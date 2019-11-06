@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View,TouchableHighlight,Image } from 'react-native';
+import { StyleSheet, Text, View,TouchableHighlight} from 'react-native';
 
 
 export default class Screen2 extends Component {
