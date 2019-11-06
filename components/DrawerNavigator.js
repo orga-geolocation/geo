@@ -23,5 +23,7 @@ const MyDrawerNavigator = CreateDrawerNavigator({
 const AppContainer = createAppContainer(MyDrawerNavigator);
 
 export default class DrawerNavigator extends Component {
-    
+    render() {
+        return <AppContainer />
+    }
 }
