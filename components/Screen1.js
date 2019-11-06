@@ -4,14 +4,14 @@ import { StyleSheet, Text, View,TouchableHighlight,Image } from 'react-native';
 
 export default class Screen1 extends Component {
     static navigationOptions = {
-        drawerLabel: 'Contacts',
+        drawerLabel: 'Player',
         
 
     }
     render() {
         return (
             <View style={styles.myView}>
-                <Text style={styles.text}>HomeScreen</Text>
+                <Text style={styles.text}>Player</Text>
                 <TouchableHighlight onPress={()=> this.props.navigation.goBack()}>
                     <Text style={styles.myText}>Go Back</Text>
                 </TouchableHighlight>

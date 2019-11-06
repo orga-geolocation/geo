@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View,TouchableHighlight,Image } from 'react-native';
+import { StyleSheet, Text, View,TouchableHighlight} from 'react-native';
 import {DrawerActions} from 'react-navigation';
 
 export default class HomeScreen extends Component {
     static navigationOptions = {
         drawerLabel: 'Home',
-        
+
 
     }
     render() {
