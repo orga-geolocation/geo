@@ -20,6 +20,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
+    textAlign:'center',
+    position: 'absolute',
+    top: 400,
+    left: 160,
+    fontWeight:'bold'
+    
+
+
     
   }
   
