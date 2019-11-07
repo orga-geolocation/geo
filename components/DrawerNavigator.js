@@ -1,30 +1,25 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {Platform ,Dimensions} from 'react-native';
 import {createAppContainer} from 'react-navigation';
-import { createDrawerNavigator } from 'react-navigation-drawer';
-import HomeScreen from './HomeScreen';
-import PlayerScreen from './PlayerScreen';
-import Screen2 from './Screen2';
-import Screen3 from './Screen3';
+import {createDrawerNavigator}from 'react-navigation-drawer';
+import HomeScreen from '../screen/HomeScreen';  
+import Player from '../screen/Player';
+import NewQuest from '../screen/NewQuest';
+
+const WIDTH = Dimensions.get('window').width;
+const DrawerNavigatorConfig = {
+    drawerWidth: WIDTH*0.33,
+}
 
 
-const MyDrawerNavigator = createDrawerNavigator({
-    Home : {screen : HomeScreen},
-    PlayerScreen : {screen : PlayerScreen},
-    Screen2 : {screen: Screen2},
-    Screen3: {screen: Screen3},
+const DrawerNavigator = createDrawerNavigator({
+    Home: {screen: HomeScreen},
+    NewPlayer : {screen :Player},
+    NewQuest: {screen:NewQuest}
 },
-{
-    initialRouteName :'Home',
-    drawerWidth: 300,
-    drawerPosition: 'left',
-}
-);
+DrawerNavigatorConfig
+)
+
+export default createAppContainer(DrawerNavigator);
 
 
-const AppContainer = createAppContainer(MyDrawerNavigator);
-
-export default class DrawerNavigator extends Component {
-    render() {
-        return <AppContainer />
-    }
-}

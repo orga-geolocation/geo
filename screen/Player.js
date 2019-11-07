@@ -1,17 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View} from 'react-native';
-import DrawerNavigator from './components/DrawerNavigator';
+import Menu from '../components/Menu'
 
-
-
-
-export default class App extends React.Component{
+export default class Player extends React.Component{
   
 
  render(){
   return (
     <View style={styles.view} >
-      <DrawerNavigator />
+        <Menu navigation={this.props.navigation} />
     </View>
   );
   }
@@ -19,10 +16,8 @@ export default class App extends React.Component{
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1,    
+    flex: 1,
+        
   },
   
 })
-
-
-
