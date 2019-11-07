@@ -8,7 +8,7 @@ import NewQuest from '../screen/NewQuest';
 
 const WIDTH = Dimensions.get('window').width;
 const DrawerNavigatorConfig = {
-    drawerWidth: WIDTH*0.33,
+    drawerWidth: WIDTH*0.43,
 }
 
 
