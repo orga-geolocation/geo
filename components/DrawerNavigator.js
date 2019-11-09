@@ -33,11 +33,10 @@ const DrawerNavigator = createDrawerNavigator({
     NewPlayer : {screen :Player},
     NewQuest: {screen:NewQuest}
 },
-    {   DrawerNavigatorConfig,
+    {   
+        DrawerNavigatorConfig,
         contentComponent: headerNavigator,
-        drawerOpenRoute: 'DrawerOpen',
-        drawerCloseRoute: 'DrawerClose',
-        drawerToggleRoute: 'DrawerToggle',
+        
         
     }
 )
