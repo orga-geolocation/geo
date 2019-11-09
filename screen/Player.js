@@ -1,9 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import Menu from '../components/Menu'
 
 export default class Player extends React.Component{
-  
+  static navigationOptions = {
+    drawerIcon : () => (
+      <Ionicons 
+                name="logo-game-controller-b"
+                size= {24}
+                color='#000000'
+      />
+    )
+  }
 
  render(){
   return (
@@ -22,9 +31,6 @@ const styles = StyleSheet.create({
   },
   text1: {
     textAlign:'center',
-    position: 'absolute',
-    top: 400,
-    left: 160,
-    fontWeight:'bold'
+    fontSize: 35
   }
 })

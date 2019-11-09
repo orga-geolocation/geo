@@ -11,7 +11,8 @@ export default class Menu extends Component {
                 color ="#000000"
                 size= {35}
                 style={styles.icon}
-                onPress={() =>{this.props.navigation.toggleDrawer()
+                onPress={() =>{this.props.navigation.navigate('DrawerOpen')
+
 
                 }}
                 
