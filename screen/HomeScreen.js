@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Menu from '../components/Menu';
+import {Container, Header} from 'native-base';
 
 export default class HomeScreen extends React.Component{
   
@@ -15,10 +16,12 @@ export default class HomeScreen extends React.Component{
   }
  render(){
   return (
-    <View style={styles.view} >
+    <Container style={styles.view} >
+      <Header>
         <Menu  navigation={this.props.navigation}/> 
         <Text style={styles.text}> Home Screen </Text> 
-    </View>
+        </Header>
+    </Container>
   );
   }
 }

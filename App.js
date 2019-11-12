@@ -1,6 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View} from 'react-native';
 import DrawerNavigator from './components/DrawerNavigator';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import PlayMode from './Firstscreen/PlayMode';
+import HomePage from './Firstscreen/HomePage'
+import HomeScreen from './screen/HomeScreen';
 
 
 
@@ -11,11 +15,21 @@ export default class App extends React.Component{
  render(){
   return (
     <View style={styles.view} >
-      <DrawerNavigator />
+      {/* <DrawerNavigator /> */}
+      <Appcontainer />
     </View>
   );
   }
 }
+
+const appSwitchNavigation= createSwitchNavigator({
+  HomePage:HomePage,
+  Explorer:DrawerNavigator,
+  PlayMode:PlayMode
+})
+
+const Appcontainer=createAppContainer(appSwitchNavigation)
+
 
 const styles = StyleSheet.create({
 

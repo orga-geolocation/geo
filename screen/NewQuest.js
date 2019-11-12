@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View} from 'react-native';
 import Menu from '../components/Menu';
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import {Container, Header} from 'native-base';
+
 
 export default class NewQuest extends React.Component{
   static navigationOptions = {
@@ -17,10 +19,12 @@ export default class NewQuest extends React.Component{
 
  render(){
   return (
-    <View style={styles.view} >
+    <Container style={styles.view} >
+      <Header>
         <Menu navigation={this.props.navigation} />
         <Text style={styles.text}>New Quest </Text>
-    </View>
+        </Header>
+    </Container>
   );
   }
 }

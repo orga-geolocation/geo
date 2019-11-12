@@ -5,6 +5,8 @@ import {createDrawerNavigator,DrawerItems}from 'react-navigation-drawer';
 import HomeScreen from '../screen/HomeScreen';  
 import Player from '../screen/Player';
 import NewQuest from '../screen/NewQuest';
+import PlayMode from '../Firstscreen/PlayMode';
+import HomePage from '../Firstscreen/HomePage'
 
 const WIDTH = Dimensions.get('window').width;
 const DrawerNavigatorConfig = {
@@ -31,7 +33,8 @@ const headerNavigator = (props) => (
 const DrawerNavigator = createDrawerNavigator({
     Home: {screen: HomeScreen},
     NewPlayer : {screen :Player},
-    NewQuest: {screen:NewQuest}
+    NewQuest: {screen:NewQuest},
+    
 },
     {   
         DrawerNavigatorConfig,
@@ -52,8 +55,9 @@ const styles = StyleSheet.create({
     },
     view:{
         height: 120,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems:'center',
+        justifyContent:'center'
+        
     },
     image:{
         height: 130,

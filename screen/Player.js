@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import Menu from '../components/Menu'
+import Menu from '../components/Menu';
+import {Container, Header} from 'native-base';
+
 
 export default class Player extends React.Component{
   static navigationOptions = {
@@ -16,10 +18,12 @@ export default class Player extends React.Component{
 
  render(){
   return (
-    <View style={styles.view} >
+    <Container style={styles.view} >
+      <Header>
         <Menu navigation={this.props.navigation} />
         <Text style={styles.text1}>Player </Text>
-    </View>
+        </Header>
+    </Container>
   );
   }
 }
