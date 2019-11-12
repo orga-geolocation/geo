@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import {StyleSheet, Text, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import {Container, Header} from 'native-base';
 
 export default class Menu extends Component {
     render() {
         return (
-            <View>
+            <Container>
+                <Header>
                 <Ionicons 
                 name="md-menu"
                 color ="#000000"
@@ -18,7 +20,8 @@ export default class Menu extends Component {
                 
                 />
                 <Text></Text>
-            </View>
+                </Header>
+            </Container>
         )
     }
 }
@@ -27,7 +30,7 @@ const styles = StyleSheet.create({
     icon: {
         zIndex: 9,
         position:"absolute",
-        top:40,
+        top:10,
         left:20
     }
 })
