@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
     icon: {
         zIndex: 9,
         position: "absolute",
-        top: 10,
-        left: 20
+        color: 'black',
+        left: 20,
+        
     }
 })

@@ -27,6 +27,7 @@ const Appcontainer = createAppContainer(appSwitchNavigation)
 const styles = StyleSheet.create({
   view: {
     flex: 1,
+    
   },
 })
 

@@ -37,9 +37,10 @@ const styles = StyleSheet.create({
     },
     btn: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'green'
     },
     text: {
-        color: "white"
-    }
+        color: "black"
+        }
 });

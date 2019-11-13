@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   text1: {
     textAlign: 'center',
     fontSize: 20,
-    color: "white"
+    color: "black"
   },
   icon: {
     fontSize: 15,
