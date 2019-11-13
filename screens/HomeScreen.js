@@ -23,7 +23,7 @@ export default class HomeScreen extends React.Component{
  render(){
   return (
     <Container style={styles.view} >
-      <Header style={{marginTop:26, backgroundColor: 'green'}}>
+      <Header style={{marginTop:26}}>
         <Menu  navigation={this.props.navigation}/> 
         <Text style={styles.text}> Home Screen </Text> 
         </Header>
@@ -39,6 +39,7 @@ export default class HomeScreen extends React.Component{
 const styles = StyleSheet.create({
   view: {
     flex: 1,
+
   },
   text: {
     textAlign:'center',

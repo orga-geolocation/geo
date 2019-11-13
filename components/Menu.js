@@ -10,7 +10,6 @@ export default class Menu extends Component {
                 <Header>
                     <Ionicons
                         name="md-menu"
-                        color="#ffffff"
                         size={35}
                         style={styles.icon}
                         onPress={() => {

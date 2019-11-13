@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'green'
     },
     text: {
-        color: "black"
+        color: "black",
+        fontSize: 18
         }
 });

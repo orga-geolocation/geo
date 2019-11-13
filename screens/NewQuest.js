@@ -21,8 +21,8 @@ export default class NewQuest extends React.Component {
   render() {
     return (
       <Container style={styles.view} >
-        <Header style={{ marginTop: 26 }}>
-          <Menu navigation={this.props.navigation} />
+        <Header style={{ marginTop: 26}}>
+           <Menu navigation={this.props.navigation} />
           <Text style={styles.text}>New Quest </Text>
         </Header>
       </Container>
@@ -33,11 +33,13 @@ export default class NewQuest extends React.Component {
 const styles = StyleSheet.create({
   view: {
     flex: 1,
+    
   },
   text: {
     textAlign: 'center',
     fontSize: 20,
-    color: "black"
+    color: "black",
+    
 
   },
   icon: {
