@@ -18,7 +18,7 @@ export default class SubHeaderButtons extends Component {
                 <View style={{ flex: 1 }}>
                     <Button style={styles.btn}
                         onPress={this.switchMode}>
-                        <Text style={styles.text}> {this.state.mode ? 'Explore' : 'Play'} </Text>
+                        <Text  style={styles.text}> {this.state.mode ? 'Explore' : 'Play'} </Text>
                     </Button>
                 </View>
                 <View style={{ flex: 1 }}>

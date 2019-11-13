@@ -1,48 +1,33 @@
 import React from 'react';
-import { StyleSheet, Text, View} from 'react-native';
-import DrawerNavigator from './components/DrawerNavigator';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import PlayMode from './Firstscreen/PlayMode';
-import HomePage from './Firstscreen/HomePage'
-import HomeScreen from './screen/HomeScreen';
+import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import PlayMode from './firstscreen/PlayMode';
+import HomePage from './firstscreen/HomePage'
+import ExploreMode from './firstscreen/ExploreMode';
 
+export default class App extends React.Component {
 
-
-
-export default class App extends React.Component{
-  
-
- render(){
-  return (
-    <View style={styles.view} >
-      {/* <DrawerNavigator /> */}
-      <Appcontainer />
-    </View>
-  );
+  render() {
+    return (
+      <View style={styles.view} >
+        <Appcontainer />
+      </View>
+    );
   }
 }
 
-const appSwitchNavigation= createSwitchNavigator({
-  HomePage:HomePage,
-  Explorer:DrawerNavigator,
-  PlayMode:PlayMode
+const appSwitchNavigation = createSwitchNavigator({
+  HomePage: HomePage,
+  Explore: ExploreMode,
+  Play: PlayMode
 })
 
-const Appcontainer=createAppContainer(appSwitchNavigation)
-
+const Appcontainer = createAppContainer(appSwitchNavigation)
 
 const styles = StyleSheet.create({
-
   view: {
-    flex: 1,    
-  },
-  container: {
     flex: 1,
-    backgroundColor: '#rgb(86, 131, 127)',
-    color: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
+  },
 })
 
 
