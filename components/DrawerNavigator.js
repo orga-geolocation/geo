@@ -26,7 +26,7 @@ const headerNavigator = (props) => (
       style={styles.line}
       forceInset={{ top: 'always', horizontal: 'always' }}
     >
-      <DrawerItems {...props} />
+      <DrawerItems {...props}  />
     </SafeAreaView>
     
     </SafeAreaView>
@@ -43,7 +43,12 @@ const headerNavigator = (props) => (
     {   
         DrawerNavigatorConfig,
         contentComponent: headerNavigator,
-    }
+    contentOptions: {
+        activeTintColor: '#5DC150',
+        inactiveTintColor: 'white', 
+    },
+    drawerBackgroundColor: '#262A2C'
+}
 )
 
 export default createAppContainer(DrawerNavigator);
@@ -61,6 +66,7 @@ const styles = StyleSheet.create({
     image:{
         height: 130,
         width: 130,
+        marginTop:38,
         borderRadius: 30
     },
     line: {
