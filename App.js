@@ -17,7 +17,7 @@ export default class App extends React.Component {
 }
 
 const appSwitchNavigation = createSwitchNavigator({
-  HomePage: HomePage,
+  HomePage: ExploreMode,
   Explore: ExploreMode,
   Play: PlayMode
 })

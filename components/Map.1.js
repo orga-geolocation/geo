@@ -14,7 +14,6 @@ const data =
     [
         {
             id: 1,
-            mode: "explore",
             title: "Alex Tour",
             description: "Hello … this a trip ...",
             latitude: 52.522445,
@@ -51,7 +50,6 @@ const data =
         },
         {
             id: 2,
-            mode: "explore",
             title: "DCI Tour",
             description: "Hello … This is the DCI TOUR",
             latitude: 52.5236609,
@@ -100,9 +98,9 @@ export default class Map extends React.Component {
             latitudeDelta: 0.02,
             longitudeDelta: 0.02,
         },
+
         latNow: 0,
         lonNow: 0,
-
     }
 
 
@@ -114,9 +112,8 @@ export default class Map extends React.Component {
 
     // -----------------
 
-    componentDidMount() {
+    componentDidUpdate() {
         this.getLocationAsync();
-
     }
 
     getLocationAsync = async () => {
@@ -142,15 +139,6 @@ export default class Map extends React.Component {
             newLocation => {
                 let coords = newLocation.coords;
                 this.setState({ latNow: coords.latitude, lonNow: coords.longitude })
-
-                this.setState({
-                    region: {
-                        latitude: 54.523662,
-                        longitude: 13.486350,
-                        latitudeDelta: 0.02,
-                        longitudeDelta: 0.02
-                    }
-                })
 /*                 console.log(coords);
  */            });
     };
@@ -171,11 +159,7 @@ export default class Map extends React.Component {
 
 
     start = () => {
-        console.log("yesxx");
-        this.setState({ openInfo: "id" })
-
-
-
+        console.log("yes");
     }
 
     openInfo = (id) => {
@@ -186,36 +170,32 @@ export default class Map extends React.Component {
 
     render() {
 
-
-
         console.log("yes1");
 
         return (
 
             <View style={styles.view} >
 
-                <Button title="test" onPress={() => this.start()} />
+
+
 
                 <MapView style={styles.map}
-                    initialRegion={this.state.region}
-                    onRegionChange={region => {
-                        this.setState({region});
-                    }}
-                    mapType="satellite">
 
+                    region={this.state.region}
+                    mapType="satellite"
+                >
 
+{/* 
                     <Marker
                         coordinate={{ longitude: this.state.lonNow, latitude: this.state.latNow }}
-                        pinColor='blue'
-                    />
+                    /> */}
 
-                    {this.state.start == false ?
+
+                    {/* this.state.start == false ?
                         data.map((item, index) => {
                             return (
                                 <Marker
                                     key={index}
-                                    pinColor='yellow'
-
                                     coordinate={{ longitude: item.longitude, latitude: item.latitude }}
                                     onPress={() => this.openInfo(item.id)}
                                 >
@@ -231,7 +211,8 @@ export default class Map extends React.Component {
                             )
                         })
                         :
-                        ""}
+                        "" */}
+
                 </MapView>
             </View>
         );
@@ -245,9 +226,8 @@ const styles = StyleSheet.create({
     },
 
     map: {
-        flex: 1,
-/*         ...StyleSheet.absoluteFillObject,
- */    },
+        ...StyleSheet.absoluteFillObject,
+    },
     bubble: {
         flex: 1,
         backgroundColor: 'rgba(255,255,255,0.7)',
