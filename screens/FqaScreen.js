@@ -14,7 +14,7 @@ export default class NewQuest extends React.Component {
         drawerIcon: () => (
             <View style={styles.icon}>
                 <Ionicons
-                    name="help"
+                    name="md-help"
                     size={24}
                     style={styles.iconcolor}
                 />
