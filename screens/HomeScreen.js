@@ -3,28 +3,38 @@ import { StyleSheet, View, Text} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Menu from '../components/Menu';
 import {Container, Header} from 'native-base';
+import SubHeaderButtons from '../components/SubHeaderButtons';
+import Map from '../components/Map';
+
 
 export default class HomeScreen extends React.Component{
   
   static navigationOptions  = {
    drawerIcon : () => (
-    <Ionicons name="md-home"
+    <View style= {styles.icon}>
+        <Ionicons name="md-home"
                size={24} 
-               color ="#000000"
+               style= {styles.iconcolor}
+              
                />
+               </View>
    )
   }
  render(){
   return (
     <Container style={styles.view} >
-      <Header>
+      <Header style={{marginTop:26}}>
         <Menu  navigation={this.props.navigation}/> 
         <Text style={styles.text}> Home Screen </Text> 
         </Header>
+
+        <SubHeaderButtons/>
+        <Map/>
     </Container>
   );
   }
 }
+
 
 const styles = StyleSheet.create({
   view: {
@@ -35,12 +45,24 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign:'center',
-    fontSize: 35
+    fontSize: 20,
+    color: "white"
+  },
+  icon :{
+    fontSize: 20, 
+    color: "white", 
+    textAlign:'center',
+    backgroundColor:'green',
+    height: 25,
+    width: 25,
+    borderRadius: 50,
+    alignItems:'center',
+    justifyContent:'center',
+   
+  },
+  iconcolor: {
+    color: "white",
 
-    // position: 'absolute',
-    // top: 400,
-    // left: 160,
-    // fontWeight:'bold'
   }
   
 })
