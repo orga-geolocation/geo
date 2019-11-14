@@ -5,112 +5,32 @@ import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 
+import data from "../dummyData";
+
+console.log(data);
+
+
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 const tooltipWidth = WIDTH * 0.5;
 const tooltipHeight = HEIGHT * 0.2;
 
-const data =
-    [
-        {
-            id: 1,
-            mode: "explore",
-            title: "Alex Tour",
-            description: "Hello … this a trip ...",
-            latitude: 52.522445,
-            longitude: 13.485993,
-            timestamp: "time",
-            updatedTime: "time",
-            finishedText: "Yes you did the amazing trip alexander!",
-            points: [
-                {
-                    id: 1,
-                    titlePoint: "TV-Tower",
-                    info: "Here you are at the tv - tower: height: 312m",
-                    latitude: 52.522445,
-                    longitude: 13.485993,
-                    image: "",
-                },
-                {
-                    id: 2,
-                    titlePoint: "Brunnen",
-                    info: "Here you are at the brunnen. nice",
-                    latitude: 52.522445,
-                    longitude: 13.485993,
-                    image: "",
-                },
-                {
-                    id: 3,
-                    titlePoint: "Rathaus",
-                    info: "Here you are at Rathaus. Welcome politic!",
-                    latitude: 52.522445,
-                    longitude: 13.485993,
-                    image: "",
-                },
-            ]
-        },
-        {
-            id: 2,
-            mode: "explore",
-            title: "DCI Tour",
-            description: "Hello … This is the DCI TOUR",
-            latitude: 52.5236609,
-            longitude: 13.4864247,
-            timestamp: "time",
-            updatedTime: "time",
-            finishedText: "Yes you did the amazing dci tour",
-            points: [
-                {
-                    id: 1,
-                    titlePoint: "smoking area",
-                    info: "Here you are at the tv - tower: height: 312m",
-                    latitude: 52.522445,
-                    longitude: 13.485993,
-                    image: "",
-                },
-                {
-                    id: 2,
-                    titlePoint: "kitchen",
-                    info: "Here you are at the brunnen. nice",
-                    latitude: 52.522445,
-                    longitude: 13.485993,
-                    image: "",
-                },
-                {
-                    id: 3,
-                    titlePoint: "classroom",
-                    info: "Here you are at Rathaus. Welcome politic!",
-                    latitude: 52.522445,
-                    longitude: 13.485993,
-                    image: "",
-                },
-            ]
-        }
-    ]
+
 
 export default class Map extends React.Component {
 
     state = {
-
         start: false,
         questNow: null,
         region: {
-            latitude: 52.523662,
-            longitude: 13.486350,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.02,
+            latitude: 0,
+            longitude: 0,
+            latitudeDelta: 1,
+            longitudeDelta: 1,
         },
         latNow: 0,
         lonNow: 0,
-
     }
-
-
-
-
-
-
-
 
     // -----------------
 
@@ -134,7 +54,6 @@ export default class Map extends React.Component {
                 enableHighAccuracy: true,
                 distanceInterval: 0,
                 timeout: 25000,
-
                 maximumAge: 3600000,
                 distanceFilter: 0,
                 timeInterval: 500
@@ -143,39 +62,16 @@ export default class Map extends React.Component {
                 let coords = newLocation.coords;
                 this.setState({ latNow: coords.latitude, lonNow: coords.longitude })
 
-                this.setState({
-                    region: {
-                        latitude: 54.523662,
-                        longitude: 13.486350,
-                        latitudeDelta: 0.02,
-                        longitudeDelta: 0.02
-                    }
-                })
-/*                 console.log(coords);
- */            });
+                this.animateFunc();
+            });
     };
 
-
-
-
     // -------------------
-
-
-
-
-
-
-
-
-
 
 
     start = () => {
         console.log("yesxx");
         this.setState({ openInfo: "id" })
-
-
-
     }
 
     openInfo = (id) => {
@@ -184,25 +80,34 @@ export default class Map extends React.Component {
     }
 
 
+    animateFunc = () => {
+        this.refs.scroll.animateCamera(
+            {
+                center: {
+                    latitude: this.state.latNow,
+                    longitude: this.state.lonNow,
+                },
+                pitch: 0,
+                heading: 0,
+                altitude: 0,
+                zoom: 16
+            }, 11000)
+    }
+
     render() {
 
-
-
-        console.log("yes1");
-
         return (
-
             <View style={styles.view} >
-
-                <Button title="test" onPress={() => this.start()} />
+                <Button title="Center current Position"
+                    onPress={this.animateFunc} />
 
                 <MapView style={styles.map}
                     initialRegion={this.state.region}
                     onRegionChange={region => {
-                        this.setState({region});
+                        this.setState({ region });
                     }}
+                    ref="scroll"
                     mapType="satellite">
-
 
                     <Marker
                         coordinate={{ longitude: this.state.lonNow, latitude: this.state.latNow }}
@@ -246,8 +151,8 @@ const styles = StyleSheet.create({
 
     map: {
         flex: 1,
-/*         ...StyleSheet.absoluteFillObject,
- */    },
+        /*         ...StyleSheet.absoluteFillObject, */
+},
     bubble: {
         flex: 1,
         backgroundColor: 'rgba(255,255,255,0.7)',
