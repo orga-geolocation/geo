@@ -37,7 +37,10 @@ const styles = StyleSheet.create({
     },
     btn: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop:0.2
+
+        
     },
     text: {
         color: "white"

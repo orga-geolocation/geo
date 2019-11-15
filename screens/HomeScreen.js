@@ -24,7 +24,7 @@ export default class HomeScreen extends React.Component{
   return (
     <View style={styles.view} >
       
-      <View style={{marginTop:26, backgroundColor:'blue', height:60}}>
+      <View style={{marginTop:26, backgroundColor:'blue', height:55}}>
         <Menu  navigation={this.props.navigation}/> 
         <Text style={styles.text}> Home Screen </Text> 
         <Button transparent style={styles.button}><Text style={{color:'white', fontSize:17}}>LOG IN</Text></Button>
