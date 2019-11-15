@@ -6,8 +6,7 @@ import { Container, Header } from 'native-base';
 export default class Menu extends Component {
     render() {
         return (
-            <Container>
-                <Header>
+            
                     <Ionicons
                         name="md-menu"
                         color="#ffffff"
@@ -17,8 +16,7 @@ export default class Menu extends Component {
                             this.props.navigation.toggleDrawer()
                         }}
                     />
-                </Header>
-            </Container>
+    
         )
     }
 }
