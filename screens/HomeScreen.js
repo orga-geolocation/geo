@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top:9,
     right: 3,
-    color:'red'
     }
   
   
