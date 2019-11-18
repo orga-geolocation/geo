@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Dimensions, StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native';
 import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 
@@ -17,9 +17,9 @@ const tooltipHeight = HEIGHT * 0.2;
 
 
 
-export default class Map extends React.Component {
+export default function Map(props){
 
-    state = {
+   const  coordinate = {
         start: false,
         questNow: null,
         region: {
@@ -30,23 +30,42 @@ export default class Map extends React.Component {
         },
         latNow: 0,
         lonNow: 0,
+        locationResult: '',
+        hasLocationPermissions: true,
+        openInfo: {}
     }
+
+    const [position, setPosition] = useState(coordinate)
 
     // -----------------
 
-    componentDidMount() {
-        this.getLocationAsync();
+    // componentDidMount() {
+    //     this.getLocationAsync();
 
-    }
+    // }
 
-    getLocationAsync = async () => {
+    useEffect(() => {
+      
+        getLocationAsync()
+    },[]) 
+
+
+
+    const getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
         if (status !== 'granted') {
-            this.setState({
-                locationResult: 'Permission to access location was denied',
-            });
+            // this.setState({
+            //     locationResult: 'Permission to access location was denied',
+            // });
+
+            setPosition(()=>{
+                return position.locationResult = 'Permission to access location was denied'
+            })
         } else {
-            this.setState({ hasLocationPermissions: true });
+            // this.setState({ hasLocationPermissions: true });
+            setPosition(()=>{
+                return position.hasLocationPermissions= true
+            })
         }
 
         let location = await Location.watchPositionAsync(
@@ -60,61 +79,72 @@ export default class Map extends React.Component {
             },
             newLocation => {
                 let coords = newLocation.coords;
-                this.setState({ latNow: coords.latitude, lonNow: coords.longitude })
+                // this.setState({ latNow: coords.latitude, lonNow: coords.longitude })
+                setPosition(()=> {
+                    return {...position, latNow: coords.latitude, lonNow: coords.longitude}
+                })
 
-                this.animateFunc();
+                // animateFunc();
             });
     };
 
     // -------------------
 
 
-    start = () => {
+  const start = () => {
         console.log("yesxx");
-        this.setState({ openInfo: "id" })
+        // this.setState({ openInfo: "id" })
+        setPosition(()=> {
+            return {...position, openInfo: "id"}
+        })
     }
 
-    openInfo = (id) => {
+   const openInfo = (id) => {
         console.log(id);
-        this.setState({ openInfo: id })
+        // this.setState({ openInfo: id })
+        setPosition(()=> {
+            return {...position, openInfo: id}
+        })
     }
 
 
-    animateFunc = () => {
-        this.refs.scroll.animateCamera(
-            {
-                center: {
-                    latitude: this.state.latNow,
-                    longitude: this.state.lonNow,
-                },
-                pitch: 0,
-                heading: 0,
-                altitude: 0,
-                zoom: 16
-            }, 2000)
-    }
-
-    render() {
+//    const animateFunc = () => {
+//         React.forwardRef(scroll).animateCamera(
+//             {
+//                 center: {
+//                     latitude: position.latNow,
+//                     longitude: position.lonNow,
+//                 },
+//                 pitch: 0,
+//                 heading: 0,
+//                 altitude: 0,
+//                 zoom: 16
+//             }, 11000)
+//     }
 
         return (
             <View style={styles.view} >
                 <Button title="Center current Position"
-                    onPress={this.animateFunc} />
+                    // onPress={animateFunc} 
+                    />
 
                 <MapView style={styles.map}
-                    initialRegion={this.state.region}
+                    initialRegion={position.region}
                     onRegionChange={region => {
-                        this.setState({ region });
+                        // this.setState({ region });
+                        setPosition(()=> {
+                            return {...position, region: region}
+                        })
                     }}
-                    ref="scroll"
+                    // ref="scroll"
                     mapType="satellite">
 
                     <Marker
-                        coordinate={{ longitude: this.state.lonNow, latitude: this.state.latNow }}
+                        coordinate={{ longitude: 0,  latitude: 1 }}
                         pinColor='blue'
                     />
 
-                    {this.state.start == false ?
+                    {position.start == false ?
                         data.map((item, index) => {
                             return (
                                 <Marker
@@ -122,14 +152,14 @@ export default class Map extends React.Component {
                                     pinColor='yellow'
 
                                     coordinate={{ longitude: item.longitude, latitude: item.latitude }}
-                                    onPress={() => this.openInfo(item.id)}
+                                    onPress={() => openInfo(item.id)}
                                 >
                                     <Callout tooltip={false}
                                     >
                                         <View>
                                             <Text>{item.title}</Text>
                                             <Text>{item.description}</Text>
-                                            <Button title="Start" style={{ zIndex: 20 }} onPress={this.start} />
+                                            <Button title="Start" style={{ zIndex: 20 }} onPress={start} />
                                         </View>
                                     </Callout>
                                 </Marker>
@@ -141,7 +171,7 @@ export default class Map extends React.Component {
             </View>
         );
     }
-}
+
 
 const styles = StyleSheet.create({
 

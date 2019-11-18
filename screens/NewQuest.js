@@ -4,8 +4,31 @@ import Menu from '../components/Menu';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Container, Header } from 'native-base';
 
-export default class NewQuest extends React.Component {
-  static navigationOptions = {
+export default function NewQuest(props) {
+  // static navigationOptions = {
+  //   drawerIcon: () => (
+  //     <View style={styles.icon}>
+  //       <Ionicons
+  //         name="md-navigate"
+  //         size={24}
+  //         style={{ color: 'white' }}
+
+  //       />
+  //     </View>
+  //   )
+  // }
+
+ 
+    return (
+      <Container style={styles.view} >
+        <Header style={{ marginTop: 26 }}>
+          <Menu navigation={props.navigation} />
+          <Text style={styles.text}>New Quest </Text>
+        </Header>
+      </Container>
+    );
+  }
+NewQuest.navigationOptions = {
     drawerIcon: () => (
       <View style={styles.icon}>
         <Ionicons
@@ -17,18 +40,6 @@ export default class NewQuest extends React.Component {
       </View>
     )
   }
-
-  render() {
-    return (
-      <Container style={styles.view} >
-        <Header style={{ marginTop: 26 }}>
-          <Menu navigation={this.props.navigation} />
-          <Text style={styles.text}>New Quest </Text>
-        </Header>
-      </Container>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   view: {

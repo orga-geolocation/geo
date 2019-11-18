@@ -7,25 +7,31 @@ import SubHeaderButtons from '../components/SubHeaderButtons';
 import Map from '../components/Map';
 
 
-export default class HomeScreen extends React.Component{
+
+
+export default function  HomeScreen(props) {
+
+  console.log('helllllllllllllllo',props);
   
-  static navigationOptions  = {
-   drawerIcon : () => (
-    <View style= {styles.icon}>
-        <Ionicons name="md-home"
-               size={24} 
-               style= {styles.iconcolor}
+  
+//  static navigationOptions  = {
+//    drawerIcon : () => (
+//     <View style= {styles.icon}>
+//         <Ionicons name="md-home"
+//                size={24} 
+//                style= {styles.iconcolor}
               
-               />
-               </View>
-   )
-  }
- render(){
+//                />
+//                </View>
+//    )
+//   }
+ 
+
   return (
     <View style={styles.view} >
       
       <View style={{marginTop:26, backgroundColor:'blue', height:55}}>
-        <Menu  navigation={this.props.navigation}/> 
+        <Menu  navigation={props.navigation}/> 
         <Text style={styles.text}> Home Screen </Text> 
         <Button transparent style={styles.button}><Text style={{color:'white', fontSize:17}}>LOG IN</Text></Button>
         </View>
@@ -48,8 +54,18 @@ export default class HomeScreen extends React.Component{
     </View>
   );
   }
-}
 
+  HomeScreen.navigationOptions  = {
+       drawerIcon : () => (
+        <View style= {styles.icon}>
+            <Ionicons name="md-home"
+                   size={24} 
+                   style= {styles.iconcolor}
+                  
+                   />
+                   </View>
+       )
+      }
 
 const styles = StyleSheet.create({
   view: {
