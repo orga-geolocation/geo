@@ -36,7 +36,7 @@ export default function Map(props) {
     }
  */
     useEffect(() => {
-        return ()=> getLocationAsync();
+        getLocationAsync(); 
     }, [])
 
 
@@ -50,7 +50,7 @@ export default function Map(props) {
                    this.setState({ hasLocationPermissions: true });
                } */
 
-        let location = await Location.watchPositionAsync(
+        await Location.watchPositionAsync(
             {
                 enableHighAccuracy: true,
                 distanceInterval: 0,
@@ -81,9 +81,9 @@ export default function Map(props) {
             });
     };
     
-    const mapView = useRef(MapView);
+    const mapView = useRef(null);
     const centerCurrentLocation = () => {
-        mapView.current.scroll.animateCamera(
+        mapView.current.animateCamera(
             {
                 center: {
                     latitude: state.latNow,
@@ -96,7 +96,7 @@ export default function Map(props) {
     }
 
     const centerCurrentLocationWithZoom = () => {
-       mapView.current.scroll.animateCamera(
+       mapView.current.animateCamera(
             {
                 center: {
                     latitude: state.latNow,
@@ -154,11 +154,11 @@ export default function Map(props) {
                 onPress={followPositionsSwitch} />
 
             <MapView style={styles.map}
-                initialRegion={state.region}
-                /*                     
+                initialRegion={state.region}                   
                 onRegionChange={region => {
-                this.setState({ region });
-                }} */
+                setState(()=>{ 
+                    return {...state,region:region} });
+                }} 
                 ref={mapView}
                 mapType="satellite"
                 zoomEnabled={true}
