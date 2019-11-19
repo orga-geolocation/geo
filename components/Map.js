@@ -220,7 +220,35 @@ export default function Map(props) {
             </MapView >
 
             {/* show this box if clicking for more details */}
-           
+            {
+                    state.showBox == true &&
+                    <View style={styles.infoBox}>
+                        <View>
+                            <Button title="Close Window - X" onPress={() => {
+                               setState(()=>{
+                                   return {...state, showBox: false}
+                                })
+                            }} />
+                        </View>
+                        <View style={{
+                            backgroundColor: "white",
+                            padding: 5
+                        }}><Text>{data.find(x => x.id === state.showBoxId).title}</Text>
+                        </View>
+                        <View style={{ flex: 1, padding: 5 }}>
+                            <Text>{data.find(x => x.id === state.showBoxId).description}</Text>
+                            <Text>{data.find(x => x.id === state.showBoxId).points.length} Points: </Text>
+                            <Text>
+                                {data.find(x => x.id === state.showBoxId).points.map((item, index) => {
+                                    return (<Text key={index}>{item.titlePoint}</Text>)
+                                })}
+                            </Text>
+                        </View>
+                        <Button title="Start" style={{ zIndex: 20, alignSelf: 'flex-end' }}
+                            onPress={() => start(data.find(x => x.id === state.showBoxId).id)} />
+                    </View>
+                }
+
 
             {/* show this box if quest started */}
             {
