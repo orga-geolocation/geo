@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Menu from '../components/Menu';
+import { StyleSheet,View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { Container, Header, Content, Accordion } from 'native-base';
+import {Content, Accordion } from 'native-base';
+import Headers from "../components/Headers";
 
 const dataArray = [
     { title: "Question 1", content: "Lorem ipsum dolor sit amet" },
@@ -10,30 +10,17 @@ const dataArray = [
     { title: "Question 3", content: "Lorem ipsum dolor sit amet" }
 ];
 export default function FAQ(props) {
-    // static navigationOptions = {
-    //     drawerIcon: () => (
-    //         <View style={styles.icon}>
-    //             <Ionicons
-    //                 name="md-help"
-    //                 size={24}
-    //                 style={styles.iconcolor}
-    //             />
-    //         </View>
-    //     )
-
-    // }
-
     
         return (
-            <Container style={styles.view} >
-                <Header style={{ marginTop: 26 }}>
-                    <Menu navigation={props.navigation} />
-                    <Text style={styles.text}>FQA </Text>
-                </Header>
+            <View style={{flex: 1}}>
+            <Headers name ='FAQ'
+                    navigation={props.navigation} />
                 <Content padder>
                     <Accordion dataArray={dataArray} expanded={0} />
                 </Content>
-            </Container>
+
+                </View>
+        
         );
     }
 

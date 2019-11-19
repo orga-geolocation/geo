@@ -1,31 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Menu from '../components/Menu';
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import { Container, Header } from 'native-base';
+import { StyleSheet, View } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Headers from "../components/Headers";
+
 
 export default function NewQuest(props) {
-  // static navigationOptions = {
-  //   drawerIcon: () => (
-  //     <View style={styles.icon}>
-  //       <Ionicons
-  //         name="md-navigate"
-  //         size={24}
-  //         style={{ color: 'white' }}
-
-  //       />
-  //     </View>
-  //   )
-  // }
-
- 
+  
     return (
-      <Container style={styles.view} >
-        <Header style={{ marginTop: 26 }}>
-          <Menu navigation={props.navigation} />
-          <Text style={styles.text}>New Quest </Text>
-        </Header>
-      </Container>
+      <View style={{flex: 1}}>
+      <Headers name='New Quest' navigation={props.navigation} />
+    </View>
     );
   }
 NewQuest.navigationOptions = {
@@ -42,15 +26,7 @@ NewQuest.navigationOptions = {
   }
 
 const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-  },
-  text: {
-    textAlign: 'center',
-    fontSize: 20,
-    color: "white"
-
-  },
+  
   icon: {
     fontSize: 15,
     color: "white",
@@ -62,7 +38,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-
-
-
 })
