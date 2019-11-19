@@ -4,31 +4,43 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Menu from '../components/Menu';
 import { Container, Header } from 'native-base';
 
-export default class Player extends React.Component {
-  static navigationOptions = {
-    drawerIcon: () => (
-      <View style={styles.icon}>
-        <Ionicons
-          name="logo-game-controller-b"
-          size={24}
-          style={styles.iconcolor}
+export default function Player(props){
+  // static navigationOptions = {
+  //   drawerIcon: () => (
+  //     <View style={styles.icon}>
+  //       <Ionicons
+  //         name="logo-game-controller-b"
+  //         size={24}
+  //         style={styles.iconcolor}
 
-        />
-      </View>
-    )
-  }
+  //       />
+  //     </View>
+  //   )
+  // }
 
-  render() {
+  
     return (
       <Container style={styles.view} >
         <Header style={{ marginTop: 26 }}>
-          <Menu navigation={this.props.navigation} />
+          <Menu navigation={props.navigation} />
           <Text style={styles.text1}>Player </Text>
         </Header>
       </Container>
     );
   }
-}
+
+  Player.navigationOptions = {
+      drawerIcon: () => (
+        <View style={styles.icon}>
+          <Ionicons
+            name="logo-game-controller-b"
+            size={24}
+            style={styles.iconcolor}
+  
+          />
+        </View>
+      )
+    }
 
 const styles = StyleSheet.create({
   view: {

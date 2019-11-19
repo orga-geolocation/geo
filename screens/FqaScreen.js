@@ -9,8 +9,36 @@ const dataArray = [
     { title: "Question 2", content: "Lorem ipsum dolor sit amet" },
     { title: "Question 3", content: "Lorem ipsum dolor sit amet" }
 ];
-export default class NewQuest extends React.Component {
-    static navigationOptions = {
+export default function FAQ(props) {
+    // static navigationOptions = {
+    //     drawerIcon: () => (
+    //         <View style={styles.icon}>
+    //             <Ionicons
+    //                 name="md-help"
+    //                 size={24}
+    //                 style={styles.iconcolor}
+    //             />
+    //         </View>
+    //     )
+
+    // }
+
+    
+        return (
+            <Container style={styles.view} >
+                <Header style={{ marginTop: 26 }}>
+                    <Menu navigation={props.navigation} />
+                    <Text style={styles.text}>FQA </Text>
+                </Header>
+                <Content padder>
+                    <Accordion dataArray={dataArray} expanded={0} />
+                </Content>
+            </Container>
+        );
+    }
+
+
+FAQ.navigationOptions = {
         drawerIcon: () => (
             <View style={styles.icon}>
                 <Ionicons
@@ -22,21 +50,6 @@ export default class NewQuest extends React.Component {
         )
 
     }
-
-    render() {
-        return (
-            <Container style={styles.view} >
-                <Header style={{ marginTop: 26 }}>
-                    <Menu navigation={this.props.navigation} />
-                    <Text style={styles.text}>FQA </Text>
-                </Header>
-                <Content padder>
-                    <Accordion dataArray={dataArray} expanded={0} />
-                </Content>
-            </Container>
-        );
-    }
-}
 
 const styles = StyleSheet.create({
     view: {

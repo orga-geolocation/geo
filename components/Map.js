@@ -115,7 +115,7 @@ export default class Map extends React.Component {
                 heading: 0,
                 altitude: 0,
                 zoom: 16
-            }, 1000)
+            }, 2000)
     }
 
 
