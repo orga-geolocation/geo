@@ -1,28 +1,12 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native';
 import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
-
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
-
 import data from "../dummyData";
-import { ScrollView } from 'react-native-gesture-handler';
-
-console.log(data);
-
-
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
-const tooltipWidth = WIDTH * 0.5;
-const tooltipHeight = HEIGHT * 0.2;
-
-
-
 export default class Map extends React.Component {
 
     state = {
-        start: false,
-        questNow: null,
         region: {
             latitude: 52.522445,
             longitude: 13.485993,
@@ -32,29 +16,32 @@ export default class Map extends React.Component {
         latNow: 0,
         lonNow: 0,
 
-
         loadFirst: true,
         followPosition: false,
         showBox: false,
         showBoxId: 0,
-    }
 
-    // -----------------
+        start: false,
+        questNow: null,
+        nextPointTitle: "",
+        howManyPoints: 0,
+        findNextLongitude: 0,
+        findNextLatitude: 0,
+    }
 
     componentDidMount() {
         this.getLocationAsync();
-
     }
 
     getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
-        if (status !== 'granted') {
-            this.setState({
-                locationResult: 'Permission to access location was denied',
-            });
-        } else {
-            this.setState({ hasLocationPermissions: true });
-        }
+        /*        if (status !== 'granted') {
+                   this.setState({
+                       locationResult: 'Permission to access location was denied',
+                   });
+               } else {
+                   this.setState({ hasLocationPermissions: true });
+               } */
 
         let location = await Location.watchPositionAsync(
             {
@@ -78,18 +65,8 @@ export default class Map extends React.Component {
                     this.centerCurrentLocation();
                 }
 
-
-
             });
     };
-
-    // -------------------
-
-    start = () => {
-        console.log("quest started");
-        this.setState({ start: true })
-    }
-
 
     centerCurrentLocation = () => {
         this.refs.scroll.animateCamera(
@@ -101,7 +78,7 @@ export default class Map extends React.Component {
                 pitch: 0,
                 heading: 0,
                 altitude: 0,
-            }, 1000)
+            }, 2000)
     }
 
     centerCurrentLocationWithZoom = () => {
@@ -118,26 +95,28 @@ export default class Map extends React.Component {
             }, 2000)
     }
 
-
     followPositionsSwitch = () => {
         this.setState({ followPosition: !this.state.followPosition })
     }
 
 
-    openInfo = (id) => {
+    start = (questId) => {
+        console.log("quest started");
+        console.log(questId);
 
-/*         this.setState({ showBox: true })
- */        console.log(id);
+        /* set states for the actual quest */
+        this.setState({
+            start: true,
+            showBox: false,
+            questNow: questId,
+            nextPointTitle: data.find(x => x.id === questId).points.find(y => y.id === 1).titlePoint,
+            howManyPoints: data.find(x => x.id === questId).points.length,
+            findNextLongitude: data.find(x => x.id === questId).points.find(y => y.id === 1).longitude,
+            findNextLatitude: data.find(x => x.id === questId).points.find(y => y.id === 1).latitude,
+        })
     }
 
-
-
-
-
     render() {
-
-        console.log("render");
-
         return (
             <View style={styles.view} >
                 <Button title="Go to current Position"
@@ -146,49 +125,54 @@ export default class Map extends React.Component {
                 <Button title={this.state.followPosition ? 'Follow Your Position: ON' : 'Follow Your Position: OFF'}
                     onPress={this.followPositionsSwitch} />
 
-
-
                 <MapView style={styles.map}
                     initialRegion={this.state.region}
-                    /*                     onRegionChange={region => {
-                                            this.setState({ region });
-                                        }} */
+                    /*                     
+                    onRegionChange={region => {
+                    this.setState({ region });
+                    }} */
                     ref="scroll"
-                    mapType="standard"
-
-                    /* showsUserLocation
-                    followsUserLocation	 */
-                    onPress={() => {
-                        this.setState({ showBox: false })
-                    }}
+                    mapType="satellite"
+                    zoomEnabled={true}
                 >
 
-
                     {/* current position marker */}
-                    {this.state.loadFirst == false &&
-                    <Marker
-                        coordinate={{ longitude: this.state.lonNow, latitude: this.state.latNow }}
-                        icon={require('../assets/pin.png')}
+                    {
+                        this.state.loadFirst == false &&
+                        <Marker
+                            coordinate={{ longitude: this.state.lonNow, latitude: this.state.latNow }}
+                            pinColor="blue"
+                        />
+                    }
 
-                    />}
+                    {/* Show marker for only next Point */}
+                    {
+                        this.state.start == true &&
+                        <Marker
+                            coordinate={{ longitude: this.state.findNextLongitude, latitude: this.state.findNextLatitude }}
+                            pinColor="yellow"
+                        />
+                    }
 
                     {/* load all markers (starting positions) from data */}
-                    {this.state.start == false ?
+                    {
+                        this.state.start == false &&
                         data.map((item, index) => {
                             return (
                                 <Marker
                                     key={index}
-                                    icon={require('../assets/pin2.png')}
                                     coordinate={{ longitude: item.longitude, latitude: item.latitude }}
-                                    onPress={() => {
-                                        this.setState({ showBox: false })
-                                    }}
+                                    /*                                     
+                                    onPress={() => {                                
+                                    this.setState({ showBox: false })
+                                    }} */
+                                    style={{ zIndex: 6000 }}
                                 >
                                     <Callout tooltip={false}
                                         onPress={() => {
                                             this.setState({ showBox: true })
                                             this.setState({ showBoxId: item.id })
-                                            this.openInfo(item.id)
+
                                         }}
                                     >
                                         <View>
@@ -200,13 +184,25 @@ export default class Map extends React.Component {
                                 </Marker>
                             )
                         })
-                        : <Text>hh</Text>}
-                </MapView>
+                    }
 
-                {<View style={styles.infoBox}>
-                    {this.state.showBox == true ?
-                        <View style={styles.infoBoxInner}>
-                            <Text>{data.find(x => x.id === this.state.showBoxId).title}</Text>
+                </MapView >
+
+                {/* show this box if clicking for more details */}
+                {
+                    this.state.showBox == true &&
+                    <View style={styles.infoBox}>
+                        <View>
+                            <Button title="Close Window - X" onPress={() => {
+                                this.setState({ showBox: false })
+                            }} />
+                        </View>
+                        <View style={{
+                            backgroundColor: "white",
+                            padding: 5
+                        }}><Text>{data.find(x => x.id === this.state.showBoxId).title}</Text>
+                        </View>
+                        <View style={{ flex: 1, padding: 5 }}>
                             <Text>{data.find(x => x.id === this.state.showBoxId).description}</Text>
                             <Text>{data.find(x => x.id === this.state.showBoxId).points.length} Points: </Text>
                             <Text>
@@ -214,12 +210,34 @@ export default class Map extends React.Component {
                                     return (<Text key={index}>{item.titlePoint}</Text>)
                                 })}
                             </Text>
-                            <Button title="Start" style={{ zIndex: 20 }} onPress={this.start} />
                         </View>
-                        : <Text></Text>}
-                </View>}
+                        <Button title="Start" style={{ zIndex: 20, alignSelf: 'flex-end' }}
+                            onPress={() => this.start(data.find(x => x.id === this.state.showBoxId).id)} />
+                    </View>
+                }
 
-            </View>
+
+                {/* show this box if quest started */}
+                {
+                    this.state.start == true &&
+                    <View style={styles.startedBox}>
+                        <View><Text> GO TO:
+                            {this.state.nextPointTitle}
+                            {/*                             
+                            {this.state.howManyPoints}
+                            {this.state.findNextLongitude}
+                            {this.state.findNextLatitude} */}
+                        </Text>
+                        </View><View>
+                        <Button title="Quit Quest"
+                        onPress={() => this.setState({ start: false })} />
+
+                        </View>
+                    </View>
+                }
+
+
+            </View >
         );
     }
 }
@@ -229,15 +247,27 @@ const styles = StyleSheet.create({
     infoBox: {
         position: "absolute",
         bottom: 30,
-        flex:1,
+        flex: 1,
         left: 20,
         right: 20,
-        height:300,
+        height: 300,
         paddingVertical: 10,
+        backgroundColor: "yellow",
+        borderColor: "white",
+        borderWidth: 6,
     },
-    infoBoxInner: {
+
+    startedBox: {
+        position: "absolute",
+        bottom: 30,
         flex: 1,
-        backgroundColor: "grey",
+        left: 20,
+        right: 20,
+        height: 100,
+        paddingVertical: 10,
+        backgroundColor: "yellow",
+        borderColor: "white",
+        borderWidth: 6,
     },
 
     view: {
@@ -246,35 +276,6 @@ const styles = StyleSheet.create({
 
     map: {
         flex: 1,
-        /*         ...StyleSheet.absoluteFillObject, */
-    },
-    bubble: {
-        flex: 1,
-        backgroundColor: 'rgba(255,255,255,0.7)',
-        paddingHorizontal: 18,
-        paddingVertical: 12,
-        borderRadius: 20,
     },
 
-    buttonContainer: {
-        flexDirection: 'row',
-        marginVertical: 20,
-        backgroundColor: 'transparent',
-    },
-
-    markerInfo: {
-        top: 200,
-        zIndex: 200,
-        position: "absolute",
-        backgroundColor: 'lightgreen',
-        borderColor: 'green',
-        borderRadius: 20,
-        borderWidth: 4,
-        paddingHorizontal: 1,
-        paddingVertical: 1,
-    }
 })
-
-
-
-
