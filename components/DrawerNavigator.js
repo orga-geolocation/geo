@@ -26,8 +26,8 @@ const headerNavigator = (props) => (
       style={styles.line}
       forceInset={{ top: 'always', horizontal: 'always' }}
     >
-      <DrawerItems {...props}  />
-    </SafeAreaView>
+        <DrawerItems {...props}  /> 
+    </SafeAreaView> 
     
     </SafeAreaView>
     
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         
     },
     view:{
-        height: 150,
+        height: 180,
         alignItems:'center',
         justifyContent:'center',
     },
