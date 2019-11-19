@@ -6,6 +6,7 @@ import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 
 import data from "../dummyData";
+import { ScrollView } from 'react-native-gesture-handler';
 
 console.log(data);
 
@@ -23,13 +24,19 @@ export default class Map extends React.Component {
         start: false,
         questNow: null,
         region: {
-            latitude: 0,
-            longitude: 0,
-            latitudeDelta: 1,
-            longitudeDelta: 1,
+            latitude: 52.522445,
+            longitude: 13.485993,
+            latitudeDelta: 96.89,
+            longitudeDelta: 96.89,
         },
         latNow: 0,
         lonNow: 0,
+
+
+        loadFirst: true,
+        followPosition: false,
+        showBox: false,
+        showBoxId: 0,
     }
 
     // -----------------
@@ -56,31 +63,48 @@ export default class Map extends React.Component {
                 timeout: 25000,
                 maximumAge: 3600000,
                 distanceFilter: 0,
-                timeInterval: 500
+                timeInterval: 1200
             },
             newLocation => {
                 let coords = newLocation.coords;
                 this.setState({ latNow: coords.latitude, lonNow: coords.longitude })
 
-                this.animateFunc();
+                if (this.state.loadFirst == true) {
+                    this.centerCurrentLocationWithZoom();
+                    this.setState({ loadFirst: false })
+                }
+
+                if (this.state.followPosition == true) {
+                    this.centerCurrentLocation();
+                }
+
+
+
             });
     };
 
     // -------------------
 
-
     start = () => {
-        console.log("yesxx");
-        this.setState({ openInfo: "id" })
-    }
-
-    openInfo = (id) => {
-        console.log(id);
-        this.setState({ openInfo: id })
+        console.log("quest started");
+        this.setState({ start: true })
     }
 
 
-    animateFunc = () => {
+    centerCurrentLocation = () => {
+        this.refs.scroll.animateCamera(
+            {
+                center: {
+                    latitude: this.state.latNow,
+                    longitude: this.state.lonNow,
+                },
+                pitch: 0,
+                heading: 0,
+                altitude: 0,
+            }, 1000)
+    }
+
+    centerCurrentLocationWithZoom = () => {
         this.refs.scroll.animateCamera(
             {
                 center: {
@@ -91,59 +115,130 @@ export default class Map extends React.Component {
                 heading: 0,
                 altitude: 0,
                 zoom: 16
-            }, 11000)
+            }, 1000)
     }
+
+
+    followPositionsSwitch = () => {
+        this.setState({ followPosition: !this.state.followPosition })
+    }
+
+
+    openInfo = (id) => {
+
+/*         this.setState({ showBox: true })
+ */        console.log(id);
+    }
+
+
+
+
 
     render() {
 
+        console.log("render");
+
         return (
             <View style={styles.view} >
-                <Button title="Center current Position"
-                    onPress={this.animateFunc} />
+                <Button title="Go to current Position"
+                    onPress={this.centerCurrentLocation} />
+
+                <Button title={this.state.followPosition ? 'Follow Your Position: ON' : 'Follow Your Position: OFF'}
+                    onPress={this.followPositionsSwitch} />
+
+
 
                 <MapView style={styles.map}
                     initialRegion={this.state.region}
-                    onRegionChange={region => {
-                        this.setState({ region });
-                    }}
+                    /*                     onRegionChange={region => {
+                                            this.setState({ region });
+                                        }} */
                     ref="scroll"
-                    mapType="satellite">
+                    mapType="standard"
 
+                    /* showsUserLocation
+                    followsUserLocation	 */
+                    onPress={() => {
+                        this.setState({ showBox: false })
+                    }}
+                >
+
+
+                    {/* current position marker */}
+                    {this.state.loadFirst == false &&
                     <Marker
                         coordinate={{ longitude: this.state.lonNow, latitude: this.state.latNow }}
-                        pinColor='blue'
-                    />
+                        icon={require('../assets/pin.png')}
 
+                    />}
+
+                    {/* load all markers (starting positions) from data */}
                     {this.state.start == false ?
                         data.map((item, index) => {
                             return (
                                 <Marker
                                     key={index}
-                                    pinColor='yellow'
-
+                                    icon={require('../assets/pin2.png')}
                                     coordinate={{ longitude: item.longitude, latitude: item.latitude }}
-                                    onPress={() => this.openInfo(item.id)}
+                                    onPress={() => {
+                                        this.setState({ showBox: false })
+                                    }}
                                 >
                                     <Callout tooltip={false}
+                                        onPress={() => {
+                                            this.setState({ showBox: true })
+                                            this.setState({ showBoxId: item.id })
+                                            this.openInfo(item.id)
+                                        }}
                                     >
                                         <View>
                                             <Text>{item.title}</Text>
                                             <Text>{item.description}</Text>
-                                            <Button title="Start" style={{ zIndex: 20 }} onPress={this.start} />
+                                            <Text>More Info</Text>
                                         </View>
                                     </Callout>
                                 </Marker>
                             )
                         })
-                        :
-                        ""}
+                        : <Text>hh</Text>}
                 </MapView>
+
+                {<View style={styles.infoBox}>
+                    {this.state.showBox == true ?
+                        <View style={styles.infoBoxInner}>
+                            <Text>{data.find(x => x.id === this.state.showBoxId).title}</Text>
+                            <Text>{data.find(x => x.id === this.state.showBoxId).description}</Text>
+                            <Text>{data.find(x => x.id === this.state.showBoxId).points.length} Points: </Text>
+                            <Text>
+                                {data.find(x => x.id === this.state.showBoxId).points.map((item, index) => {
+                                    return (<Text key={index}>{item.titlePoint}</Text>)
+                                })}
+                            </Text>
+                            <Button title="Start" style={{ zIndex: 20 }} onPress={this.start} />
+                        </View>
+                        : <Text></Text>}
+                </View>}
+
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+
+    infoBox: {
+        position: "absolute",
+        bottom: 30,
+        flex:1,
+        left: 20,
+        right: 20,
+        height:300,
+        paddingVertical: 10,
+    },
+    infoBoxInner: {
+        flex: 1,
+        backgroundColor: "grey",
+    },
 
     view: {
         flex: 1,
@@ -152,7 +247,7 @@ const styles = StyleSheet.create({
     map: {
         flex: 1,
         /*         ...StyleSheet.absoluteFillObject, */
-},
+    },
     bubble: {
         flex: 1,
         backgroundColor: 'rgba(255,255,255,0.7)',
@@ -177,8 +272,6 @@ const styles = StyleSheet.create({
         borderWidth: 4,
         paddingHorizontal: 1,
         paddingVertical: 1,
-
-
     }
 })
 
