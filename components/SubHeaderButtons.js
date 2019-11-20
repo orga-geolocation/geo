@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from "react-native";
-import { Button } from "native-base"
+import { StyleSheet, View, Text, Button} from "react-native";
+import {} from "native-base"
 import { withOrientation } from 'react-navigation';
 
 export default function SubHeaderButtons(props){
@@ -18,13 +18,21 @@ export default function SubHeaderButtons(props){
         return (
             <View style={styles.main}>
                 <View style={{ flex: 1 }}>
-                    <Button style={styles.btn}
-                        onPress={switchMode}>
-                        <Text  style={styles.text}> {mode ? 'Explore' : 'Play'} </Text>
-                    </Button>
+                    <Button success
+                            style={styles.btn}
+                            onPress={switchMode}
+                            title={mode ? 'Explore' : 'Play'}
+                            color='black'
+                            />
+                       
+                   
                 </View>
                 <View style={{ flex: 1 }}>
-                    <Button style={styles.btn} ><Text style={styles.text}>Categories</Text></Button>
+                    <Button success
+                            title='Categories'
+                            color='black'
+                            style={styles.btn}
+                        />
                 </View>
             </View>
         )
@@ -44,7 +52,5 @@ const styles = StyleSheet.create({
 
         
     },
-    text: {
-        color: "white"
-    }
+    
 });
