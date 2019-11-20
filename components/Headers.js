@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View, Text,Button} from 'react-native';
 import Menu from './Menu';
-import {Button} from 'native-base';
+//import {} from 'native-base';
 
 export default function  Headers(props) {
 
@@ -20,7 +20,9 @@ export default function  Headers(props) {
         <View style={{marginTop:26, backgroundColor:'blue', height:55}}>
           <Menu  navigation={props.navigation}/> 
           <Text style={styles.text}>{props.name}</Text> 
-          <Button transparent style={styles.button}><Text style={{color:'white', fontSize:17}}>LOG IN</Text></Button>
+          <View  style={styles.button}>
+          <Button title='LOG IN' color = "white"/>
+          </View>
           </View>
 
         </View>
@@ -38,11 +40,12 @@ export default function  Headers(props) {
      
     },
     button: {
-      width: 60,
+      width: 80,
       alignSelf:'flex-end',
       position: 'absolute',
-      top:9,
-      right: 3,
+      top:13,
+      right: 0,
+      fontSize:17
       }
     
     
