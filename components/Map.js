@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 import data from "../dummyData";
 export default function Map(props) {
 
-    initialData = {
+    let initialData = {
         region: {
             latitude: 52.522445,
             longitude: 13.485993,
@@ -30,7 +30,7 @@ export default function Map(props) {
     }
     const [state, setState] = useState(initialData)
 
-
+    let changedState=null;
     /* componentDidMount() {
         this.getLocationAsync();
     }
@@ -50,27 +50,28 @@ export default function Map(props) {
                    this.setState({ hasLocationPermissions: true });
                } */
 
-        await Location.watchPositionAsync(
+       await Location.watchPositionAsync(
             {
                 enableHighAccuracy: true,
                 distanceInterval: 0,
                 timeout: 25000,
                 maximumAge: 3600000,
                 distanceFilter: 0,
-                timeInterval: 1200
+                timeInterval: 3000
             },
             newLocation => {
                 let coords = newLocation.coords;
-                setState(() => {
-                    return { ...state, latNow: coords.latitude, lonNow: coords.longitude }
-                })
+                changedState=state;
+                changedState.latNow=coords.latitude;
+                changedState.lonNow=coords.longitude;
+                setState(changedState)
                 /*   this.setState({ latNow: coords.latitude, lonNow: coords.longitude }) */
-
+                console.log("checking state ..........",state)
                 if (state.loadFirst == true) {
                     centerCurrentLocationWithZoom();
-                    setState(() => {
-                        return { ...state, loadFirst: false }
-                    })
+                   changedState=state;
+                   changedState.loadFirst=false
+                    setState(changedState)
                     /*     this.setState({ loadFirst: false }) */
                 }
 
@@ -110,9 +111,10 @@ export default function Map(props) {
     }
 
     const followPositionsSwitch = () => {
-        setState(() => {
-            return { ...state, followPosition: !state.followPosition }
-        })
+        changedState=state;
+                   changedState.followPosition= !changedState.followPosition
+                    setState(changedState)
+       
         /*     this.setState({ followPosition: !this.state.followPosition }) */
     }
 
@@ -122,9 +124,9 @@ export default function Map(props) {
         console.log(questId);
 
         /* set states for the actual quest */
-        setState(() => {
+        setState((prev) => {
             return {
-                ...state, start: true,
+                ...prev, start: true,
                 showBox: false,
                 questNow: questId,
                 nextPointTitle: data.find(x => x.id === questId).points.find(y => y.id === 1).titlePoint,
@@ -144,7 +146,6 @@ export default function Map(props) {
              findNextLatitude: data.find(x => x.id === questId).points.find(y => y.id === 1).latitude,
          }) */
     }
-  
     return (
         <View style={styles.view} >
             <Button title="Go to current Position"
