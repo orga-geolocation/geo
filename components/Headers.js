@@ -17,7 +17,7 @@ export default function  Headers(props) {
     return (
       <View>
         
-        <View style={{marginTop:26, backgroundColor:'#ADD8E6', height:55}}>
+        <View style={{marginTop:26, backgroundColor:'blue', height:55}}>
           <Menu  navigation={props.navigation}/> 
           <Text style={styles.text}>{props.name}</Text> 
           <View  style={styles.button}>
