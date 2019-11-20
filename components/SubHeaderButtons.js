@@ -17,20 +17,20 @@ export default function SubHeaderButtons(props){
     
         return (
             <View style={styles.main}>
-                <View style={{ flex: 1 }}>
-                    <Button success
+                <View style={{ flex: 1, backgroundColor:'#87CEEB' }}>
+                    <Button 
                             style={styles.btn}
                             onPress={switchMode}
                             title={mode ? 'Explore' : 'Play'}
-                            color='black'
+                            color='white'
                             />
                        
                    
                 </View>
-                <View style={{ flex: 1 }}>
-                    <Button success
+                <View style={{ flex: 1 ,backgroundColor:'#87CEEB'}}>
+                    <Button 
                             title='Categories'
-                            color='black'
+                            color='white'
                             style={styles.btn}
                         />
                 </View>
