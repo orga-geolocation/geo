@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet,Button } from 'react-native'
+import { Text, View, StyleSheet,TouchableOpacity } from 'react-native'
 import {} from "native-base"
 
 export default function HomePage(props) {
@@ -7,16 +7,14 @@ export default function HomePage(props) {
     console.log(this.props);
     return (
       <View style={styles.container}>
-        <Button 
-                title='Play'
-                onPress={() =>props.navigation.navigate("Play")} 
+        <TouchableOpacity onPress={() =>props.navigation.navigate("Play")} >
                 
-            />
+                    <Text>Play</Text>
+        </TouchableOpacity>
                 
-        <Button  
-                title= 'Explorer'
-                onPress={() =>props.navigation.navigate("Explore")}
-            /> 
+        <TouchableOpacity  onPress={() =>props.navigation.navigate("Explore")}>
+               <Text>Explorer</Text>
+                   </TouchableOpacity>
       </View>
     )
   

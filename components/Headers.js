@@ -1,18 +1,10 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text,Button} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Menu from './Menu';
-//import {} from 'native-base';
+
 
 export default function  Headers(props) {
 
-//  const [title, setTitle] = useState([{
-
-//     title: 'Home Screen',
-//     title: 'Player',
-//     title: 'New Quest',
-//     title: 'FAQ'
-
-//         }])
 
     return (
       <View>
@@ -20,17 +12,24 @@ export default function  Headers(props) {
         <View style={{marginTop:26, backgroundColor:'blue', height:55}}>
           <Menu  navigation={props.navigation}/> 
           <Text style={styles.text}>{props.name}</Text> 
-          <View  style={styles.button}>
-          <Button title='LOG IN' color = "white"/>
-          </View>
-          </View>
+            <View>
+            <TouchableOpacity>
+                      <Text style={styles.viewbutton}>LOG IN</Text>
+            </TouchableOpacity>
+            </View>
 
-        </View>
+          </View>
+          </View>
     )
 }
 
   const styles = StyleSheet.create({
     
+    // textButton: {
+    //   backgroundColor: "red",
+    //   padding: 5,
+      
+    //       },
     text: {
       fontSize: 20,
       color: "white",
@@ -39,14 +38,14 @@ export default function  Headers(props) {
       textAlign:'center',
      
     },
-    button: {
-      width: 80,
+    viewbutton: {
+      width: 60,
       alignSelf:'flex-end',
       position: 'absolute',
-      top:13,
-      right: 0,
-      fontSize:17
-      }
+      bottom:2,
+      fontSize:17,
+      color: 'white'
+      } 
     
     
   })
