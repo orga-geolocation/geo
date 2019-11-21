@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet} from 'react-native'
-
+import { Text, View, StyleSheet } from 'react-native'
 export default class PlayMode extends Component {
     render() {
         console.log(this.props);
         return (
             <View style={styles.container}>
-             <Text>Play Mode</Text>
+                <Text>Play Mode</Text>
             </View>
         )
     }
@@ -14,8 +13,8 @@ export default class PlayMode extends Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-  });
+});
