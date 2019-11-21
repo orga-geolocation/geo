@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import PlayMode from './firstscreen/PlayMode';
 import HomePage from './firstscreen/HomePage'

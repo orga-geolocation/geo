@@ -1,54 +1,51 @@
 import React from 'react';
-import {Dimensions,SafeAreaView,ScrollView,View,Image,StyleSheet} from 'react-native';
-import {createAppContainer} from 'react-navigation';
-import {createDrawerNavigator,DrawerItems}from 'react-navigation-drawer';
-import HomeScreen from '../screens/HomeScreen';  
+import { Dimensions, SafeAreaView, View, Image, StyleSheet } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
+
+import HomeScreen from '../screens/HomeScreen';
 import Player from '../screens/Player';
 import NewQuest from '../screens/NewQuest';
 import FAQ from '../screens/FqaScreen'
 
 const WIDTH = Dimensions.get('window').width;
 const DrawerNavigatorConfig = {
-    drawerWidth: WIDTH*0.43,
-
+    drawerWidth: WIDTH * 0.43,
 }
 
 const headerNavigator = (props) => (
     <SafeAreaView style={styles.container}>
-    <View style={styles.view}>
-        <Image 
-            source={require('../assets/geo.png')}
-            style={styles.image}
-            
-        />
-    </View>
-    <SafeAreaView
-      style={styles.line}
-      forceInset={{ top: 'always', horizontal: 'always' }}
-    >
-        <DrawerItems {...props}  /> 
-    </SafeAreaView> 
-    
+        <View style={styles.view}>
+            <Image
+                source={require('../assets/geo.png')}
+                style={styles.image}
+            />
+        </View>
+        <SafeAreaView
+            style={styles.line}
+            forceInset={{ top: 'always', horizontal: 'always' }}
+        >
+            <DrawerItems {...props} />
+        </SafeAreaView>
     </SafeAreaView>
-    
-    )
-    
-    const DrawerNavigator = createDrawerNavigator({
-    Home: {screen: HomeScreen},
-    NewPlayer : {screen :Player},
-    NewQuest: {screen:NewQuest},
-    FAQ: {screen:FAQ}
-    
+
+)
+
+const DrawerNavigator = createDrawerNavigator({
+    Home: { screen: HomeScreen },
+    NewPlayer: { screen: Player },
+    NewQuest: { screen: NewQuest },
+    FAQ: { screen: FAQ }
 },
-    {   
+    {
         DrawerNavigatorConfig,
         contentComponent: headerNavigator,
-    contentOptions: {
-        activeTintColor: '#5DC150',
-        inactiveTintColor: 'white', 
-    },
-    drawerBackgroundColor: '#262A2C'
-}
+        contentOptions: {
+            activeTintColor: '#5DC150',
+            inactiveTintColor: 'white',
+        },
+        drawerBackgroundColor: '#262A2C'
+    }
 )
 
 export default createAppContainer(DrawerNavigator);
@@ -56,21 +53,20 @@ export default createAppContainer(DrawerNavigator);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        
     },
-    view:{
+    view: {
         height: 180,
-        alignItems:'center',
-        justifyContent:'center',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    image:{
+    image: {
         height: 130,
         width: 130,
-        marginTop:38,
+        marginTop: 38,
         borderRadius: 30
     },
     line: {
         borderBottomColor: 'grey',
         borderBottomWidth: 1
-      }
+    }
 })
