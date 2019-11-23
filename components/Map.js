@@ -3,7 +3,9 @@ import { StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native
 import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import data from "../dummyData";
+import { Row } from 'native-base';
 export default function Map(props) {
 
     let initialData = {
@@ -17,7 +19,6 @@ export default function Map(props) {
         lonNow: 0,
 
         loadFirst: true,
-        followPosition: false,
         showBox: false,
         showBoxId: 0,
 
@@ -27,6 +28,7 @@ export default function Map(props) {
         howManyPoints: 0,
         findNextLongitude: 0,
         findNextLatitude: 0,
+        watchposition:null,
     }
     const [state, setState] = useState(initialData)
 
@@ -50,14 +52,13 @@ export default function Map(props) {
                    this.setState({ hasLocationPermissions: true });
                } */
 
-       await Location.watchPositionAsync(
+       state.watchposition= await Location.watchPositionAsync(
             {
                 enableHighAccuracy: true,
                 distanceInterval: 0,
                 timeout: 25000,
                 maximumAge: 3600000,
                 distanceFilter: 0,
-                timeInterval: 3000
             },
             newLocation => {
                 let coords = newLocation.coords;
@@ -65,20 +66,14 @@ export default function Map(props) {
                 changedState.latNow=coords.latitude;
                 changedState.lonNow=coords.longitude;
                 setState(changedState)
-                /*   this.setState({ latNow: coords.latitude, lonNow: coords.longitude }) */
-                console.log("checking state ..........",state)
+  
                 if (state.loadFirst == true) {
                     centerCurrentLocationWithZoom();
                    changedState=state;
                    changedState.loadFirst=false
                     setState(changedState)
-                    /*     this.setState({ loadFirst: false }) */
+                  
                 }
-
-                if (state.followPosition == true) {
-                    centerCurrentLocation();
-                }
-
             });
     };
     
@@ -110,15 +105,6 @@ export default function Map(props) {
             }, 2000)
     }
 
-    const followPositionsSwitch = () => {
-        changedState=state;
-                   changedState.followPosition= !changedState.followPosition
-                    setState(changedState)
-       
-        /*     this.setState({ followPosition: !this.state.followPosition }) */
-    }
-
-
     start = (questId) => {
         console.log("quest started");
         console.log(questId);
@@ -148,12 +134,11 @@ export default function Map(props) {
     }
     return (
         <View style={styles.view} >
-            <Button title="Go to current Position"
-                onPress={centerCurrentLocation} />
+            <View style={styles.iconsOnMap}> 
+                <Ionicons name="md-locate" size={32} color="green" onPress={centerCurrentLocation} />
 
-            <Button title={state.followPosition ? 'Follow Your Position: ON' : 'Follow Your Position: OFF'}
-                onPress={followPositionsSwitch} />
-
+                <Ionicons name="md-compass" size={32} color="green" onPress={centerCurrentLocationWithZoom} />
+            </View>
             <MapView style={styles.map}
                 initialRegion={state.region}                   
                 onRegionChange={region => {
@@ -199,12 +184,8 @@ export default function Map(props) {
                             >
                                 <Callout tooltip={false}
                                     onPress={() => {
-                                        setState(() => {
-                                            return { ...state, showBox: true, showBoxId: item.id }
-                                        })
-                                        /* this.setState({ showBox: true })
-                                        this.setState({ showBoxId: item.id }) */
-
+                                        setState({...state,showBox:true,showBoxId:item.id})
+                                        state.watchposition.remove()     
                                     }}
                                 >
                                     <View>
@@ -226,9 +207,8 @@ export default function Map(props) {
                     <View style={styles.infoBox}>
                         <View>
                             <Button title="Close Window - X" onPress={() => {
-                               setState(()=>{
-                                   return {...state, showBox: false}
-                                })
+                               setState({...state,showBox:false})
+                              
                             }} />
                         </View>
                         <View style={{
@@ -303,7 +283,15 @@ const styles = StyleSheet.create({
         borderColor: "white",
         borderWidth: 6,
     },
+    iconsOnMap:{
+        width:"100%",
+        padding:8,
+        backgroundColor:"transparent",
+        height:48,
+        flexDirection:"row",
+        justifyContent:"space-between"
 
+    },
     view: {
         flex: 1,
     },
