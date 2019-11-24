@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Headers from '../components/Headers'
@@ -8,14 +8,26 @@ import Map from '../components/Map';
 
 export default function HomeScreen(props) {
 
+  const [check,setcheck]=useState(true)
+  const [mode,setmode]=useState("explore")
+
+  const changeMode=()=>{
+    setcheck(!check);
+    if(check){
+      setmode("play")
+    }else{
+      setmode("explore")
+    }
+    
+  }
   return (
     <View style={{ flex: 1 }}>
       <Headers
         name='Home Screen'
         navigation={props.navigation}
       />
-      <SubHeaderButtons />
-      <Map />
+      <SubHeaderButtons changeMode={changeMode} mode={mode}/>
+      <Map mode={mode} />
     </View>
   )
 }

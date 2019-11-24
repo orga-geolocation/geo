@@ -3,12 +3,6 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 export default function SubHeaderButtons(props) {
 
-    const [mode, setMode] = useState(true)
-
-    const switchMode = () => {
-        setMode(!mode)
-    }
-
     const [text, setText] = useState(false)
     togglePicker = () => {
         setText(!text)
@@ -18,9 +12,9 @@ export default function SubHeaderButtons(props) {
         <View style={styles.main}>
             <View style={{ flex: 1, backgroundColor: 'blue' }}>
                 <TouchableOpacity style={styles.btn}
-                    onPress={switchMode}
+                    onPress={props.changeMode}
                 >
-                    <Text style={{ fontSize: 17, color: 'white' }}>{mode ? 'Explore' : 'Play'}</Text>
+                    <Text style={{ fontSize: 17, color: 'white' }}>{props.mode}</Text>
                 </TouchableOpacity>
 
             </View>
