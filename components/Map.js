@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 /* import data from "../dummyData"; */
 export default function Map(props) {
-
+console.log(props.mode)
     let initialData = {
         region: {
             latitude: 52.522445,
@@ -35,12 +35,17 @@ export default function Map(props) {
 
     useEffect(() => {
         getLocationAsync(); 
-        datafromServer()
-    }, [])
+        if(props.mode==="explore"){
+           datafromExpServer() 
+        }else{
+            datafromPlayServer()
+        }
+        
+    }, [props.mode])
 
     
-    const datafromServer=async ()=>{
-        await fetch("https://geo-app-server.herokuapp.com/getallquests")
+    const datafromExpServer=async ()=>{
+        await fetch("https://geo-app-server.herokuapp.com/getallexpquests")
         .then(res=>res.json())
         .then(data=>{
          setdata1(data.doc)
@@ -49,8 +54,17 @@ export default function Map(props) {
 
             console.log(err.message)
         }) 
+    }
+    const datafromPlayServer=async ()=>{
+        await fetch("https://geo-app-server.herokuapp.com/getallplayquests")
+        .then(res=>res.json())
+        .then(data=>{
+         setdata1(data.doc)
+            console.log(data.doc)
+        }).catch(err=>{
 
-
+            console.log(err.message)
+        }) 
     }
     const getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -156,7 +170,7 @@ export default function Map(props) {
                     state.loadFirst == false &&
                     <Marker
                         coordinate={{ longitude: state.lonNow, latitude: state.latNow }}
-                        pinColor="blue"
+                        pinColor="darkgreen"
                     />
                 }
 
