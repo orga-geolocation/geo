@@ -4,8 +4,7 @@ import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import data from "../dummyData";
-import { Row } from 'native-base';
+/* import data from "../dummyData"; */
 export default function Map(props) {
 
     let initialData = {
@@ -31,17 +30,28 @@ export default function Map(props) {
         watchposition:null,
     }
     const [state, setState] = useState(initialData)
-
+    const [data1,setdata1]= useState([])
     let changedState=null;
-    /* componentDidMount() {
-        this.getLocationAsync();
-    }
- */
+
     useEffect(() => {
         getLocationAsync(); 
+        datafromServer()
     }, [])
 
+    
+    const datafromServer=async ()=>{
+        await fetch("https://geo-app-server.herokuapp.com/getallquests")
+        .then(res=>res.json())
+        .then(data=>{
+         setdata1(data.doc)
+            console.log(data.doc)
+        }).catch(err=>{
 
+            console.log(err.message)
+        }) 
+
+
+    }
     const getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
         /*        if (status !== 'granted') {
@@ -115,22 +125,13 @@ export default function Map(props) {
                 ...prev, start: true,
                 showBox: false,
                 questNow: questId,
-                nextPointTitle: data.find(x => x.id === questId).points.find(y => y.id === 1).titlePoint,
-                howManyPoints: data.find(x => x.id === questId).points.length,
-                findNextLongitude: data.find(x => x.id === questId).points.find(y => y.id === 1).longitude,
-                findNextLatitude: data.find(x => x.id === questId).points.find(y => y.id === 1).latitude,
+                nextPointTitle: data1.find(x => x.id === questId).points.find(y => y.id === 1).title,
+                howManyPoints: data1.find(x => x.id === questId).points.length,
+                findNextLongitude: data1.find(x => x.id === questId).points.find(y => y.id === 1).longitude,
+                findNextLatitude: data1.find(x => x.id === questId).points.find(y => y.id === 1).latitude,
             }
         })
 
-        /*  this.setState({
-             start: true,
-             showBox: false,
-             questNow: questId,
-             nextPointTitle: data.find(x => x.id === questId).points.find(y => y.id === 1).titlePoint,
-             howManyPoints: data.find(x => x.id === questId).points.length,
-             findNextLongitude: data.find(x => x.id === questId).points.find(y => y.id === 1).longitude,
-             findNextLatitude: data.find(x => x.id === questId).points.find(y => y.id === 1).latitude,
-         }) */
     }
     return (
         <View style={styles.view} >
@@ -171,7 +172,7 @@ export default function Map(props) {
                 {/* load all markers (starting positions) from data */}
                 {
                     state.start == false &&
-                    data.map((item, index) => {
+                    data1.map((item, index) => {
                         return (
                             <Marker
                                 key={index}
@@ -214,19 +215,19 @@ export default function Map(props) {
                         <View style={{
                             backgroundColor: "white",
                             padding: 5
-                        }}><Text>{data.find(x => x.id === state.showBoxId).title}</Text>
+                        }}><Text>{data1.find(x => x.id === state.showBoxId).title}</Text>
                         </View>
                         <View style={{ flex: 1, padding: 5 }}>
-                            <Text>{data.find(x => x.id === state.showBoxId).description}</Text>
-                            <Text>{data.find(x => x.id === state.showBoxId).points.length} Points: </Text>
+                            <Text>{data1.find(x => x.id === state.showBoxId).info}</Text>
+                            <Text>{data1.find(x => x.id === state.showBoxId).points.length} Points: </Text>
                             <Text>
-                                {data.find(x => x.id === state.showBoxId).points.map((item, index) => {
-                                    return (<Text key={index}>{item.titlePoint}</Text>)
+                                {data1.find(x => x.id === state.showBoxId).points.map((item, index) => {
+                                    return (<Text key={index}>{item.title}</Text>)
                                 })}
                             </Text>
                         </View>
                         <Button title="Start" style={{ zIndex: 20, alignSelf: 'flex-end' }}
-                            onPress={() => start(data.find(x => x.id === state.showBoxId).id)} />
+                            onPress={() => start(data1.find(x => x.id === state.showBoxId).id)} />
                     </View>
                 }
 
