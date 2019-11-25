@@ -1,16 +1,24 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, View, Platform } from 'react-native';
 import Headers from "../components/Headers";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Picker, Icon } from "native-base"
 
 export default function Player(props) {
+  const [ShowPicker, setShowPicker] = useState(true)
+  const [category, setCategory] = useState('all')
+  const pick = () => {
+    setShowPicker(true)
+  }
   return (
     <View style={{ flex: 1 }}>
       <Headers
-        name='PLayer'
+        name='Player'
         navigation={props.navigation}
       />
+       
     </View>
+    
   );
 }
 
@@ -42,4 +50,5 @@ const styles = StyleSheet.create({
     color: "white",
 
   }
+
 })

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Button } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Button, Platform } from "react-native";
 import { Picker, Icon } from "native-base"
 
 export default function SubHeaderButtons(props) {
@@ -28,16 +28,16 @@ export default function SubHeaderButtons(props) {
             </View>
         */}
         <View style={styles.pickerStyle}>
-      {ShowPicker ? (<Picker
+        <Picker
         selectedValue={category}
         mode="dropdown"
-        textStyle={{ color: "white", fontSize: 19 }}
+        textStyle={{color:'white'}}
+        style={{color:"#fff", backgroundColor:"blue", height:60, width: 220, borderTopLeftRadius:0, borderBottomLeftRadius: 0}}
         placeholder="All Categories"
         placeholderStyle={{ color: "white", fontSize: 19}}
         iosIcon={<Icon name="arrow-down" style ={{color: 'white'}} />}
         onValueChange={(itemValue, itemIndex) => {
           setCategory(itemValue)
-          
         }
         }>
         <Picker.Item label="All Categories" value="all" />
@@ -45,9 +45,7 @@ export default function SubHeaderButtons(props) {
         <Picker.Item label="Parks" value="parks" />
         <Picker.Item label="Map" value="map" />
         <Picker.Item label="Quest" value="quest" />
-      </Picker>) : <Text style ={{color: 'white',fontSize: '19' }} onPress={pick} > Select Your Map</Text>   }
-       {/* <Text style ={{color: 'white'}} > You Selected : {category}</Text>  */}
-       
+      </Picker>
     </View>
     </View> 
     )
@@ -67,13 +65,9 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         fontSize: 18
     },
-    pickerStyle: {
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 60,
-        fontSize: 18,
-        backgroundColor: 'blue',
-      },
+    pickerStyle : {
+        width : '50%'
+    }
+
       
 });
