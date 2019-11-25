@@ -5,7 +5,7 @@ import { Picker, Icon } from "native-base"
 export default function SubHeaderButtons(props) {
 
     const [ShowPicker, setShowPicker] = useState(true)
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState('all')
   const pick = () => {
     setShowPicker(true)
   }
@@ -31,20 +31,20 @@ export default function SubHeaderButtons(props) {
       {ShowPicker ? (<Picker
         selectedValue={category}
         mode="dropdown"
-        textStyle={{ color: "white" }}
-        placeholder="Select your Area"
-        placeholderStyle={{ color: "white", fontSize: '19'}}
+        textStyle={{ color: "white", fontSize: 19 }}
+        placeholder="All Categories"
+        placeholderStyle={{ color: "white", fontSize: 19}}
         iosIcon={<Icon name="arrow-down" style ={{color: 'white'}} />}
         onValueChange={(itemValue, itemIndex) => {
           setCategory(itemValue)
           
         }
         }>
-        
+        <Picker.Item label="All Categories" value="all" />
         <Picker.Item label="Museum" value="museum" />
         <Picker.Item label="Parks" value="parks" />
-        <Picker.Item label="Map" value="Map" />
-        <Picker.Item label="Quest" value="Quest" />
+        <Picker.Item label="Map" value="map" />
+        <Picker.Item label="Quest" value="quest" />
       </Picker>) : <Text style ={{color: 'white',fontSize: '19' }} onPress={pick} > Select Your Map</Text>   }
        {/* <Text style ={{color: 'white'}} > You Selected : {category}</Text>  */}
        
