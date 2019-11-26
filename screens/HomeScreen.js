@@ -9,14 +9,14 @@ import Map from '../components/Map';
 export default function HomeScreen(props) {
 
   const [check,setcheck]=useState(true)
-  const [mode,setmode]=useState("Explore")
+  const [mode,setmode]=useState("explore")
 
   const changeMode=()=>{
     setcheck(!check);
     if(check){
-      setmode("Play")
+      setmode("play")
     }else{
-      setmode("Explore")
+      setmode("explore")
     }
     
   }

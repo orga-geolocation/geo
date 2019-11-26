@@ -15,7 +15,7 @@ export default function SubHeaderButtons(props) {
                 <TouchableOpacity style={styles.btn}
                     onPress={props.changeMode}
                 >
-                    <Text style={{ fontSize: 19, color: 'white' }}>{props.mode}</Text>
+                    <Text style={{ fontSize: 19, color: 'white' }}>{props.mode === "explore" ? 'Explore' : 'Play'}</Text>
                 </TouchableOpacity>
 
             </View>
