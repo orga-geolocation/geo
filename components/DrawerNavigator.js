@@ -8,6 +8,7 @@ import Player from '../screens/Player';
 import NewQuest from '../screens/NewQuest';
 import FAQ from '../screens/FqaScreen';
 import About from '../screens/About';
+import Statistics from '../screens/Statistics'
 
 const WIDTH = Dimensions.get('window').width;
 const DrawerNavigatorConfig = {
@@ -37,7 +38,8 @@ const DrawerNavigator = createDrawerNavigator({
     NewPlayer: { screen: Player },
     NewQuest: { screen: NewQuest },
     FAQ: { screen: FAQ },
-    About : {screen : About}
+    About : {screen : About},
+    Statistics : {screen: Statistics} 
 
 },
     {

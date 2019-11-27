@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View, Text, Image} from 'react-native';
 import Headers from "../components/Headers";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Avatar} from 'react-native-elements';
@@ -23,8 +23,8 @@ export default function About(props) {
       <Headers
         name='About'
         navigation={props.navigation} />
-
-        <View style={{borderWidth: 6, color: 'red', height: 450, margin: 7}}>
+    {/* team members and avatar */}
+        <View style={{borderWidth: 5, borderColor: 'green', height: 450, margin: 7}}>
       <Text style ={styles.text}>Team Members :</Text>
 
     <View style ={{flex: 1, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-around', marginRight: 10}}>
@@ -47,6 +47,14 @@ export default function About(props) {
         </View>
     </View>
     </View>
+
+
+    {/* About GeoQuest */}
+    <View style={{borderWidth: 5, BorderColor: 'green', height: 450, margin: 7}}>
+      <Text style ={styles.text}>About GeoQuest:</Text>
+      <Image  source={require('../assets/geo.png')}
+              style={styles.image}/>
+      </View>
     </View>
   );
 }
@@ -85,5 +93,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignItems:'flex-start',
     marginLeft: 19
+  },
+  image: {
+    width:50,
+    height:50,
+    margin: 0,
+    alignSelf: 'flex-end'
   }
 })
