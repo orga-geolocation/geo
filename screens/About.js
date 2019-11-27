@@ -1,60 +1,52 @@
 import React from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, Text} from 'react-native';
 import Headers from "../components/Headers";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Avatar} from 'react-native-elements';
-import { ListItem } from 'react-native-elements';
 
 
-const list = [
-  {
-    name: 'Naqvi',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    subtitle: 'Full Stack Developer'
-  },
-  {
-    name: 'Franz',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    subtitle: 'Full Stack Developer'
-  },
-  {
-    name: 'Yasmin',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: 'Front-end Developer' 
-  },
-
-  {
-    name: 'Boyan',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    subtitle: 'Front-end Developer'
-  }
-
-]
 export default function About(props) {
 
-  keyExtractor = (item, index) => index.toString()
+  /* keyExtractor = (item, index) => index.toString()
 
 
   renderItem = ({ item }) => (
     <ListItem
       title={item.name}
       subtitle={item.subtitle}
-      leftAvatar={{ source: { uri: item.avatar_url } }}
-      bottomDivider
-      
+      leftAvatar={{source: { uri: item.avatar_url }, showEditButton: true, }}
+      bottomDivider 
     />
-  )
+  ) */
   return (
     <View style={{ flex: 1 }}>
       <Headers
         name='About'
         navigation={props.navigation} />
 
-<FlatList
-      keyExtractor={keyExtractor}
-      data={list}
-      renderItem={renderItem}
-    />
+        <View style={{borderWidth: 6, color: 'red', height: 450, margin: 7}}>
+      <Text style ={styles.text}>Team Members :</Text>
+
+    <View style ={{flex: 1, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-around', marginRight: 10}}>
+      
+      <View style ={{marginTop : 20, backgroundColor: 'lightgrey', width: 150, height: 170, alignItems: 'center', justifyContent:'center'}}>
+      <Avatar  rounded size={125}
+                    avatarStyle={{backgroundColor: 'orange'}}
+                    onPress={() => console.log("Works!")}
+                    activeOpacity={0.7}
+                    containerStyle={{backgroundColor: 'red'}} />
+                    </View>
+      <View style ={{marginTop : 20, backgroundColor: 'lightgrey', width: 150, height: 170, alignItems: 'center', justifyContent:'center'}}>
+      <Avatar avatarStyle={{backgroundColor: 'green'}} rounded size={125} /></View>
+      <View style ={{marginTop : 20, backgroundColor: 'lightgrey', width: 150, height: 170, alignItems: 'center', justifyContent:'center'}}>
+       <Avatar avatarStyle={{backgroundColor: 'pink'}} rounded size={125}/></View>
+      <View style ={{marginTop : 20, backgroundColor: 'lightgrey', width: 150, height: 170, alignItems: 'center', justifyContent:'center'}}>
+        <Avatar source={require('../assets/yasmin.jpg')} rounded size={120} />
+        <Text style={{marginTop: 7}}>Yasmin Farag</Text>
+       
+        </View>
+    </View>
+    </View>
     </View>
   );
 }
@@ -86,5 +78,12 @@ const styles = StyleSheet.create({
   iconcolor: {
     color: "white",
 
+  },
+  text: {
+    marginTop: 15,
+    fontSize: 20,
+    fontWeight: 'bold',
+    alignItems:'flex-start',
+    marginLeft: 19
   }
 })
