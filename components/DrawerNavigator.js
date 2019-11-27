@@ -6,7 +6,8 @@ import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import HomeScreen from '../screens/HomeScreen';
 import Player from '../screens/Player';
 import NewQuest from '../screens/NewQuest';
-import FAQ from '../screens/FqaScreen'
+import FAQ from '../screens/FqaScreen';
+import About from '../screens/About';
 
 const WIDTH = Dimensions.get('window').width;
 const DrawerNavigatorConfig = {
@@ -35,7 +36,9 @@ const DrawerNavigator = createDrawerNavigator({
     Home: { screen: HomeScreen },
     NewPlayer: { screen: Player },
     NewQuest: { screen: NewQuest },
-    FAQ: { screen: FAQ }
+    FAQ: { screen: FAQ },
+    About : {screen : About}
+
 },
     {
         DrawerNavigatorConfig,
