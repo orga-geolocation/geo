@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Image, ScrollView} from 'react-native';
 import Headers from "../components/Headers";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Avatar} from 'react-native-elements';
+import { Divider } from 'react-native-elements';
 
 
 export default function About(props) {
@@ -11,57 +12,77 @@ export default function About(props) {
       <Headers
         name='About'
         navigation={props.navigation} />
-        <View style ={{backgroundColor:'transparent'}}> 
+        <View style ={{borderWidth: 3, borderColor: 'grey', backgroundColor:'transparent', margin: 5}}> 
     {/* team members and avatar */}
-        <View style={{borderWidth: 2, borderColor: 'grey', height: 350, margin: 15}}>
+        <View style={{height: 310, margin: 12}}>
       <Text style ={styles.text}>Team Members :</Text>
 
     <View style ={{flex: 1, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-around', marginRight:30, marginTop: 4}}>
       
       <View >
       <Avatar  rounded size={120}
-                    avatarStyle={{backgroundColor: 'orange'}}
+                    avatarStyle={{backgroundColor: 'grey'}}
                     onPress={() => console.log("Works!")}
                     activeOpacity={0.7}
-                    containerStyle={{backgroundColor: 'red'}} />
+                     />
                     </View>
       <View >
-      <Avatar avatarStyle={{backgroundColor: 'green'}} rounded size={120} />
+      <Avatar
+      avatarStyle={{backgroundColor: 'grey'}} rounded size={120} />
       </View>
       <View style ={{marginTop : 15}} >
-       <Avatar avatarStyle={{backgroundColor: 'pink'}} rounded size={122}/>
+       <Avatar avatarStyle={{backgroundColor: 'grey'}} rounded size={120} />
        </View>
       <View style ={{marginTop : 15}} >
-        <Avatar source={require('../assets/yasmin.jpg')} rounded size={120} />
-        <Text style={{marginTop: 7}}>Yasmin Farag</Text>
+        <Avatar source={require('../assets/boyan.jpg')} rounded size={120} />
+        <Text style={{marginTop: 7, textAlign:'center'}}>Boyan</Text>
        
         </View>
     </View>
     </View>
+    <Divider style ={{backgroundColor:'#d3d3d3'}} />
 
 
     {/* About GeoQuest */}
-    <View style={{borderWidth: 2, borderColor: 'grey', height: 200, margin: 15}}>
-      <Text style ={styles.text}>About GeoQuest:</Text>
+    <View style={{height: 250, margin: 12}}>
+      <Text style ={styles.text}>About :</Text>
+      
+      <Text style={styles.txtdetails}>- GeoQuest is a simple and powerful Geocaching app for iOS and Android that includes the following features:</Text>
+      <Text style={styles.txtdetails}>- GeoQuest account</Text>
+      <Text style ={{marginLeft: 25}}>uses the Geocaching Live API so that you can login with your account and see all of your information</Text>
+      <Text style={styles.txtdetails}>- Find Caches :</Text>
+      <Text style ={{marginLeft: 25}}>Current location, coordinates, search for a location, or GC code.</Text>
+      <Text style={styles.txtdetails}>- Map Options :</Text>
+      <Text style ={{marginLeft: 25}}>Choose from Apple Maps, OpenStreet Map online</Text>
+      
+
       <Image  source={require('../assets/geo.png')}
               style={styles.image}/>
       </View>
-
+      <Divider style ={{backgroundColor:'#d3d3d3'}} />
       {/* technologies container */}
-
-
-      <View style={{borderWidth: 2, borderColor: 'grey', height: 200, margin: 15}}>
+      <View style={{height: 160, margin: 12}}>
       <Text style ={styles.text}>Technologies:</Text>
       </View>
 
-      
+      <Divider style ={{backgroundColor:'#d3d3d3'}} />
 
        {/* Future Implementations container */}
 
 
-       <View style={{borderWidth: 2, borderColor: 'grey', height: 200, margin: 15}}>
+       <View style={{height: 200, margin: 12}}>
       <Text style ={styles.text}>Future Implementations:</Text>
+      <View style ={{marginLeft: 20, marginTop: 10}}>
+          <Text>- offline Maps</Text>
+          <Text>- Share location with friends</Text>
+          <Text>- Chat</Text>
+          <Text>- Friend lists</Text>
+          <Text>- Upload images,Request images, profile image</Text>
+          <Text>- Bookmark lists</Text>
+
+          </View>
       </View>
+      <Divider style ={{backgroundColor:'#d3d3d3', height: 2}} />
 
       </View>
     </ScrollView>
@@ -97,21 +118,27 @@ const styles = StyleSheet.create({
 
   },
   text: {
-    marginTop: 15,
+    marginTop: 10,
     fontSize: 20,
     fontWeight: 'bold',
     alignItems:'flex-start',
-    marginLeft: 19
+    marginLeft: 19,
   },
+
   image: {
     width:50,
     height:50,
     alignSelf: 'flex-end',
     position: 'absolute',
-    top: 4,
+    top: 0,
     right: 2,
-    backgroundColor: 'black',
-    borderRadius: 3
+    // backgroundColor: 'black',
+    // borderRadius: 3
 
+  },
+  txtdetails: {
+    marginLeft: 10,
+    marginTop: 12,
+    
   }
 })
