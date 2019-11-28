@@ -10,6 +10,7 @@
   "dependencies": {
     "base": "^3.0.0",
     "expo": "^35.0.0",
+    "geolib": "^3.1.0",
     "native": "^0.3.3",
     "native-base": "^2.13.8",
     "react": "16.8.3",
