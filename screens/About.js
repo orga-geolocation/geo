@@ -1,46 +1,37 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image} from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView} from 'react-native';
 import Headers from "../components/Headers";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Avatar} from 'react-native-elements';
 
 
 export default function About(props) {
-
-  /* keyExtractor = (item, index) => index.toString()
-
-
-  renderItem = ({ item }) => (
-    <ListItem
-      title={item.name}
-      subtitle={item.subtitle}
-      leftAvatar={{source: { uri: item.avatar_url }, showEditButton: true, }}
-      bottomDivider 
-    />
-  ) */
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}>
       <Headers
         name='About'
         navigation={props.navigation} />
+        <View style ={{backgroundColor:'#f8f8ff'}}> 
     {/* team members and avatar */}
-        <View style={{borderWidth: 5, borderColor: 'green', height: 450, margin: 7}}>
+        <View style={{borderWidth: 2, borderColor: 'grey', height: 350, margin: 15}}>
       <Text style ={styles.text}>Team Members :</Text>
 
-    <View style ={{flex: 1, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-around', marginRight: 10}}>
+    <View style ={{flex: 1, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-around', marginRight:30}}>
       
-      <View style ={{marginTop : 20, backgroundColor: 'lightgrey', width: 150, height: 170, alignItems: 'center', justifyContent:'center'}}>
-      <Avatar  rounded size={125}
+      <View >
+      <Avatar  rounded size={120}
                     avatarStyle={{backgroundColor: 'orange'}}
                     onPress={() => console.log("Works!")}
                     activeOpacity={0.7}
                     containerStyle={{backgroundColor: 'red'}} />
                     </View>
-      <View style ={{marginTop : 20, backgroundColor: 'lightgrey', width: 150, height: 170, alignItems: 'center', justifyContent:'center'}}>
-      <Avatar avatarStyle={{backgroundColor: 'green'}} rounded size={125} /></View>
-      <View style ={{marginTop : 20, backgroundColor: 'lightgrey', width: 150, height: 170, alignItems: 'center', justifyContent:'center'}}>
-       <Avatar avatarStyle={{backgroundColor: 'pink'}} rounded size={125}/></View>
-      <View style ={{marginTop : 20, backgroundColor: 'lightgrey', width: 150, height: 170, alignItems: 'center', justifyContent:'center'}}>
+      <View >
+      <Avatar avatarStyle={{backgroundColor: 'green'}} rounded size={120} />
+      </View>
+      <View style ={{marginTop : 15}} >
+       <Avatar avatarStyle={{backgroundColor: 'pink'}} rounded size={122}/>
+       </View>
+      <View style ={{marginTop : 15}} >
         <Avatar source={require('../assets/yasmin.jpg')} rounded size={120} />
         <Text style={{marginTop: 7}}>Yasmin Farag</Text>
        
@@ -50,12 +41,30 @@ export default function About(props) {
 
 
     {/* About GeoQuest */}
-    <View style={{borderWidth: 5, BorderColor: 'green', height: 450, margin: 7}}>
+    <View style={{borderWidth: 2, borderColor: 'grey', height: 200, margin: 15}}>
       <Text style ={styles.text}>About GeoQuest:</Text>
       <Image  source={require('../assets/geo.png')}
               style={styles.image}/>
       </View>
-    </View>
+
+      {/* technologies container */}
+
+
+      <View style={{borderWidth: 2, borderColor: 'grey', height: 200, margin: 15}}>
+      <Text style ={styles.text}>Technologies:</Text>
+      </View>
+
+      
+
+       {/* Future Implementations container */}
+
+
+       <View style={{borderWidth: 2, borderColor: 'grey', height: 200, margin: 15}}>
+      <Text style ={styles.text}>Future Implementations:</Text>
+      </View>
+
+      </View>
+    </ScrollView>
   );
 }
 
@@ -97,7 +106,12 @@ const styles = StyleSheet.create({
   image: {
     width:50,
     height:50,
-    margin: 0,
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    top: 4,
+    right: 2,
+    backgroundColor: 'black',
+    borderRadius: 3
+
   }
 })
