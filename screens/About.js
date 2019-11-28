@@ -11,12 +11,12 @@ export default function About(props) {
       <Headers
         name='About'
         navigation={props.navigation} />
-        <View style ={{backgroundColor:'#f8f8ff'}}> 
+        <View style ={{backgroundColor:'transparent'}}> 
     {/* team members and avatar */}
         <View style={{borderWidth: 2, borderColor: 'grey', height: 350, margin: 15}}>
       <Text style ={styles.text}>Team Members :</Text>
 
-    <View style ={{flex: 1, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-around', marginRight:30}}>
+    <View style ={{flex: 1, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-around', marginRight:30, marginTop: 4}}>
       
       <View >
       <Avatar  rounded size={120}

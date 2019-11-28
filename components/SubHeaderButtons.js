@@ -11,7 +11,7 @@ export default function SubHeaderButtons(props) {
   }
     return (
         <View style={styles.main}>
-            <View style={{ flex: 1, backgroundColor: 'blue' }}>
+            <View style={{ flex: 1, backgroundColor: '#31a350' }}>
                 <TouchableOpacity style={styles.btn}
                     onPress={props.changeMode}
                 >
@@ -32,7 +32,7 @@ export default function SubHeaderButtons(props) {
         selectedValue={category}
         mode="dropdown"
         textStyle={{color:'white'}}
-        style={{color:"#fff", backgroundColor:"blue", height:60, width: 220, borderTopLeftRadius:0, borderBottomLeftRadius: 0}}
+        style={{color:"#fff", backgroundColor:"#31a350", height:60, width: 220, borderTopLeftRadius:0, borderBottomLeftRadius: 0}}
         placeholder="All Categories"
         placeholderStyle={{ color: "white", fontSize: 19}}
         iosIcon={<Icon name="arrow-down" style ={{color: 'white'}} />}
