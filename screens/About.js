@@ -21,17 +21,20 @@ export default function About(props) {
       
       <View >
       <Avatar  rounded size={120}
-                    avatarStyle={{backgroundColor: 'grey'}}
+                    source={require('../assets/navi.png')}
                     onPress={() => console.log("Works!")}
                     activeOpacity={0.7}
                      />
+                     <Text style={{marginTop: 7, textAlign:'center'}}>Naqvi</Text>
                     </View>
       <View >
       <Avatar
-      avatarStyle={{backgroundColor: 'grey'}} rounded size={120} />
+      source={require('../assets/profilefranz.png')} rounded size={120} />
+      <Text style={{marginTop: 7, textAlign:'center'}}>Franz</Text>
       </View>
       <View style ={{marginTop : 15}} >
-       <Avatar avatarStyle={{backgroundColor: 'grey'}} rounded size={120} />
+       <Avatar source={require('../assets/yasmin.jpg')} rounded size={120} />
+       <Text style={{marginTop: 7, textAlign:'center'}}>Yasmin</Text>
        </View>
       <View style ={{marginTop : 15}} >
         <Avatar source={require('../assets/boyan.jpg')} rounded size={120} />
@@ -63,6 +66,12 @@ export default function About(props) {
       {/* technologies container */}
       <View style={{height: 160, margin: 12}}>
       <Text style ={styles.text}>Technologies:</Text>
+      <View style ={{marginLeft: 20, marginTop: 10}}>
+      <Text>- React Native </Text>
+      <Text>- Node.js</Text>
+      <Text>- Express</Text>
+      <Text>- Mongo</Text>
+      </View>
       </View>
 
       <Divider style ={{backgroundColor:'#d3d3d3'}} />
