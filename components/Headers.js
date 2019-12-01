@@ -37,13 +37,17 @@ export default function Headers(props) {
           animationType="slide"
           transparent={false}
           visible={modalVisible}>
-          <View style={{ marginTop: 22 }}>
-            <View style={{ width: 400, height: "100%" }}>
+          <View style={{ paddingTop: 22 }}>
+            <View style={{ width: "100%", height: "100%" }}>
               <TouchableHighlight
                 onPress={() => {
                   setModalVisible(!modalVisible);
                 }}>
-                <Text>close Modal</Text>
+                <Text style={{textAlign:"center",backgroundColor:"green"}}><Ionicons
+                name="md-close"
+                size={32}
+                style={styles.iconcolor}
+            /></Text>
               </TouchableHighlight>
               {state.register ? <LoginView /> : <SignupView />}
 
