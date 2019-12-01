@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
+  Image,
   TouchableHighlight,
   Alert
 } from 'react-native';
+import GlobalState from "../../globalstate/GlobalState"
 
 export default SignupView =(props)=>{
 
-    const [username,setusername]=useState("")
+const Context=useContext(GlobalState)
+
+  const [username,setusername]=useState("")
   const [email,setemail]=useState("")
   const [password,setpassword]=useState("")
 
-  const onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed "+viewId);
+  const onClickListener = (view) => {
+    Alert.alert("Alert", "Button pressed "+view);
   }
 
     return (
       <View style={styles.container}>
+         <Image source={require('../../assets/pin.png')} style={{marginBottom:20}} />
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
               placeholder="Email"
@@ -43,7 +48,11 @@ export default SignupView =(props)=>{
         </View>
 
         <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => onClickListener('login')}>
-          <Text style={styles.loginText}>Login</Text>
+          <Text style={styles.loginText}>Signup</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight style={styles.buttonContainer} onPress={()=>Context.switchValue(Context.state.register)}>
+            <Text>Already Registered</Text>
         </TouchableHighlight>
       </View>
     );
