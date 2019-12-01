@@ -6,7 +6,6 @@ import SubHeaderButtons from '../components/SubHeaderButtons';
 import Map from '../components/Map';
 
 export default function HomeScreen(props) {
-
   const [check,setcheck]=useState(true)
   const [mode,setmode]=useState("explore")
 
@@ -26,7 +25,7 @@ export default function HomeScreen(props) {
         navigation={props.navigation}
       />
       <SubHeaderButtons changeMode={changeMode} mode={mode}/>
-        <Map mode={mode}/>
+        <Map mode={mode}  navigation={props.navigation}/>
     </View>
   )
 }
