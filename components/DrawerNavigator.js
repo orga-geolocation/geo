@@ -3,7 +3,7 @@ import { Dimensions, SafeAreaView, View, Image, StyleSheet } from 'react-native'
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/Mapscreen';
 import Player from '../screens/Player';
 import NewQuest from '../screens/NewQuest';
 import FAQ from '../screens/FqaScreen'
