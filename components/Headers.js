@@ -3,14 +3,13 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Menu from './Menu';
 
 export default function Headers(props) {
-
   return (
     <View>
       <View style={{ marginTop: 26, backgroundColor: 'blue', height: 55 }}>
         <Menu navigation={props.navigation} />
         <Text style={styles.text}>{props.name}</Text>
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>props.navigation.navigate("LoginView")}>
             <Text style={styles.viewbutton}>LOG IN</Text>
           </TouchableOpacity>
         </View>
@@ -27,11 +26,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   viewbutton: {
-    width: 60,
+    width: 80,
+    padding:13,
     alignSelf: 'flex-end',
-    position: 'absolute',
-    bottom: 2,
+   position: 'relative', 
+    bottom: 30,
     fontSize: 17,
-    color: 'white'
+    color: 'white',
+    borderColor:"black",
+    borderWidth:2
   }
 })
