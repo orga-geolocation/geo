@@ -25,7 +25,7 @@ export default LoginView = (props) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/pin2.png')} style={{marginBottom:20}} />
+      <Image source={require('../../assets/pin2.png')} style={{marginBottom:20,position:"absolute",top:20}}  />
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
           placeholder="User Name"
