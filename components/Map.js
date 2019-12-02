@@ -315,7 +315,7 @@ export default function Map(props) {
 
                 {questMode === "play" &&
                     <View style={{ height: "100%", position: "absolute", width: 15, right: 0, backgroundColor: '#fff' }}>
-                        <Text></Text>
+                       <View style={{backgroundColor: "#000", height: "50%"}}></View>
                     </View>
                 }
             </View>
