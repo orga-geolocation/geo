@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
 import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
@@ -8,19 +8,21 @@ import { getDistance } from 'geolib';
 /* import data from "../dummyData"; */
 export default function Map(props) {
     /* console.log(props.mode) */
-    let initialData = {
+
+    const [state, setState] = useState({
         region: {
             latitude: 52.522445,
             longitude: 13.485993,
             latitudeDelta: 96.89,
             longitudeDelta: 96.89,
-        },
-        loadFirst: true,
-    }
-    const [state, setState] = useState(initialData)
+        }
+    })
 
     let [loadFirst, setLoadFirst] = useState(true)
 
+    let [followPosition, setFollowPosition] = useState(false)
+
+    const [mapType, setMapType] = useState("satellite")
     const [longitudeNow, setLongitudeNow] = useState(0)
     const [latitudeNow, setLatitudeNow] = useState(0)
     const [questID, setQuestID] = useState(null)
@@ -36,8 +38,6 @@ export default function Map(props) {
     const [latToFind, setLatToFind] = useState(null)
     const [showBox, setShowBox] = useState(false)
     const [data1, setdata1] = useState([])
-
-    let changedState = null;
 
     useEffect(() => {
         getLocationAsync();
@@ -92,20 +92,17 @@ export default function Map(props) {
                 changedState = state;
                 setLongitudeNow(coords.longitude)
                 setLatitudeNow(coords.latitude)
-                console.log("loadfirst!hooks" + loadFirst);
-                console.log("loadfirst!state" + state.loadFirst);
-                if (loadFirst == true) {
-                    console.log("----------");
+                /*  console.log("loadfirst!hooks" + loadFirst); */
 
-                    changedState.loadFirst = false
-                    setState(changedState)
 
+                if (loadFirst === true) {
                     setLoadFirst(prev => {
                         loadFirst = false
                     });
-
+                    setLoadFirst(false);
                     centerCurrentLocationWithZoom(coords.latitude, coords.longitude);
                 }
+
             });
     };
 
@@ -118,11 +115,13 @@ export default function Map(props) {
                     latitude: latitudeNow,
                     longitude: longitudeNow,
                 },
-                pitch: 0,
-                heading: 0,
+                /*                 pitch: 0,
+                                heading: 0, */
                 altitude: 0,
             }, 2000)
     }
+
+
 
     const centerCurrentLocationWithZoom = (lat, lon) => {
         if (longitudeNow !== 0) {
@@ -135,8 +134,8 @@ export default function Map(props) {
                     latitude: lat,
                     longitude: lon,
                 },
-                pitch: 0,
-                heading: 0,
+                /*                 pitch: 0,
+                                heading: 0, */
                 altitude: 0,
                 zoom: 16
             }, 2000)
@@ -155,6 +154,8 @@ export default function Map(props) {
         /* console.log(questID); */
         setShowBox(false) // close InfoBox
         let pointNow = 1; // initial point
+        console.log("   -> Point to find: " + pointNow);
+
         prepareSetQuest(questID, pointNow)
         setQuestStarted(true) // set quest to start
     }
@@ -174,10 +175,13 @@ export default function Map(props) {
         setFoundPoint(false)
         pointNow = currentPoint + 1
         prepareSetQuest(questID, pointNow)
+        console.log("   -> Point to find: " + pointNow);
+        // store/save quest as running
+        // and store/save current point
     }
 
     cancelQuest = () => {
-        console.log(" -> quest canceled");
+        console.log(" <- Quest canceled");
         setFoundPoint(false)
         setLatToFind(null)
         setLonToFind(null)
@@ -189,17 +193,52 @@ export default function Map(props) {
         setCurrentPointTitle("")
     }
 
+    solvedQuest = () => {
+        console.log("!!! Quest SOLVED !!!");
+        // store/save quest as solved!
+    }
+
     calcMetersAway(6);
-    /* calcMetersAway(2486); */
+    /*     calcMetersAway(2486);
+     */
+
+    setFollowMyPosition = () => {
+        setFollowPosition(!followPosition)
+    }
+    followMyPosition = () => {
+        if (followPosition === true) {
+            centerCurrentLocation();
+        }
+    }
+    followMyPosition()
+
+
+    setMyMapType = () => {
+        if (mapType === "satellite") {
+            setMapType("standard")
+        }
+        else {
+            setMapType("satellite")
+
+        }
+    }
 
     return (
         <View style={styles.view} >
             <View style={styles.iconsOnMap}>
-                <Ionicons name="md-locate" size={32} color="green" onPress={centerCurrentLocation} />
-                <Ionicons name="md-compass" size={32} color="green" onPress={centerCurrentLocationWithZoom} />
+                {/* <Ionicons name="md-locate" size={32} color="green" onPress={centerCurrentLocation} /> */}
+                {/* <Ionicons name="md-compass" size={32} color="green" onPress={centerCurrentLocationWithZoom} /> */}
+
+                <TouchableOpacity onPress={centerCurrentLocation}><Text> Center Position</Text></TouchableOpacity>
+                <TouchableOpacity onPress={setMyMapType}><Text> Map: {mapType}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={setFollowMyPosition}><Text>FollowPosition: {"" + followPosition} </Text></TouchableOpacity>
             </View>
             <MapView style={styles.map}
                 initialRegion={state.region}
+                /*  onRegionChangeComplete={ 
+                    region => setFollowPosition(false)
+                    } */
+
                 onRegionChange={region => {
                     /* setState(() => {
                        return { ...state, region: region }
@@ -208,13 +247,13 @@ export default function Map(props) {
                     setLongitudeNow(longitudeNow)
                 }}
                 ref={mapView}
-                mapType="satellite"
+                mapType={mapType}
                 zoomEnabled={true}
             >
 
                 {/* current position marker */}
                 {
-                    state.loadFirst === false &&
+                    loadFirst === false &&
                     <Marker
                         coordinate={{ longitude: longitudeNow, latitude: latitudeNow }}
                         pinColor="darkgreen"
@@ -326,7 +365,8 @@ export default function Map(props) {
                         {(currentPoint != howManyPoints) ?
                             <Button title="Go to next Point"
                                 onPress={() => loadNextPoint()} />
-                            : <Text> YOU SOLVED THE COMPLETE QUEST!!!</Text>
+                            : <Text onLayout={() => solvedQuest()}> YOU SOLVED THE COMPLETE QUEST!!!
+                            </Text>
                         }
                     </View>
                 </View>
@@ -378,8 +418,8 @@ const styles = StyleSheet.create({
     iconsOnMap: {
         width: "100%",
         padding: 8,
-        backgroundColor: "transparent",
-        height: 48,
+        backgroundColor: "lightgrey",
+        height: 36,
         flexDirection: "row",
         justifyContent: "space-between"
 
