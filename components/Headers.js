@@ -14,7 +14,7 @@ export default function Headers(props) {
   console.log(state.register)
   return (
     <View>
-      <View style={{ marginTop: 26, backgroundColor: 'blue', height: 55 }}>
+      <View style={{ marginTop: 26, backgroundColor: '#31a350', height: 55 }}>
         <Menu navigation={props.navigation} />
         <Text style={styles.text}>{props.name}</Text>
         <View>
