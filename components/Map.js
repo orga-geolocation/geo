@@ -20,7 +20,8 @@ export default function Map(props) {
     }
     const [state, setState] = useState(initialData)
 
-    /* const [loadFirst, setLoadFirst] = useState(true) */
+    let [loadFirst, setLoadFirst] = useState(true)
+
     const [longitudeNow, setLongitudeNow] = useState(0)
     const [latitudeNow, setLatitudeNow] = useState(0)
     const [questID, setQuestID] = useState(null)
@@ -92,13 +93,18 @@ export default function Map(props) {
                 changedState = state;
                 setLongitudeNow(coords.longitude)
                 setLatitudeNow(coords.latitude)
-                /*  console.log("loadfirst!hooks"+loadFirst);
-                 console.log("loadfirst!state"+state.loadFirst); */
-                if (state.loadFirst == true) {
-                    console.log("loadstate=true");
-                    /*     setLoadFirst(false) */
+                console.log("loadfirst!hooks" + loadFirst);
+                console.log("loadfirst!state" + state.loadFirst);
+                if (loadFirst == true) {
+                    console.log("----------");
+
                     changedState.loadFirst = false
                     setState(changedState)
+
+                    setLoadFirst(prev => {
+                        loadFirst = false
+                    });
+
                     centerCurrentLocationWithZoom(coords.latitude, coords.longitude);
                 }
             });
@@ -173,12 +179,15 @@ export default function Map(props) {
 
     cancelQuest = () => {
         console.log(" -> quest canceled");
-        /*      setFoundPoint(false)
-                setLatToFind(null)
-                setLonToFind(null) */
+        setFoundPoint(false)
+        setLatToFind(null)
+        setLonToFind(null)
+        setHowManyPoints(null)
         setShowBox(false)
         setQuestID(null)
         setQuestStarted(false)
+        setCurrentPoint(null)
+        setCurrentPointTitle("")
     }
 
     calcMetersAway(6);
@@ -240,7 +249,6 @@ export default function Map(props) {
                                 >
                                     <View>
                                         <Text>{item.title}</Text>
-                                        <Text>{item.description}</Text>
                                         <Text>More Info</Text>
                                     </View>
                                 </Callout>
@@ -260,7 +268,7 @@ export default function Map(props) {
                             setShowBox(false)
                         }} />
                     </View>
-                    <Text>{questID}</Text>
+                    {/* <Text>{questID}</Text> */}
                     <View style={{
                         backgroundColor: "white",
                         padding: 5
@@ -271,7 +279,7 @@ export default function Map(props) {
                         <Text>{data1.find(x => x.id === questID).points.length} Points: </Text>
                         <Text>
                             {data1.find(x => x.id === questID).points.map((item, index) => {
-                                return (<Text key={index}>{item.title}</Text>)
+                                return (<Text key={index}> {item.title} - </Text>)
                             })}
                         </Text>
                     </View>
@@ -291,7 +299,7 @@ export default function Map(props) {
                             { latitude: latitudeNow, longitude: longitudeNow },
                             { latitude: latToFind, longitude: lonToFind }
                         )} Meters away</Text>
-                        <Text> howManyPoints: {howManyPoints} </Text>
+                        {/* <Text> howManyPoints: {howManyPoints} </Text> */}
                         {/* <Text> questID: {questID} </Text>
                         <Text> currentPoint: {currentPoint} </Text>
                         <Text> lonToFind: {lonToFind} </Text>
@@ -315,7 +323,7 @@ export default function Map(props) {
 
                         <Text> You found {currentPointTitle} </Text>
                         {/* <Text> INFO INFO </Text> */}
-                        
+
                         {(currentPoint != howManyPoints) ?
                             <Button title="Go to next Point"
                                 onPress={() => loadNextPoint()} />
