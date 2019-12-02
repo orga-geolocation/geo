@@ -2,12 +2,10 @@ import React,{useState} from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Headers from '../components/Headers'
-
 import SubHeaderButtons from '../components/SubHeaderButtons';
 import Map from '../components/Map';
 
 export default function HomeScreen(props) {
-
   const [check,setcheck]=useState(true)
   const [mode,setmode]=useState("explore")
 
@@ -27,7 +25,7 @@ export default function HomeScreen(props) {
         navigation={props.navigation}
       />
       <SubHeaderButtons changeMode={changeMode} mode={mode}/>
-      <Map mode={mode} />
+        <Map mode={mode}  navigation={props.navigation}/>
     </View>
   )
 }
@@ -42,6 +40,8 @@ HomeScreen.navigationOptions = {
     </View>
   )
 }
+
+
 
 const styles = StyleSheet.create({
   icon: {

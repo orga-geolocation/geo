@@ -7,7 +7,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDistance } from 'geolib';
 /* import data from "../dummyData"; */
 export default function Map(props) {
-
     /* console.log(props.mode) */
     let initialData = {
         region: {
