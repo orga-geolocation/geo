@@ -186,6 +186,7 @@ export default function Map(props) {
     cancelQuest = () => {
         console.log(" <- Quest canceled");
         setFoundPoint(false)
+        setQuestMode(null)
         setLatToFind(null)
         setLonToFind(null)
         setHowManyPoints(null)
@@ -239,7 +240,12 @@ export default function Map(props) {
 
             <View style={{ flex: 1, flexDirection: "row" }}>
 
-                <View style={{ flex:1 }}>
+
+
+                <View style={{ flex: 1 }}>
+
+
+
                     <MapView style={styles.map}
                         initialRegion={state.region}
                         /*  onRegionChangeComplete={ 
@@ -307,9 +313,9 @@ export default function Map(props) {
                         }
                     </MapView ></View>
 
-                {questMode === "explore" &&
-                    <View style={{ flex:1, width: 50 }}>
-                        <Text>hello</Text>
+                {questMode === "play" &&
+                    <View style={{ height: "100%", position: "absolute", width: 15, right: 0, backgroundColor: '#fff' }}>
+                        <Text></Text>
                     </View>
                 }
             </View>
