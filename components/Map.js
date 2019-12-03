@@ -22,6 +22,8 @@ export default function Map(props) {
 
     let [followPosition, setFollowPosition] = useState(false)
 
+    const [accuracyOfMeters, setAccuracyOfMeters] = useState(6)
+    // 2486
     const [questMode, setQuestMode] = useState(null)
 
     const [mapType, setMapType] = useState("satellite")
@@ -173,6 +175,7 @@ export default function Map(props) {
             }
         }
     }
+    calcMetersAway(accuracyOfMeters);
 
     loadNextPoint = () => {
         setFoundPoint(false)
@@ -202,9 +205,7 @@ export default function Map(props) {
         // store/save quest as solved!
     }
 
-    calcMetersAway(6);
-    /*     calcMetersAway(2486);
-     */
+
 
     setFollowMyPosition = () => {
         setFollowPosition(!followPosition)
@@ -223,8 +224,21 @@ export default function Map(props) {
         }
         else {
             setMapType("satellite")
-
         }
+    }
+
+    calcProgressBar = () => {
+        let getIt = getDistance(
+            { latitude: latitudeNow, longitude: longitudeNow },
+            { latitude: latToFind, longitude: lonToFind }
+        )
+
+        getIt = getIt - accuracyOfMeters;
+        if (getIt >= 100) {
+            getIt = 100;
+        }
+        console.log(getIt);
+        return (getIt)
     }
 
     return (
@@ -232,7 +246,6 @@ export default function Map(props) {
             <View style={styles.iconsOnMap}>
                 {/* <Ionicons name="md-locate" size={32} color="green" onPress={centerCurrentLocation} /> */}
                 {/* <Ionicons name="md-compass" size={32} color="green" onPress={centerCurrentLocationWithZoom} /> */}
-
                 <TouchableOpacity onPress={centerCurrentLocation}><Text> Center Position</Text></TouchableOpacity>
                 <TouchableOpacity onPress={setMyMapType}><Text> Map: {mapType}</Text></TouchableOpacity>
                 <TouchableOpacity onPress={setFollowMyPosition}><Text>FollowPosition: {"" + followPosition} </Text></TouchableOpacity>
@@ -240,11 +253,7 @@ export default function Map(props) {
 
             <View style={{ flex: 1, flexDirection: "row" }}>
 
-
-
                 <View style={{ flex: 1 }}>
-
-
 
                     <MapView style={styles.map}
                         initialRegion={state.region}
@@ -273,19 +282,6 @@ export default function Map(props) {
                             />
                         }
 
-                        {/* Show marker for only next Point 
-                        And show markers only in the explore mode
-                        */}
-                        {
-                            (questStarted === true && questMode === "explore") &&
-                            <Marker
-                                coordinate={{ longitude: lonToFind, latitude: latToFind }}
-                                pinColor="yellow"
-                            />
-
-
-                        }
-
                         {/* load all markers (starting positions) from data */}
                         {
                             questStarted === false &&
@@ -311,11 +307,34 @@ export default function Map(props) {
                                 )
                             })
                         }
+
+
+                        {/* Show marker for only next Point 
+                        And show markers only in the explore mode
+                        */}
+                        {
+                            (questStarted === true && questMode === "explore") &&
+                            <Marker
+                                coordinate={{ longitude: lonToFind, latitude: latToFind }}
+                                pinColor="yellow"
+                            />
+
+
+                        }
+
                     </MapView ></View>
 
-                {questMode === "play" &&
+                {questMode === "explore" &&
                     <View style={{ height: "100%", position: "absolute", width: 15, right: 0, backgroundColor: '#fff' }}>
-                       <View style={{backgroundColor: "#000", height: "50%"}}></View>
+                        <View style={{
+                            backgroundColor: "#000", height: "" + calcProgressBar() + "%"
+
+                        }}
+                        >
+                            <Text>                       </Text>
+
+
+                        </View>
                     </View>
                 }
             </View>
