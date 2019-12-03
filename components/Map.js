@@ -22,6 +22,8 @@ export default function Map(props) {
 
     let [followPosition, setFollowPosition] = useState(false)
 
+    const [questMode, setQuestMode] = useState(null)
+
     const [mapType, setMapType] = useState("satellite")
     const [longitudeNow, setLongitudeNow] = useState(0)
     const [latitudeNow, setLatitudeNow] = useState(0)
@@ -142,6 +144,7 @@ export default function Map(props) {
     }
 
     prepareSetQuest = (questID, pointNow) => {
+        setQuestMode(data1.find(x => x.id === questID).mode)
         setHowManyPoints(data1.find(x => x.id === questID).points.length)
         setCurrentPoint(pointNow)
         setCurrentPointTitle(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).title)
@@ -183,6 +186,7 @@ export default function Map(props) {
     cancelQuest = () => {
         console.log(" <- Quest canceled");
         setFoundPoint(false)
+        setQuestMode(null)
         setLatToFind(null)
         setLonToFind(null)
         setHowManyPoints(null)
@@ -233,69 +237,93 @@ export default function Map(props) {
                 <TouchableOpacity onPress={setMyMapType}><Text> Map: {mapType}</Text></TouchableOpacity>
                 <TouchableOpacity onPress={setFollowMyPosition}><Text>FollowPosition: {"" + followPosition} </Text></TouchableOpacity>
             </View>
-            <MapView style={styles.map}
-                initialRegion={state.region}
-                /*  onRegionChangeComplete={ 
-                    region => setFollowPosition(false)
-                    } */
 
-                onRegionChange={region => {
-                    /* setState(() => {
-                       return { ...state, region: region }
-                       }); */
-                    setLatitudeNow(latitudeNow)
-                    setLongitudeNow(longitudeNow)
-                }}
-                ref={mapView}
-                mapType={mapType}
-                zoomEnabled={true}
-            >
+            <View style={{ flex: 1, flexDirection: "row" }}>
 
-                {/* current position marker */}
-                {
-                    loadFirst === false &&
-                    <Marker
-                        coordinate={{ longitude: longitudeNow, latitude: latitudeNow }}
-                        pinColor="darkgreen"
-                    />
-                }
 
-                {/* Show marker for only next Point */}
-                {
-                    questStarted === true &&
-                    <Marker
-                        coordinate={{ longitude: lonToFind, latitude: latToFind }}
-                        pinColor="yellow"
-                    />
-                }
 
-                {/* load all markers (starting positions) from data */}
-                {
-                    questStarted === false &&
-                    data1.map((item, index) => {
-                        return (
+                <View style={{ flex: 1 }}>
+
+
+
+                    <MapView style={styles.map}
+                        initialRegion={state.region}
+                        /*  onRegionChangeComplete={ 
+                            region => setFollowPosition(false)
+                            } */
+
+                        onRegionChange={region => {
+                            /* setState(() => {
+                               return { ...state, region: region }
+                               }); */
+                            setLatitudeNow(latitudeNow)
+                            setLongitudeNow(longitudeNow)
+                        }}
+                        ref={mapView}
+                        mapType={mapType}
+                        zoomEnabled={true}
+                    >
+
+                        {/* current position marker */}
+                        {
+                            loadFirst === false &&
                             <Marker
-                                key={index}
-                                coordinate={{ longitude: item.longitude, latitude: item.latitude }}
-                                style={{ zIndex: 6000 }}
-                            >
-                                <Callout tooltip={false}
-                                    onPress={() => {
-                                        setShowBox(true)
-                                        setQuestID(item.id)
-                                    }}
-                                >
-                                    <View>
-                                        <Text>{item.title}</Text>
-                                        <Text>More Info</Text>
-                                    </View>
-                                </Callout>
-                            </Marker>
-                        )
-                    })
-                }
+                                coordinate={{ longitude: longitudeNow, latitude: latitudeNow }}
+                                pinColor="darkgreen"
+                            />
+                        }
 
-            </MapView >
+                        {/* Show marker for only next Point 
+                        And show markers only in the explore mode
+                        */}
+                        {
+                            (questStarted === true && questMode === "explore") &&
+                            <Marker
+                                coordinate={{ longitude: lonToFind, latitude: latToFind }}
+                                pinColor="yellow"
+                            />
+
+
+                        }
+
+                        {/* load all markers (starting positions) from data */}
+                        {
+                            questStarted === false &&
+                            data1.map((item, index) => {
+                                return (
+                                    <Marker
+                                        key={index}
+                                        coordinate={{ longitude: item.longitude, latitude: item.latitude }}
+                                        style={{ zIndex: 6000 }}
+                                    >
+                                        <Callout tooltip={false}
+                                            onPress={() => {
+                                                setShowBox(true)
+                                                setQuestID(item.id)
+                                            }}
+                                        >
+                                            <View>
+                                                <Text>{item.title}</Text>
+                                                <Text>More Info</Text>
+                                            </View>
+                                        </Callout>
+                                    </Marker>
+                                )
+                            })
+                        }
+                    </MapView ></View>
+
+                {questMode === "play" &&
+                    <View style={{ height: "100%", position: "absolute", width: 15, right: 0, backgroundColor: '#fff' }}>
+                       <View style={{backgroundColor: "#000", height: "50%"}}></View>
+                    </View>
+                }
+            </View>
+
+
+
+
+
 
             {/* show this box if clicking for more details */}
             {
