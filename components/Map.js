@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native';
 import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDistance } from 'geolib';
-/* import data from "../dummyData"; */
+
 export default function Map(props) {
     /* console.log(props.mode) */
 
@@ -17,15 +17,11 @@ export default function Map(props) {
             longitudeDelta: 96.89,
         }
     })
-
     let [loadFirst, setLoadFirst] = useState(true)
-
     let [followPosition, setFollowPosition] = useState(false)
-
-    const [accuracyOfMeters, setAccuracyOfMeters] = useState(6)
+    const [accuracyOfMeters, setAccuracyOfMeters] = useState(10)
     // 2486
     const [questMode, setQuestMode] = useState(null)
-
     const [mapType, setMapType] = useState("satellite")
     const [longitudeNow, setLongitudeNow] = useState(0)
     const [latitudeNow, setLatitudeNow] = useState(0)
@@ -35,12 +31,17 @@ export default function Map(props) {
     /*  const [questID, setQuestID] = useState(2)
         const [questStarted, setQuestStarted] = useState(true)
         const [currentPoint, setCurrentPoint] = useState(2)    */
+
     const [currentPointTitle, setCurrentPointTitle] = useState("")
+    const [currentPointInfo, setCurrentPointInfo] = useState("")
     const [foundPoint, setFoundPoint] = useState(false)
     const [howManyPoints, setHowManyPoints] = useState(null)
     const [lonToFind, setLonToFind] = useState(null)
     const [latToFind, setLatToFind] = useState(null)
+    const [currentHint, setCurrentHint] = useState("")
+
     const [showBox, setShowBox] = useState(false)
+
     const [data1, setdata1] = useState([])
 
     useEffect(() => {
@@ -152,6 +153,8 @@ export default function Map(props) {
         setCurrentPointTitle(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).title)
         setLonToFind(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).longitude)
         setLatToFind(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).latitude)
+        setCurrentHint(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).hint)
+        setCurrentPointInfo(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).info)
     }
 
     start = (questID) => {
@@ -198,6 +201,10 @@ export default function Map(props) {
         setQuestStarted(false)
         setCurrentPoint(null)
         setCurrentPointTitle("")
+        setCurrentHint("")
+        setCurrentPointInfo("")
+
+
     }
 
     solvedQuest = () => {
@@ -251,7 +258,7 @@ export default function Map(props) {
                 <TouchableOpacity onPress={setFollowMyPosition}><Text>FollowPosition: {"" + followPosition} </Text></TouchableOpacity>
             </View>
 
-            <View style={{ flex: 1, flexDirection: "row" }}>
+            <View style={{ flex: 1, }}>
 
                 <View style={{ flex: 1 }}>
 
@@ -318,107 +325,147 @@ export default function Map(props) {
                                 coordinate={{ longitude: lonToFind, latitude: latToFind }}
                                 pinColor="yellow"
                             />
-
-
                         }
 
-                    </MapView ></View>
+                    </MapView >
 
-                {questMode === "explore" &&
-                    <View style={{ height: "100%", position: "absolute", width: 15, right: 0, backgroundColor: '#fff' }}>
-                        <View style={{
-                            backgroundColor: "#000", height: "" + calcProgressBar() + "%"
 
-                        }}
-                        >
-                            <Text>                       </Text>
+
+                    {/* show this box if clicking for more details */}
+                    {
+                        showBox === true &&
+                        <View style={styles.infoBox}>
+
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: "#279144",
+                                    padding: 10
+                                }}
+                                onPress={() => {
+                                    setShowBox(false)
+                                }}>
+                                <Text style={{ textAlign: "right", color: "white" }}>X</Text>
+                            </TouchableOpacity>
+
+
+                            <View><Text style={{
+                                backgroundColor: "#86fca6",
+                                padding: 10,
+                                fontSize: 18,
+                                fontWeight: "bold",
+                            }}>{data1.find(x => x.id === questID).title}</Text>
+                            </View>
+                            <View style={{ flex: 1, padding: 5 }}>
+
+
+
+                                <ScrollView style={{ flex: 1 }}>
+
+                                    <Text style={{ padding: 5 }}>{data1.find(x => x.id === questID).info}</Text>
+
+
+                                </ScrollView>
+
+
+
+                                {/* show all points only for explore and not for the play mode */}
+                                {data1.find(x => x.id === questID).mode === "explore" &&
+                                    <View>
+                                        <Text>{data1.find(x => x.id === questID).points.length} Points: </Text>
+                                        <Text>
+                                            {data1.find(x => x.id === questID).points.map((item, index) => {
+                                                return (<Text key={index}> {item.title} - </Text>)
+                                            })}
+                                        </Text>
+                                    </View>
+                                }
+                            </View>
+
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: "#279144",
+                                    padding: 10
+                                }}
+                                onPress={() => start(data1.find(x => x.id === questID).id)}
+                            >
+                                <Text style={{ textAlign: "center", color: "white" }}>Start Quest</Text>
+                            </TouchableOpacity>
+
 
 
                         </View>
-                    </View>
-                }
-            </View>
+                    }
+
+
+                    {/* show this box if quest started */}
+                    {
+                        questStarted === true &&
+                        <View style={styles.startedBox}>
+                            <View>
+                                <Text> Go to: {currentPointTitle} </Text>
+
+                                {(questMode === "play") &&
+                                    <Text>{currentHint}</Text>
+                                }
+
+                                {(questMode === "explore") &&
+                                    <Text> {getDistance(
+                                        { latitude: latitudeNow, longitude: longitudeNow },
+                                        { latitude: latToFind, longitude: lonToFind }
+                                    )} Meters away</Text>
+                                }
 
 
 
 
-
-
-            {/* show this box if clicking for more details */}
-            {
-                showBox === true &&
-                <View style={styles.infoBox}>
-                    <View>
-                        <Button title="Close Window - X" onPress={() => {
-                            setShowBox(false)
-                        }} />
-                    </View>
-                    {/* <Text>{questID}</Text> */}
-                    <View style={{
-                        backgroundColor: "white",
-                        padding: 5
-                    }}><Text>{data1.find(x => x.id === questID).title}</Text>
-                    </View>
-                    <View style={{ flex: 1, padding: 5 }}>
-                        <Text>{data1.find(x => x.id === questID).info}</Text>
-                        <Text>{data1.find(x => x.id === questID).points.length} Points: </Text>
-                        <Text>
-                            {data1.find(x => x.id === questID).points.map((item, index) => {
-                                return (<Text key={index}> {item.title} - </Text>)
-                            })}
-                        </Text>
-                    </View>
-                    <Button title="Start" style={{ zIndex: 20, alignSelf: 'flex-end' }}
-                        onPress={() => start(data1.find(x => x.id === questID).id)} />
-                </View>
-            }
-
-
-            {/* show this box if quest started */}
-            {
-                questStarted === true &&
-                <View style={styles.startedBox}>
-                    <View>
-                        <Text> Go to: {currentPointTitle} </Text>
-                        <Text> {getDistance(
-                            { latitude: latitudeNow, longitude: longitudeNow },
-                            { latitude: latToFind, longitude: lonToFind }
-                        )} Meters away</Text>
-                        {/* <Text> howManyPoints: {howManyPoints} </Text> */}
-                        {/* <Text> questID: {questID} </Text>
+                                {/* <Text> howManyPoints: {howManyPoints} </Text> */}
+                                {/* <Text> questID: {questID} </Text>
                         <Text> currentPoint: {currentPoint} </Text>
                         <Text> lonToFind: {lonToFind} </Text>
                         <Text> latToFind: {latToFind} </Text>
                          */}
-                    </View>
-                    <View>
-                        <Button title="Cancel Quest"
-                            onPress={() => cancelQuest()} />
-                    </View>
-                </View>
-            }
+                            </View>
+                            <View>
+                                <Button title="Cancel Quest"
+                                    onPress={() => cancelQuest()} />
+                            </View>
+                        </View>
+                    }
 
 
-            {
-                (foundPoint === true && questStarted === true) &&
-                <View style={styles.foundBox}>
-                    <View>
-                        {/* <Text>{"foundPoint:" + foundPoint}</Text>
-                        <Text>{"latToFind:" + latToFind}</Text> */}
-
-                        <Text> You found {currentPointTitle} </Text>
-                        {/* <Text> INFO INFO </Text> */}
-
-                        {(currentPoint != howManyPoints) ?
-                            <Button title="Go to next Point"
-                                onPress={() => loadNextPoint()} />
-                            : <Text onLayout={() => solvedQuest()}> YOU SOLVED THE COMPLETE QUEST!!!
+                    {/* Show this box after finding a point */}
+                    {
+                        (foundPoint === true && questStarted === true) &&
+                        <View style={styles.foundBox}>
+                            <View>
+                                <Text> You found {currentPointTitle} </Text>
+                                <Text> {currentPointInfo} </Text>
+                                {(currentPoint != howManyPoints) ?
+                                    <Button title="Go to next Point"
+                                        onPress={() => loadNextPoint()} />
+                                    : <Text onLayout={() => solvedQuest()}> YOU SOLVED THE COMPLETE QUEST!!!
                             </Text>
-                        }
-                    </View>
+                                }
+                            </View>
+                        </View>
+                    }
+
+
                 </View>
-            }
-        </View >
+
+                {questMode === "play" &&
+                    <View style={{ height: "100%", position: "absolute", width: 15, right: 0, backgroundColor: '#fff' }}>
+                        <View style={{ backgroundColor: "#000", height: "" + calcProgressBar() + "%" }}
+                        >
+                        </View>
+                    </View>
+                }
+
+            </View>
+
+
+
+        </View>
     );
 }
 
@@ -427,15 +474,16 @@ const styles = StyleSheet.create({
 
     infoBox: {
         position: "absolute",
-        bottom: 30,
         flex: 1,
-        left: 20,
-        right: 20,
-        height: 300,
-        paddingVertical: 10,
-        backgroundColor: "yellow",
-        borderColor: "white",
-        borderWidth: 6,
+        left: 10,
+        right: 10,
+        top: 10,
+        bottom: 10,
+/*         padding: 10,
+ *//*         margin: 20,
+ */        backgroundColor: "white",
+        /* borderColor: "white",
+        borderWidth: 1, */
     },
 
     startedBox: {
