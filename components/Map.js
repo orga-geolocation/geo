@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, TouchableOpacity, Image } from 'react-native';
 import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDistance } from 'geolib';
+import IMAG from '../assets/loader1.gif'
 
 export default function Map(props) {
     /* console.log(props.mode) */
@@ -44,22 +45,38 @@ export default function Map(props) {
 
     const [data1, setdata1] = useState([])
 
+
+    let [loading, setShowLoader] = useState(true);
+
+
     useEffect(() => {
+
+
         getLocationAsync();
         if (props.mode === "explore") {
+            setShowLoader(true)
             datafromExpServer()
         } else {
             datafromPlayServer()
+            setShowLoader(true)
+
         }
+
 
     }, [props.mode])
 
     const datafromExpServer = async () => {
+
+
         await fetch("https://geo-app-server.herokuapp.com/getallexpquests")
             .then(res => res.json())
             .then(data => {
                 setdata1(data.doc)
                 /* console.log(data.doc) */
+
+                setShowLoader(false)
+
+
             }).catch(err => {
                 console.log(err.message)
             })
@@ -69,7 +86,10 @@ export default function Map(props) {
             .then(res => res.json())
             .then(data => {
                 setdata1(data.doc)
+                setShowLoader(false)
+
                 /* console.log(data.doc) */
+                setLoader(false)
             }).catch(err => {
                 console.log(err.message)
             })
@@ -126,13 +146,13 @@ export default function Map(props) {
             }, 2000)
     }
 
-
-
     const centerCurrentLocationWithZoom = (lat, lon) => {
         if (longitudeNow !== 0) {
             lat = latitudeNow;
             lon = longitudeNow;
         }
+
+
         mapView.current.animateCamera(
             {
                 center: {
@@ -248,9 +268,15 @@ export default function Map(props) {
         return (getIt)
     }
 
+
     return (
         <View style={styles.view} >
             <View style={styles.iconsOnMap}>
+
+                <Text> {loading}</Text>
+
+
+
                 {/* <Ionicons name="md-locate" size={32} color="green" onPress={centerCurrentLocation} /> */}
                 {/* <Ionicons name="md-compass" size={32} color="green" onPress={centerCurrentLocationWithZoom} /> */}
                 <TouchableOpacity onPress={centerCurrentLocation}><Text> Center Position</Text></TouchableOpacity>
@@ -330,12 +356,32 @@ export default function Map(props) {
                     </MapView >
 
 
+                    {loading &&
+                        <View style={{
+                            flex: 1, position: "absolute",
+                            width: "100%",
+                            height: "100%",
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+
+               
+{/*                                  <Image 
+          style={{width: 50, height: 50}}
+          source={IMAG}
+        /> */}
+
+                            <View style={{ backgroundColor: "#fff", padding: 16 }}>
+                                <Text style={{ textAlign: "center" }}>Loading...</Text>
+                            </View>
+                        </View>
+                    }
+
 
                     {/* show this box if clicking for more details */}
                     {
                         showBox === true &&
                         <View style={styles.infoBox}>
-
                             <TouchableOpacity
                                 style={{
                                     backgroundColor: "#279144",
@@ -346,8 +392,6 @@ export default function Map(props) {
                                 }}>
                                 <Text style={{ textAlign: "right", color: "white" }}>X</Text>
                             </TouchableOpacity>
-
-
                             <View><Text style={{
                                 backgroundColor: "#86fca6",
                                 padding: 10,
@@ -356,22 +400,13 @@ export default function Map(props) {
                             }}>{data1.find(x => x.id === questID).title}</Text>
                             </View>
                             <View style={{ flex: 1, padding: 5 }}>
-
-
-
                                 <ScrollView style={{ flex: 1 }}>
-
                                     <Text style={{ padding: 5 }}>{data1.find(x => x.id === questID).info}</Text>
-
-
                                 </ScrollView>
-
-
-
                                 {/* show all points only for explore and not for the play mode */}
                                 {data1.find(x => x.id === questID).mode === "explore" &&
                                     <View>
-                                        <Text>{data1.find(x => x.id === questID).points.length} Points: </Text>
+                                        <Text>{data1.find(x => x.id === questID).points.length} Points to find: </Text>
                                         <Text>
                                             {data1.find(x => x.id === questID).points.map((item, index) => {
                                                 return (<Text key={index}> {item.title} - </Text>)
@@ -480,10 +515,10 @@ const styles = StyleSheet.create({
         top: 10,
         bottom: 10,
 /*         padding: 10,
- *//*         margin: 20,
+ *//*      margin: 20,
  */        backgroundColor: "white",
-        /* borderColor: "white",
-        borderWidth: 1, */
+        borderColor: "#279144",
+        borderWidth: 2,
     },
 
     startedBox: {
