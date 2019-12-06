@@ -5,6 +5,7 @@ import SignupView from "../screens/registeration/signup"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LoginView from '../screens/registeration/login';
 import GlobalState from "../globalstate/GlobalState"
+import Profile from '../screens/registeration/profile';
 
 
 export default function Headers(props) {
@@ -12,7 +13,6 @@ export default function Headers(props) {
   /* const [modalVisible, setModalVisible] = useState(false) */
   const Context = useContext(GlobalState)
   const state= Context.state;
-  console.log(state.register)
   return (
     <View>
       <View style={{ marginTop: 26, backgroundColor: '#31a350', height: 55 }}>
@@ -22,9 +22,9 @@ export default function Headers(props) {
           <TouchableOpacity style={styles.viewbutton} onPress={() => {
             Context.switchModal(state.modalVisible);
           }}>
-            <Text style={{ fontSize: 15, color: "white" }} >
-              Login
-             </Text>
+           {state.user?  <Text style={{ fontSize: 15, color: "white" }} >
+                {state.user}
+             </Text>: <Text style={{ fontSize: 15, color: "white" }} > Login  </Text>}
             <Text>
               <Ionicons name="md-person"
                 size={24}
@@ -50,7 +50,7 @@ export default function Headers(props) {
                 style={styles.iconcolor}
             /></Text>
               </TouchableHighlight>
-              {state.register ? <LoginView /> : <SignupView />}
+              {state.user? <Profile/> : state.register ? <LoginView /> : <SignupView />}
 
 
             </View>
