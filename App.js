@@ -15,9 +15,15 @@ export default  App =()=> {
   const switchValue=(value)=>{
     dispatch({type:"switch",payload:value})
   }
+  const setUser=(user)=>{
+    dispatch({type:"setuser",payload:user})
+  }
+  const switchModal=(value)=>{
+    dispatch({type:"switchmodal",payload:value})
+  }
 
     return (
-      <GlobalState.Provider value={{state,switchValue}}> 
+      <GlobalState.Provider value={{state,switchValue,setUser,switchModal}}> 
       <View style={styles.view} >
         <Appcontainer />
       </View>

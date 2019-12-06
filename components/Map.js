@@ -89,7 +89,6 @@ export default function Map(props) {
                 setShowLoader(false)
 
                 /* console.log(data.doc) */
-                setLoader(false)
             }).catch(err => {
                 console.log(err.message)
             })

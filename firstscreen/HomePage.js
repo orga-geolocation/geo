@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity ,AsyncStorage } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 
 export default function HomePage(props) {
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => {
         props.navigation.navigate("Play")
-        AsyncStorage.setItem("mode","play")
+        setStorage("play")
         }} >
         <Text>Play</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => {
         props.navigation.navigate("Explore")
-        AsyncStorage.setItem("mode","explore")
+        setStorage("explore")
         }}>
         <Text>Explorer</Text>
       </TouchableOpacity>

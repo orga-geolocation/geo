@@ -3,7 +3,8 @@ import {createContext} from "react"
 const initialstate={
     login:false,
     user:"",
-    register:false
+    register:false,
+    modalVisible:false
 }
 
 export default GlobalState=createContext(initialstate)

@@ -5,13 +5,14 @@ import SignupView from "../screens/registeration/signup"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LoginView from '../screens/registeration/login';
 import GlobalState from "../globalstate/GlobalState"
+import Profile from '../screens/registeration/profile';
 
 
 export default function Headers(props) {
 
-  const [modalVisible, setModalVisible] = useState(false)
-  const { state } = useContext(GlobalState)
-  console.log(state.register)
+  /* const [modalVisible, setModalVisible] = useState(false) */
+  const Context = useContext(GlobalState)
+  const state= Context.state;
   return (
     <View>
       <View style={{ marginTop: 26, backgroundColor: '#31a350', height: 55 }}>
@@ -19,11 +20,11 @@ export default function Headers(props) {
         <Text style={styles.text}>{props.name}</Text>
         <View>
           <TouchableOpacity style={styles.viewbutton} onPress={() => {
-            setModalVisible(true);
+            Context.switchModal(state.modalVisible);
           }}>
-            <Text style={{ fontSize: 15, color: "white" }} >
-              Login
-             </Text>
+           {state.user?  <Text style={{ fontSize: 15, color: "white" }} >
+                {state.user}
+             </Text>: <Text style={{ fontSize: 15, color: "white" }} > Login  </Text>}
             <Text>
               <Ionicons name="md-person"
                 size={24}
@@ -36,12 +37,12 @@ export default function Headers(props) {
         <Modal
           animationType="slide"
           transparent={false}
-          visible={modalVisible}>
+          visible={state.modalVisible}>
           <View style={{ paddingTop: 22 }}>
             <View style={{ width: "100%", height: "100%" }}>
               <TouchableHighlight
                 onPress={() => {
-                  setModalVisible(!modalVisible);
+                  Context.switchModal(state.modalVisible);
                 }}>
                 <Text style={{textAlign:"center",backgroundColor:"green"}}><Ionicons
                 name="md-close"
@@ -49,7 +50,7 @@ export default function Headers(props) {
                 style={styles.iconcolor}
             /></Text>
               </TouchableHighlight>
-              {state.register ? <LoginView /> : <SignupView />}
+              {state.user? <Profile/> : state.register ? <LoginView /> : <SignupView />}
 
 
             </View>
