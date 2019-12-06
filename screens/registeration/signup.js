@@ -19,29 +19,25 @@ export default SignupView = (props) => {
   const [password, setpassword] = useState("")
   const [Msj, setMsj] = useState("")
 
-  const onClickListener = (view) => {
-    Alert.alert("Alert", "Button pressed " + view);
-  }
-
   const signupUser = async() => {
     if (username !== "" && email !== "" && password !== "") {
-      console.log("its a username",username)
       let userdata = {
         username: username,
         password: password,
         email: email
       }
       let dataBody=JSON.stringify(userdata)
-      console.log(typeof userdata);
-      console.log(userdata)
     await fetch("https://geo-app-server.herokuapp.com/signup",{method:"POST",headers: {
       'Accept': 'application/json',
         'Content-Type': 'application/json',
     }, body:dataBody})
   .then(res=>res.json())
     .then(data=>{
-      if(data.username){
+      if(data.success){
               Context.switchValue(Context.state.register)
+      }else{
+        setMsj(data.msj)
+        setTimeout(function () { setMsj("") }, 2000)
       }
 
     })
@@ -88,7 +84,7 @@ export default SignupView = (props) => {
       <TouchableHighlight style={styles.buttonContainer} onPress={() => Context.switchValue(Context.state.register)}>
         <Text>Already Registered</Text>
       </TouchableHighlight>
-      {Msj.trim() !== "" ? <Text style={{ color: "red" }}> {Msj}</Text> : null}
+      {Msj!== "" ? <Text style={{ color: "red" }}> {Msj}</Text> : null}
     </View>
   );
 }
