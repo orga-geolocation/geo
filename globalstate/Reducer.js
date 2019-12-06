@@ -1,6 +1,6 @@
 export const initialstate={
     login:false,
-    user:"",
+    user:null,
     register:false,
     modalVisible:false
 }
