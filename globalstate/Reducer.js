@@ -17,6 +17,8 @@ export default Reducer=(state,action)=>{
             return {...state,user:action.payload}
         case "setuserdata":
             return {...state,userData:action.payload}
+        case "setmode":
+            return {...state,mode:action.payload}
         default:
             return state;
     }
