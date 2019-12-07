@@ -2,7 +2,8 @@ export const initialstate={
     login:false,
     user:null,
     register:false,
-    modalVisible:false
+    modalVisible:false,
+    userData:null
 }
 
 export default Reducer=(state,action)=>{
@@ -13,6 +14,8 @@ export default Reducer=(state,action)=>{
                 return {...state,modalVisible:!action.payload}
         case "setuser":
             return {...state,user:action.payload}
+        case "setuserdata":
+            return {...state,userData:action.payload}
         default:
             return state;
     }
