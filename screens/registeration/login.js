@@ -9,13 +9,13 @@ import {
   Image
 } from 'react-native';
 import GlobalState from "../../globalstate/GlobalState"
-
+import * as SecureStore from "expo-secure-store"
 
 export default LoginView = (props) => {
 
 
   const Context = useContext(GlobalState)
-  const state=Context.state;
+  const state = Context.state;
 
   const [username, setusername] = useState("")
   const [password, setpassword] = useState("")
@@ -25,31 +25,39 @@ export default LoginView = (props) => {
     Alert.alert("Alert", "Button pressed " + view);
   }
 
-  const userLogin = async() => {
+  setLocalStorage = async (key,value) => {
+    await SecureStore.setItemAsync(key, value);
+}
+
+  const userLogin = async () => {
     if (username !== "" && password !== "") {
       let userdata = {
         username: username,
         password: password
       }
-      let dataBody=JSON.stringify(userdata)
-    await fetch("https://geo-app-server.herokuapp.com/login",{method:"POST",headers: {
-      'Accept': 'application/json',
-        'Content-Type': 'application/json',
-    }, body:dataBody})
-  .then(res=>res.json())
-    .then(data=>{
-      if(data.success){
-        Context.setUser(data.user.username)
-        Context.switchModal(state.modalVisible)
-      }else{
-        setMsj(data.msj)
-        setTimeout(function () { setMsj("") }, 2000)
-      }
+      let dataBody = JSON.stringify(userdata)
+      await fetch("https://geo-app-server.herokuapp.com/login", {
+        method: "POST", headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, body: dataBody
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            setLocalStorage("data_store",JSON.stringify(data.user))
+            Context.setUserData(data.user)
+            Context.setUser(data.user.username)
+            Context.switchModal(state.modalVisible)
+          } else {
+            setMsj(data.msj)
+            setTimeout(function () { setMsj("") }, 2000)
+          }
 
-    })
-    .catch((e)=>{
-      console.log(e)
-    })
+        })
+        .catch((e) => {
+          console.log(e)
+        })
 
     } else {
       setMsj(" ** Please fill out all the fields ***")
@@ -61,12 +69,12 @@ export default LoginView = (props) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/pin2.png')} style={{marginBottom:20,position:"absolute",top:20}}  />
+      <Image source={require('../../assets/pin2.png')} style={{ marginBottom: 20, position: "absolute", top: 20 }} />
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
           placeholder="User Name"
           underlineColorAndroid='transparent'
-          onChangeText={(username) => setusername( username )} />
+          onChangeText={(username) => setusername(username)} />
       </View>
 
       <View style={styles.inputContainer}>
@@ -74,7 +82,7 @@ export default LoginView = (props) => {
           placeholder="Password"
           secureTextEntry={true}
           underlineColorAndroid='transparent'
-          onChangeText={(password) => setpassword( password )} />
+          onChangeText={(password) => setpassword(password)} />
       </View>
 
       <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={userLogin}>

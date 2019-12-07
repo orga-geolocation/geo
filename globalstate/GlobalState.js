@@ -4,7 +4,9 @@ const initialstate={
     login:false,
     user:"",
     register:false,
-    modalVisible:false
+    modalVisible:false,
+    userData:null,
+    mode:""
 }
 
 export default GlobalState=createContext(initialstate)

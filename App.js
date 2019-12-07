@@ -1,38 +1,43 @@
-import React,{useReducer} from 'react';
+import React, { useReducer } from 'react';
 import { StyleSheet, View } from 'react-native';
-import * as AsyncStorage from 'expo-secure-store';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import PlayMode from './firstscreen/PlayMode';
 import HomePage from './firstscreen/HomePage'
 import ExploreMode from './firstscreen/ExploreMode';
 import GlobalState from "./globalstate/GlobalState"
-import Reducer,{initialstate} from "./globalstate/Reducer"
+import Reducer, { initialstate } from "./globalstate/Reducer"
 
-export default  App =()=> {
+export default App = () => {
+  const [state, dispatch] = useReducer(Reducer, initialstate)
 
-  const [state,dispatch]=useReducer(Reducer,initialstate)
- 
-  const switchValue=(value)=>{
-    dispatch({type:"switch",payload:value})
-  }
-  const setUser=(user)=>{
-    dispatch({type:"setuser",payload:user})
-  }
-  const switchModal=(value)=>{
-    dispatch({type:"switchmodal",payload:value})
-  }
 
-    return (
-      <GlobalState.Provider value={{state,switchValue,setUser,switchModal}}> 
+  /*  globalState Methods */
+  const switchValue = (value) => {
+    dispatch({ type: "switch", payload: value })
+  }
+  const setUser = (user) => {
+    dispatch({ type: "setuser", payload: user })
+  }
+  const switchModal = (value) => {
+    dispatch({ type: "switchmodal", payload: value })
+  }
+  const setUserData = (value) => {
+    dispatch({ type: "setuserdata", payload: value })
+  }
+  const setMode=(calue)=>{
+    dispatch({ type: "setmode", payload: value })
+  }
+  return (
+    <GlobalState.Provider value={{ state, switchValue, setUser, switchModal, setUserData ,setMode}}>
       <View style={styles.view} >
         <Appcontainer />
       </View>
-      </GlobalState.Provider>
-    );
+    </GlobalState.Provider>
+  );
 }
 
 const appSwitchNavigation = createSwitchNavigator({
-  HomePage:ExploreMode /* AsyncStorage.getItemAsync("mode")==="explore"?Exploremode: AsyncStorage.getItemAsync("mode")==="play"? PlayMode: HomePage */ ,
+  HomePage:ExploreMode ,
   Explore: ExploreMode,
   Play: PlayMode
 })

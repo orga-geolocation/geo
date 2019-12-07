@@ -7,28 +7,40 @@ import {
     TouchableOpacity
 } from 'react-native';
 import GlobalState from "../../globalstate/GlobalState"
+import * as SecureStore from "expo-secure-store"
+
+
 
 export default function Profile() {
     const Context = useContext(GlobalState)
     const state = Context.state;
+    console.log(state.user)
 
-    const userLogout=()=>{
+    const userLogout = async() => {
+        await DeleteStorageItem("data_store")
         Context.setUser(null)
         Context.switchModal(state.modalVisible)
     }
+
+/* secure Storage */
+const DeleteStorageItem = async (key) => {
+    await SecureStore.deleteItemAsync(key);
+}
+
     return (
         <View style={styles.container}>
             <View style={styles.header}></View>
             <Image style={styles.avatar} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} />
             <View style={styles.body}>
                 <View style={styles.bodyContent}>
-                    <Text style={styles.name}>{state.user}</Text>
-                    <Text style={styles.email}>user email</Text>
-                    <Text style={styles.description}>user details login created date .....</Text>
+                    <Text style={styles.name}>{state.userData.username}</Text>
+                    <Text style={styles.email}>{state.userData.email}</Text>
+                    <Text style={styles.description}>Login created ...{state.userData.timestamp}</Text>
+                    <Text>Quest Created : {state.userData.userQuests.length}</Text>
 
                     <TouchableOpacity style={styles.buttonContainer} onPress={userLogout}>
                         <Text>Log Out</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> 
                 </View>
             </View>
         </View>

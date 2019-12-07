@@ -1,19 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import * as SecureStore from 'expo-secure-store';
+
 
 export default function HomePage(props) {
-  
+  const setStorageMode=async(value)=>{
+    await SecureStore.setItemAsync("mode",value)
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => {
+        setStorageMode("play")
         props.navigation.navigate("Play")
-        setStorage("play")
         }} >
         <Text>Play</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => {
+        setStorageMode("explore")
         props.navigation.navigate("Explore")
-        setStorage("explore")
         }}>
         <Text>Explorer</Text>
       </TouchableOpacity>
