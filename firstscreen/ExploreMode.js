@@ -13,7 +13,6 @@ export default function ExploreMode(props) {
 
         const getLocalStorage = await SecureStore.getItemAsync("data_store")
         const convertData = JSON.parse(getLocalStorage)
-        console.log("Storage data ..........",convertData)
         if (convertData) {
             const data = await fetch("https://geo-app-server.herokuapp.com/load", {
                 method: "POST",
