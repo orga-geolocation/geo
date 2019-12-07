@@ -3,7 +3,8 @@ export const initialstate={
     user:null,
     register:false,
     modalVisible:false,
-    userData:null
+    userData:null,
+    mode:""
 }
 
 export default Reducer=(state,action)=>{
