@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Headers from "../components/Headers";
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { MapView } from "expo";
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import QuestCreatorStack from "./stacknavforcreatequest.js/stacknavQuest"
+
+
 export default function CreateQuest(props) {
-  const [form, setForm] = useState(true)
+
   return (
     <View style={{ flex: 1 }}>
       <Headers
         name='Create Quest'
         navigation={props.navigation}
       />
-      <View>
-        <Text>user can now create quest</Text>
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => setForm(!form)}>
-          <Text>create quest</Text>
-        </TouchableHighlight>
-
-      {form ? <Text>FORM here</Text>:null}
-      </View>
+      <QuestCreatorStack/>
     </View>
   );
 }
@@ -52,8 +47,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft:"auto",
+    marginLeft: "auto",
+    marginRight: "auto",
     width: 250,
     borderRadius: 30,
-  },
+  }
 })

@@ -36,7 +36,9 @@ const DeleteStorageItem = async (key) => {
                     <Text style={styles.name}>{state.userData.username}</Text>
                     <Text style={styles.email}>{state.userData.email}</Text>
                     <Text style={styles.description}>Login created ...{state.userData.timestamp}</Text>
-                    <Text>Quest Created : {state.userData.userQuests.length}</Text>
+                    <Text>Quests Created : {state.userData.userQuests.length}</Text>
+                    <Text>Quests Completed : {state.userData.completeQuests.length}</Text>
+                    <Text>Quests incomplete : {state.userData.incompleteQuests.length}</Text>
 
                     <TouchableOpacity style={styles.buttonContainer} onPress={userLogout}>
                         <Text>Log Out</Text>
