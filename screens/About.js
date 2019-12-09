@@ -1,102 +1,104 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, ScrollView} from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
 import Headers from "../components/Headers";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Avatar} from 'react-native-elements';
-import { Divider } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
 
 
 export default function About(props) {
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <Headers
         name='About'
         navigation={props.navigation} />
-        <View style ={{backgroundColor:'#f8f8ff', margin: 5}}> 
-    
-    {/* About GeoQuest */}
-    <View style={{height: 290, margin: 12}}>
-      <Text style ={styles.text}>About :</Text>
-      
-      <Text style={styles.txtdetails}>- GeoQuest is a simple and powerful Geocaching app for iOS and Android that includes the following features:</Text>
-      <Text style={styles.txtdetails}>- GeoQuest account</Text>
-      <Text style ={{marginLeft: 25,lineHeight: 20}}>uses the Geocaching Live API so that you can login with your account and see all of your information</Text>
-      <Text style={styles.txtdetails}>- Find Caches :</Text>
-      <Text style ={{marginLeft: 25, lineHeight: 20}}>Current location, coordinates, search for a location</Text>
-      <Text style={styles.txtdetails}>- Map Options :</Text>
-      <Text style ={{marginLeft: 25, lineHeight: 20}}>Choose from Apple Maps, Google Maps, OpenStreet Map</Text>
-      
 
-      {/* <Image  source={require('../assets/geo.png')}
-              style={styles.image}/> */}
-      </View>
-      <Divider style ={{backgroundColor:'#d3d3d3', height: 1, marginLeft:22, marginRight: 22}} />
-      {/* technologies container */}
-      <View style={{height: 170, margin: 12}}>
-      <Text style ={styles.text}>Technologies:</Text>
-      <View style ={{marginLeft: 20, marginTop: 10}}>
-      <Text style={{lineHeight: 30}}>- React Native </Text>
-      <Text style={{lineHeight: 30}}>- Node.js</Text>
-      <Text style={{lineHeight: 30}}>- Express</Text>
-      <Text style={{lineHeight: 30}}>- Mongo</Text>
-      </View>
-      </View>
+      <ScrollView style={{backgroundColor:"#31a350"}}>
 
-      <Divider style ={{backgroundColor:'#d3d3d3', height: 1, marginLeft:22, marginRight: 22}} />
+        {/* About GeoQuest */}
+        <View style={styles.defaultOuterBox}>
+          <Text style={styles.defaultBoxTitle}>ABOUT</Text>
+          <View style={styles.defaultBoxMain}>
+            <Text style={styles.defaultMainText}>
+            
+            Geo-Quest is a simple and powerful Geocaching app for iOS 
+            and Android that includes the following features:
+            {'\n'}
+            Geo-Quest account {'\n'}
+            uses the Geocaching Live API so that you can login with your 
+            account and see all of your information{'\n'} {'\n'}
 
-       {/* Future Implementations container */}
-
-
-       <View style={{height: 250, margin: 12}}>
-      <Text style ={styles.text}>Future Implementations:</Text>
-      <View style ={{marginLeft: 20, marginTop: 10}}>
-          <Text style={{lineHeight: 30}}>- offline Maps</Text>
-          <Text style={{lineHeight: 30}}>- Share location with friends</Text>
-          <Text style={{lineHeight: 30}}>- Chat</Text>
-          <Text style={{lineHeight: 30}}>- Friend lists</Text>
-          <Text style={{lineHeight: 30}}>- Upload images,Request images, profile image</Text>
-          <Text style={{lineHeight: 30}}>- Bookmark lists</Text>
-
+            - Find Caches :{'\n'}
+            Current location, coordinates, search for a location{'\n'} {'\n'}
+            - Map Options :{'\n'}
+            Choose from Apple Maps, Google Maps, OpenStreet Map</Text>
           </View>
-      </View>
-      <Divider style ={{backgroundColor:'#d3d3d3', height: 1, marginLeft:22, marginRight: 22}} />
-
-      {/* team members and avatar */}
-      <View style={{height: 340, margin: 12}}>
-      <Text style ={styles.text}>Team Members :</Text>
-
-    <View style ={{flex: 1, flexDirection:'row', flexWrap:'wrap', justifyContent:'space-around', marginRight:30, marginTop: 10}}>
-      
-      <View >
-      <Avatar  rounded size={120}
-                    source={require('../assets/navi.png')}
-                    onPress={() => console.log("Works!")}
-                    activeOpacity={0.7}
-                     />
-                     <Text style={{marginTop: 7, textAlign:'center'}}>Naqvi</Text>
-                    </View>
-      <View >
-      <Avatar
-      source={require('../assets/profilefranz.png')} rounded size={120} />
-      <Text style={{marginTop: 7, textAlign:'center'}}>Franz</Text>
-      </View>
-      <View style ={{marginTop : 15}} >
-       <Avatar source={require('../assets/yasmin.jpg')} rounded size={120} />
-       <Text style={{marginTop: 7, textAlign:'center'}}>Yasmin</Text>
-       </View>
-      <View style ={{marginTop : 15}} >
-        <Avatar source={require('../assets/boyan.jpg')} rounded size={120} />
-        <Text style={{marginTop: 7, textAlign:'center'}}>Boyan</Text>
-       
         </View>
-    </View>
-    </View>
-    <Divider style ={{backgroundColor:'#d3d3d3', height: 1, marginLeft:22, marginRight: 22}} />
+        {/* technologies container */}
+        <View style={styles.defaultOuterBox}>
+          <Text style={styles.defaultBoxTitle}>TECHNOLOGIES</Text>
+          <View style={styles.defaultBoxMain}>
+            <Text style={styles.defaultMainText}>
+              - React Native  {'\n'}
+              - Node.js  {'\n'}
+              - Express {'\n'}
+              - Mongo
+            </Text>
+          </View>
+        </View>
 
 
+        {/* Future Implementations container */}
 
-      </View>
-    </ScrollView>
+
+        <View style={styles.defaultOuterBox}>
+          <Text style={styles.defaultBoxTitle}>FUTURE IMPLEMENTATIONS</Text>
+          <View style={styles.defaultBoxMain}>
+            <Text style={styles.defaultMainText}>
+              - Offline Maps {'\n'}
+              - Share location with friends {'\n'}
+              - Chat {'\n'}
+              - QR-Code {'\n'}
+              - Friend lists {'\n'}
+              - Upload images, Request images, profile image {'\n'}
+              - Bookmarks
+            </Text>
+          </View>
+        </View>
+
+        {/* team members and avatar */}
+        <View style={styles.defaultOuterBox}>
+          <Text style={styles.defaultBoxTitle}>TEAM MEMBERS</Text>
+          <View style={styles.defaultBoxMain}>
+
+            <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', }}>
+              <View >
+                <Avatar size={120}
+                  source={require('../assets/navi.png')}
+                />
+                <Text style={{ marginTop: 7, textAlign: 'center' }}>Naqvi</Text>
+              </View>
+              <View >
+                <Avatar
+                  source={require('../assets/profilefranz.png')} size={120} />
+                <Text style={{ marginTop: 7, textAlign: 'center' }}>Franz</Text>
+              </View>
+              <View style={{ marginTop: 15 }} >
+                <Avatar source={require('../assets/yasmin.jpg')} size={120} />
+                <Text style={{ marginTop: 7, textAlign: 'center' }}>Yasmin</Text>
+              </View>
+              <View style={{ marginTop: 15 }} >
+                <Avatar source={require('../assets/boyan.jpg')} size={120} />
+                <Text style={{ marginTop: 7, textAlign: 'center' }}>Boyan</Text>
+
+              </View>
+            </View>
+          </View>
+        </View>
+
+
+      </ScrollView >
+    </View >
+
   );
 }
 
@@ -114,6 +116,31 @@ About.navigationOptions = {
 
 const styles = StyleSheet.create({
 
+  defaultMainText: {
+    color: "#135625",
+  },
+
+  defaultOuterBox: {
+    marginLeft: 9,
+    marginRight: 9,
+    marginTop: 5,
+    marginBottom: 5,
+    /*     borderWidth: 1,
+        borderColor: "black", */
+  },
+
+  defaultBoxTitle: {
+    fontWeight: "bold",
+    padding: 10,
+    color: "#135625",
+    backgroundColor: "#f5f5f5",
+  },
+
+  defaultBoxMain: {
+    padding: 10,
+    backgroundColor: "#fff",
+  },
+
   icon: {
     fontSize: 15,
     textAlign: 'center',
@@ -127,29 +154,6 @@ const styles = StyleSheet.create({
   iconcolor: {
     color: "white",
 
-  },
-  text: {
-    marginTop: 7,
-    fontSize: 20,
-    fontWeight: 'bold',
-    alignItems:'flex-start',
-    marginLeft: 19,
-  },
-
- /*  image: {
-    width:50,
-    height:50,
-    alignSelf: 'flex-end',
-    position: 'absolute',
-    top: 0,
-    right: 2,
-    // backgroundColor: 'black',
-    // borderRadius: 3
-
-  }, */
-  txtdetails: {
-    marginLeft: 10,
-    marginTop: 12,
-    lineHeight: 20
   }
+
 })
