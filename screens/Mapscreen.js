@@ -21,7 +21,7 @@ export default function HomeScreen(props) {
   return (
     <View style={{ flex: 1 }}>
       <Headers
-        name='Home Screen'
+        name='Map'
         navigation={props.navigation}
       />
       <SubHeaderButtons changeMode={changeMode} mode={mode}/>

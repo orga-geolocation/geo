@@ -6,9 +6,11 @@ import Headers from "../components/Headers";
 import { Content, Accordion } from 'native-base';
 
 const dataArray = [
-    { title: "Question 1", content: "Lorem ipsum dolor sit amet" },
-    { title: "Question 2", content: "Lorem ipsum dolor sit amet" },
-    { title: "Question 3", content: "Lorem ipsum dolor sit amet" }
+    { title: "Whats the different between Explore and Play?", content: "Lorem ipsum dolor sit amet" },
+    { title: "I'm at the right point, but nothing happened.", content: "Lorem ipsum dolor sit amet" },
+    { title: "Why I can't create a quest?", content: "Lorem ipsum dolor sit amet" },
+    { title: "I can't login.", content: "Lorem ipsum dolor sit amet" }
+
 ];
 
 export default function FAQ(props) {

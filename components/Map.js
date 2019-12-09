@@ -271,13 +271,6 @@ export default function Map(props) {
     return (
         <View style={styles.view} >
             <View style={styles.iconsOnMap}>
-
-                <Text> {loading}</Text>
-
-
-
-                {/* <Ionicons name="md-locate" size={32} color="green" onPress={centerCurrentLocation} /> */}
-                {/* <Ionicons name="md-compass" size={32} color="green" onPress={centerCurrentLocationWithZoom} /> */}
                 <TouchableOpacity onPress={centerCurrentLocation}><Text> Center Position</Text></TouchableOpacity>
                 <TouchableOpacity onPress={setMyMapType}><Text> Map: {mapType}</Text></TouchableOpacity>
                 <TouchableOpacity onPress={setFollowMyPosition}><Text>FollowPosition: {"" + followPosition} </Text></TouchableOpacity>
@@ -364,8 +357,8 @@ export default function Map(props) {
                             alignItems: 'center'
                         }}>
 
-               
-{/*                                  <Image 
+
+                            {/*                                  <Image 
           style={{width: 50, height: 50}}
           source={IMAG}
         /> */}

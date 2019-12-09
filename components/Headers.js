@@ -12,19 +12,19 @@ export default function Headers(props) {
 
   /* const [modalVisible, setModalVisible] = useState(false) */
   const Context = useContext(GlobalState)
-  const state= Context.state;
+  const state = Context.state;
   return (
-    <View>
-      <View style={{ marginTop: 26, backgroundColor: '#31a350', height: 55 }}>
-        <Menu navigation={props.navigation} />
+    <View style={{ marginTop: 26, backgroundColor: '#31a350', height: 55 }}>
+      <View>
+        <Menu style={{height:55}} navigation={props.navigation} />
         <Text style={styles.text}>{props.name}</Text>
         <View>
           <TouchableOpacity style={styles.viewbutton} onPress={() => {
             Context.switchModal(state.modalVisible);
           }}>
-           {state.user?  <Text style={{ fontSize: 15, color: "white" }} >
-                {state.user}
-             </Text>: <Text style={{ fontSize: 15, color: "white" }} > Login  </Text>}
+            {state.user ? <Text style={{ fontSize: 15, color: "white" }} >
+              {state.user}
+            </Text> : <Text style={{ fontSize: 15, color: "white" }} > Login  </Text>}
             <Text>
               <Ionicons name="md-person"
                 size={24}
@@ -44,13 +44,13 @@ export default function Headers(props) {
                 onPress={() => {
                   Context.switchModal(state.modalVisible);
                 }}>
-                <Text style={{textAlign:"center",backgroundColor:"green"}}><Ionicons
-                name="md-close"
-                size={32}
-                style={styles.iconcolor}
-            /></Text>
+                <Text style={{ textAlign: "center", backgroundColor: "green" }}><Ionicons
+                  name="md-close"
+                  size={32}
+                  style={styles.iconcolor}
+                /></Text>
               </TouchableHighlight>
-              {state.user? <Profile/> : state.register ? <LoginView /> : <SignupView />}
+              {state.user ? <Profile /> : state.register ? <LoginView /> : <SignupView />}
 
 
             </View>
