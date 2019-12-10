@@ -24,11 +24,20 @@ export default App = () => {
   const setUserData = (value) => {
     dispatch({ type: "setuserdata", payload: value })
   }
-  const setMode=(calue)=>{
+  const setMode=(value)=>{
     dispatch({ type: "setmode", payload: value })
   }
+  const setLatG=(value)=>{
+    dispatch({type:"lat",payload:value})
+  }
+  const setLongG=(value)=>{
+    dispatch({type:"long",payload:value})
+  }
+  const setID=(value)=>{
+    dispatch({type:"id",payload:value})
+  }
   return (
-    <GlobalState.Provider value={{ state, switchValue, setUser, switchModal, setUserData ,setMode}}>
+    <GlobalState.Provider value={{ state, switchValue, setUser, switchModal, setUserData ,setMode ,setLatG,setLongG,setID}}>
       <View style={styles.view} >
         <Appcontainer />
       </View>
