@@ -270,11 +270,11 @@ export default function Map(props) {
 
     return (
         <View style={styles.view} >
-            <View style={styles.iconsOnMap}>
+            {<View style={styles.iconsOnMap}>
                 <TouchableOpacity onPress={centerCurrentLocation}><Text> Center Position</Text></TouchableOpacity>
                 <TouchableOpacity onPress={setMyMapType}><Text> Map: {mapType}</Text></TouchableOpacity>
                 <TouchableOpacity onPress={setFollowMyPosition}><Text>FollowPosition: {"" + followPosition} </Text></TouchableOpacity>
-            </View>
+            </View>}
 
             <View style={{ flex: 1, }}>
 
@@ -376,47 +376,73 @@ export default function Map(props) {
                         <View style={styles.infoBox}>
                             <TouchableOpacity
                                 style={{
-                                    backgroundColor: "#279144",
-                                    padding: 10
+                                    /* backgroundColor: "#279144", */
+                                    padding: 10,
+                                    alignItems: "flex-end"
+
                                 }}
                                 onPress={() => {
                                     setShowBox(false)
                                 }}>
-                                <Text style={{ textAlign: "right", color: "white" }}>X</Text>
+
+                                <View style={{ borderRadius: 50, width: 45, backgroundColor: "#ffffff", borderWidth: 2, borderColor: "#2d9349", paddingLeft: 9 }}>
+                                    <Ionicons
+                                        name="md-close"
+                                        size={40}
+                                        color="#2d9349"
+                                    />
+                                </View>
+
                             </TouchableOpacity>
-                            <View><Text style={{
-                                backgroundColor: "#86fca6",
-                                padding: 10,
-                                fontSize: 18,
-                                fontWeight: "bold",
-                            }}>{data1.find(x => x.id === questID).title}</Text>
+                            <View style={{ /* borderColor: "#217e3a",
+                                borderTopWidth: 10, */}}><Text style={{
+                                    backgroundColor: "#31a350",
+                                    padding: 10,
+                                    color: "white",
+                                    fontSize: 18,
+/*                                 fontWeight: "bold",
+ */                            }}>
+
+                                    {/* <Ionicons
+                                        name="md-arrow-dropright"
+                                        size={20}
+                                        color="#ffffff"
+                                    /> */}
+                                    
+                                    
+                                    {' '}{data1.find(x => x.id === questID).title}</Text>
                             </View>
-                            <View style={{ flex: 1, padding: 5 }}>
-                                <ScrollView style={{ flex: 1 }}>
-                                    <Text style={{ padding: 5 }}>{data1.find(x => x.id === questID).info}</Text>
+                            <View style={{ flex: 1, padding: 5, backgroundColor: "#217e3a" }}>
+                                <ScrollView style={{ flex: 1, backgroundColor: "#ffffff", margin: 5 }}>
+                                    <Text style={{ padding: 10, color: "#2d9349" }}>{data1.find(x => x.id === questID).info}</Text>
                                 </ScrollView>
                                 {/* show all points only for explore and not for the play mode */}
                                 {data1.find(x => x.id === questID).mode === "explore" &&
-                                    <View>
-                                        <Text>{data1.find(x => x.id === questID).points.length} Points to find: </Text>
-                                        <Text>
+                                    <View style={{ backgroundColor: "#31a350", margin: 5, padding: 10 }}>
+                                        <Text style={{ color: "white" }}>{data1.find(x => x.id === questID).points.length} Points </Text>
+                                        <Text style={{ color: "white" }}>
                                             {data1.find(x => x.id === questID).points.map((item, index) => {
-                                                return (<Text key={index}> {item.title} - </Text>)
+                                                return (<Text key={index}>[{item.title}] </Text>)
                                             })}
                                         </Text>
                                     </View>
                                 }
                             </View>
 
-                            <TouchableOpacity
-                                style={{
-                                    backgroundColor: "#279144",
-                                    padding: 10
-                                }}
-                                onPress={() => start(data1.find(x => x.id === questID).id)}
-                            >
-                                <Text style={{ textAlign: "center", color: "white" }}>Start Quest</Text>
-                            </TouchableOpacity>
+                            <View style={{ backgroundColor: "#31a350" }}>
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: "#fff", // 46bf67
+                                        borderColor: "#217e3a",
+                                        borderWidth: 1,
+                                        padding: 10,
+                                        margin: 10
+                                    }}
+                                    onPress={() => start(data1.find(x => x.id === questID).id)}
+                                >
+                                    <Text style={{ textAlign: "center", color: "#2d9349" }}>Start Quest</Text>
+                                </TouchableOpacity>
+                            </View>
 
 
 
@@ -452,10 +478,26 @@ export default function Map(props) {
                         <Text> latToFind: {latToFind} </Text>
                          */}
                             </View>
-                            <View>
-                                <Button title="Cancel Quest"
-                                    onPress={() => cancelQuest()} />
+
+
+                            <View style={{ backgroundColor: "#31a350" }}>
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: "#fff", // 46bf67
+                                        borderColor: "#217e3a",
+                                        borderWidth: 1,
+                                        padding: 10,
+                                        margin: 5
+                                    }}
+                                    onPress={() => cancelQuest()}
+                                >
+                                    <Text style={{ textAlign: "center", color: "#31a350" }}>Cancel Quest</Text>
+                                </TouchableOpacity>
                             </View>
+
+
+
+
                         </View>
                     }
 
@@ -505,12 +547,12 @@ const styles = StyleSheet.create({
         left: 10,
         right: 10,
         top: 10,
-        bottom: 10,
-/*         padding: 10,
- *//*      margin: 20,
- */        backgroundColor: "white",
-        borderColor: "#279144",
-        borderWidth: 2,
+        bottom: 40,
+        /*         padding: 10,
+         *//*      margin: 20,
+   */        /* backgroundColor: "white", */
+        /*         borderColor: "#279144",
+                borderWidth: 2, */
     },
 
     startedBox: {
