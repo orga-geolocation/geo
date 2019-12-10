@@ -1,24 +1,33 @@
-export const initialstate={
-    login:false,
-    user:null,
-    register:false,
-    modalVisible:false,
-    userData:null,
-    mode:""
+export const initialstate = {
+    login: false,
+    user: null,
+    register: false,
+    modalVisible: false,
+    userData: null,
+    mode: "",
+    lat: null,
+    long: null,
+    id: 0
 }
 
-export default Reducer=(state,action)=>{
-    switch(action.type){
+export default Reducer = (state, action) => {
+    switch (action.type) {
         case "switch":
-            return {...state,register:!action.payload}
+            return { ...state, register: !action.payload }
         case "switchmodal":
-                return {...state,modalVisible:!action.payload}
+            return { ...state, modalVisible: !action.payload }
         case "setuser":
-            return {...state,user:action.payload}
+            return { ...state, user: action.payload }
         case "setuserdata":
-            return {...state,userData:action.payload}
+            return { ...state, userData: action.payload }
         case "setmode":
-            return {...state,mode:action.payload}
+            return { ...state, mode: action.payload }
+        case "lat":
+            return { ...state, lat: action.payload }
+        case "long":
+            return { ...state, long: action.payload }
+        case "id":
+            return { ...state, id: action.payload }
         default:
             return state;
     }

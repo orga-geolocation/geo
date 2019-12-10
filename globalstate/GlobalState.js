@@ -6,7 +6,10 @@ const initialstate={
     register:false,
     modalVisible:false,
     userData:null,
-    mode:""
+    mode:"",
+    lat:null,
+    long:null,
+    id:0
 }
 
 export default GlobalState=createContext(initialstate)
