@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   Alert
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import GlobalState from "../../globalstate/GlobalState"
 
 export default SignupView = (props) => {
@@ -17,6 +18,7 @@ export default SignupView = (props) => {
   const [username, setusername] = useState("")
   const [email, setemail] = useState("")
   const [password, setpassword] = useState("")
+  const [showpass,setShowpass]=useState(true)
   const [Msj, setMsj] = useState("")
 
   const signupUser = async() => {
@@ -72,9 +74,16 @@ export default SignupView = (props) => {
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
           placeholder="Password"
-          secureTextEntry={true}
+          secureTextEntry={showpass}
           underlineColorAndroid='transparent'
           onChangeText={(password) => setpassword( password )} />
+             <Ionicons
+            name={showpass?"md-eye-off":"md-eye"}
+            color="#ffffff"
+            size={20}
+            style={{color:"black",position:"absolute",right:10}}
+            onPress={() =>setShowpass(!showpass)}
+        />
       </View>
 
       <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={signupUser}>

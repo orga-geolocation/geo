@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import GlobalState from "../../globalstate/GlobalState"
 import * as SecureStore from "expo-secure-store"
+import Ionicons from 'react-native-vector-icons/Ionicons'
+
 
 export default LoginView = (props) => {
 
@@ -20,7 +22,7 @@ export default LoginView = (props) => {
   const [username, setusername] = useState("")
   const [password, setpassword] = useState("")
   const [Msj, setMsj] = useState("")
-
+  const [showpass,setShowpass]=useState(true)
   const onClickListener = (view) => {
     Alert.alert("Alert", "Button pressed " + view);
   }
@@ -80,9 +82,16 @@ export default LoginView = (props) => {
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputs}
           placeholder="Password"
-          secureTextEntry={true}
+          secureTextEntry={showpass}
           underlineColorAndroid='transparent'
           onChangeText={(password) => setpassword(password)} />
+          <Ionicons
+            name={showpass?"md-eye-off":"md-eye"}
+            color="#ffffff"
+            size={20}
+            style={{color:"black",position:"absolute",right:10}}
+            onPress={() =>setShowpass(!showpass)}
+        />
       </View>
 
       <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={userLogin}>
@@ -106,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#DCDCDC',
+    backgroundColor: '#DCDCDC'
   },
   inputContainer: {
     borderBottomColor: '#F5FCFF',
