@@ -1,4 +1,4 @@
-import React, { useState,useContext ,useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, TouchableOpacity, Image } from 'react-native';
 import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
@@ -10,7 +10,7 @@ import IMAG from '../assets/loader1.gif'
 
 export default function Map(props) {
     /* console.log(props.mode) */
-    const Context=useContext(GlobalState)
+    const Context = useContext(GlobalState)
     const [state, setState] = useState({
         region: {
             latitude: 52.522445,
@@ -72,8 +72,9 @@ export default function Map(props) {
         await fetch("https://geo-app-server.herokuapp.com/getallexpquests")
             .then(res => res.json())
             .then(data => {
+
                 setdata1(data.doc)
-                /* console.log(data.doc) */
+                console.log(data.doc)
 
                 setShowLoader(false)
 
@@ -169,14 +170,14 @@ export default function Map(props) {
     }
 
     prepareSetQuest = (questID, pointNow) => {
-        setQuestMode(data1.find(x => x.id === questID).mode)
-        setHowManyPoints(data1.find(x => x.id === questID).points.length)
+        setQuestMode(data1.find(x => x._id === questID).mode)
+        setHowManyPoints(data1.find(x => x._id === questID).points.length)
         setCurrentPoint(pointNow)
-        setCurrentPointTitle(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).title)
-        setLonToFind(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).longitude)
-        setLatToFind(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).latitude)
-        setCurrentHint(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).hint)
-        setCurrentPointInfo(data1.find(x => x.id === questID).points.find(y => y.id === pointNow).info)
+        setCurrentPointTitle(data1.find(x => x._id === questID).points.find(y => y.id === pointNow).title)
+        setLonToFind(data1.find(x => x._id === questID).points.find(y => y.id === pointNow).longitude)
+        setLatToFind(data1.find(x => x._id === questID).points.find(y => y.id === pointNow).latitude)
+        setCurrentHint(data1.find(x => x._id === questID).points.find(y => y.id === pointNow).hint)
+        setCurrentPointInfo(data1.find(x => x._id === questID).points.find(y => y.id === pointNow).info)
     }
 
     start = (questID) => {
@@ -323,7 +324,7 @@ export default function Map(props) {
                                         <Callout tooltip={false}
                                             onPress={() => {
                                                 setShowBox(true)
-                                                setQuestID(item.id)
+                                                setQuestID(item._id)
                                             }}
                                         >
                                             <View>
@@ -411,20 +412,20 @@ export default function Map(props) {
                                         size={20}
                                         color="#ffffff"
                                     /> */}
-                                    
-                                    
-                                    {' '}{data1.find(x => x.id === questID).title}</Text>
+
+
+                                    {' '}{data1.find(x => x._id === questID).title}</Text>
                             </View>
                             <View style={{ flex: 1, padding: 5, backgroundColor: "#217e3a" }}>
                                 <ScrollView style={{ flex: 1, backgroundColor: "#ffffff", margin: 5 }}>
-                                    <Text style={{ padding: 10, color: "#2d9349" }}>{data1.find(x => x.id === questID).info}</Text>
+                                    <Text style={{ padding: 10, color: "#2d9349" }}>{data1.find(x => x._id === questID).info}</Text>
                                 </ScrollView>
                                 {/* show all points only for explore and not for the play mode */}
-                                {data1.find(x => x.id === questID).mode === "explore" &&
+                                {data1.find(x => x._id === questID).mode === "explore" &&
                                     <View style={{ backgroundColor: "#31a350", margin: 5, padding: 10 }}>
-                                        <Text style={{ color: "white" }}>{data1.find(x => x.id === questID).points.length} Points </Text>
+                                        <Text style={{ color: "white" }}>{data1.find(x => x._id === questID).points.length} Points </Text>
                                         <Text style={{ color: "white" }}>
-                                            {data1.find(x => x.id === questID).points.map((item, index) => {
+                                            {data1.find(x => x._id === questID).points.map((item, index) => {
                                                 return (<Text key={index}>[{item.title}] </Text>)
                                             })}
                                         </Text>
@@ -441,7 +442,7 @@ export default function Map(props) {
                                         padding: 10,
                                         margin: 10
                                     }}
-                                    onPress={() => start(data1.find(x => x.id === questID).id)}
+                                    onPress={() => start(data1.find(x => x._id === questID)._id)}
                                 >
                                     <Text style={{ textAlign: "center", color: "#2d9349" }}>Start Quest</Text>
                                 </TouchableOpacity>
@@ -553,7 +554,7 @@ const styles = StyleSheet.create({
         bottom: 40,
         /*         padding: 10,
          *//*      margin: 20,
-   */        /* backgroundColor: "white", */
+  */        /* backgroundColor: "white", */
         /*         borderColor: "#279144",
                 borderWidth: 2, */
     },
