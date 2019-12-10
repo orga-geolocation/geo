@@ -7,7 +7,7 @@ export default function Menu(props) {
         <Ionicons
             name="md-menu"
             color="#ffffff"
-            size={35}
+            size={40}
             style={styles.icon}
             onPress={() => {
                 props.navigation.toggleDrawer()
@@ -19,8 +19,7 @@ export default function Menu(props) {
 const styles = StyleSheet.create({
     icon: {
         zIndex: 9,
-        position: "absolute",
-        top: 10,
-        left: 20
+        paddingLeft: 20,
+        paddingTop: 7,
     }
 })
