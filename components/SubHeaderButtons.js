@@ -11,14 +11,25 @@ export default function SubHeaderButtons(props) {
     }
     return (
         <View style={styles.main}>
-            <View style={{ flex: 1, backgroundColor: '#31a350' }}>
+{/*             <View style={{ flex: 1, backgroundColor: '#31a350' }}>
                 <TouchableOpacity style={styles.btn}
                     onPress={props.changeMode}
                 >
                     <Text style={styles.btnText}>{props.mode === "explore" ? 'Explore' : 'Play'}</Text>
                 </TouchableOpacity>
 
+            </View> */}
+
+<View style={{ flex: 1, backgroundColor: '#31a350' }}>
+                <TouchableOpacity style={styles.btn}
+                    onPress={props.changeMode}
+                >
+                    <Text style={styles.btnText}>{props.mode === "explore" ? 'Explore Mode' : 'Play Mode'}</Text>
+                </TouchableOpacity>
+
             </View>
+
+
             {/* <View style={{ flex: 1, backgroundColor: 'blue' }}>
                 <TouchableOpacity style={styles.btn}
                     onPress={togglePicker}
@@ -66,22 +77,23 @@ const styles = StyleSheet.create({
 
 
     btn: {
-        height: 45,
+        height: 40,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 0,
         paddingTop: 0,
-        margin: 0,
-        backgroundColor: "#46bf67",
-        borderColor: "#73e793",
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
+        margin: 5,
+        backgroundColor: "#fff", // 46bf67
+        borderColor: "#217e3a",
+        borderWidth: 1,
+/*         borderTopWidth: 0,
+        borderBottomWidth: 0, */
 
     },
     btnText: {
         fontSize: 16,
-        color: 'white',
-        margin: 0,
+        color: '#2d9349',
+        margin: 5,
         padding: 0,
     },
 
