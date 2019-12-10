@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Text ,StyleSheet,TextInput, Keyboard,TouchableOpacity, ScrollView} from 'react-native'
 import { SegmentedControls } from 'react-native-radio-buttons'
 
-const MainQuest = () => {
+const MainQuest = (props) => {
     const [form, setForm] = useState(false)
     const [lat, setLat] = useState(null)
     const [long, setLong] = useState(null)
@@ -26,6 +26,7 @@ const MainQuest = () => {
         }
 
         console.log("form submit")
+        props.navigation.navigate("Point")
     }
     return (
         <ScrollView>
