@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState,useContext ,useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, TouchableOpacity, Image } from 'react-native';
 import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDistance } from 'geolib';
+import GlobalState from "../globalstate/GlobalState"
 import IMAG from '../assets/loader1.gif'
 
 export default function Map(props) {
     /* console.log(props.mode) */
-
+    const Context=useContext(GlobalState)
     const [state, setState] = useState({
         region: {
             latitude: 52.522445,
@@ -116,6 +117,8 @@ export default function Map(props) {
                 changedState = state;
                 setLongitudeNow(coords.longitude)
                 setLatitudeNow(coords.latitude)
+                Context.setLatG(coords.latitude)
+                Context.setLongG(coords.longitude)
                 /*  console.log("loadfirst!hooks" + loadFirst); */
 
 
