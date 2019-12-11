@@ -4,24 +4,10 @@ import Headers from "../components/Headers";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PureChart from 'react-native-pure-chart';
             let row=''
-            let row2=''
-            let info =''
-            let info1 =''
-            let info2 =''
-            let info3 =''
-            let info4 =''
-            let time=''
-            let time2= ''
-            let long = ''
+            let row2=''  
             let playTime =''
 
-
-            let newData = [
-              {x: '2018-01-01', y: 0},
-              {x: '2018-04-02', y: 0},
-              {x: '2018-06-03', y: 0},
-              {x: '2019-11-23', y: 3},
-              {x: '2018-12-05', y:2 }
+            let newData = [   
           ]
             
 export default function Statistics(props) {
@@ -41,32 +27,36 @@ export default function Statistics(props) {
     fetchData()
     playMode()
    
-  },[])  
-  
-  
-  
-              for (let i =0; i<data.length; i++){
+  },[]) 
+  let arr =[]
+  let jo= ''
+  let pointsTime= []
+  let splitPoints =''
+  let long= ''
+              for (let i =0; i < data.length; i++){
+                console.log('lengthhhhhhhhhhhhhh: ', data[i].points.length); 
+                long =data[i].mode.length
                 console.log(data[i].title) 
                 row = data[0].title
                 row2 = data[1].title
-                //console.log('outerloop time',data[i].points[i].timestamp)
-                time= data[i].timestamp
-                console.log('lengthhhhhhhhhhhhhh: ', data[i].points.length);
-                long = data[i].points.length
-              // inner looop 
+                arr.push(data[i].timestamp)
+                jo = arr.join(' / ')
+                
+                
+              // inner loop 
                 for(let j=0; j<data[i].points.length; j++){
                  console.log('this is innerloop',data[i].points[j].title);
-                 info =  data[0].points[j].title;
-                 info1 = data[1].points[j].title;
+                 /* info =  data[0].points[j].title;
+                 info1 = data[i].points[j].title; */
                   console.log('inner loop time',data[i].points[j].timestamp); 
-                 time2 = data[i].points[j].timestamp;   
+                  pointsTime.push(data[i].points[j].timestamp)
+                  splitPoints= pointsTime.join(' / ')
+                  
                   /* info2 = data[i].points[j].title[2][]; */
                  /* info3 = data[3].points[j].title;
                  info4 = data[4].points[j].title;  */
-                
                 }       
               }
-
              /*  let newData= []
            for (let x = 0; x <data.length; x++){
                 let item= {x: data[x].timestamp , y: 4}
@@ -87,10 +77,11 @@ export default function Statistics(props) {
             let sub =''
             let subPlay= ''
             //let inf =''
+            let counter = 0
             for (let z = 0; z<play.length; z++) {
               console.log( 'play mode ',play[z].points.length)
               name = play[z].info
-              sub = play[z].points.length
+              sub = play[z].mode.length
               subPlay= play[z].timestamp
               let sub2 = {x: play[z].timestamp, y: 20}
               newData.push(sub2)
@@ -107,21 +98,14 @@ export default function Statistics(props) {
       />
    <View>
     
-   <Text>{row}</Text>
-      <Text>{info}</Text>
-      <Text>{row2}</Text>
-      
-      <Text>{info1}</Text>
-      {/* <Text>{info2}</Text>
-      <Text>{info3}</Text>
-      <Text>{info4}</Text> */}
-    <Text> Main time for explore quest {time}</Text>
-    <Text> time for the inner exp quest {time2}</Text>
-    <Text> explore quest length are : {long}</Text>
+   <Text> Quest 1 : {row}</Text>
+  
+      <Text> Quest 2 : {row2}</Text>
+    <Text> Quests time : {jo}</Text>
+    <Text> points time :  {splitPoints}</Text>
+    <Text> explore quest length is : {long}</Text>
     <Text> play quest length are : {sub}</Text>
     <Text> time for play quest {subPlay}</Text>
-    {/* <Text>{name}</Text>
-    <Text>{inf}</Text> */}
         </View >  
         <View>
         <PureChart 
