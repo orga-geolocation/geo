@@ -22,7 +22,7 @@ export default function Map(props) {
     })
     let [loadFirst, setLoadFirst] = useState(true)
     let [followPosition, setFollowPosition] = useState(false)
-    const [accuracyOfMeters, setAccuracyOfMeters] = useState(10)
+    const [accuracyOfMeters, setAccuracyOfMeters] = useState(10000)
     // 2486
     const [questMode, setQuestMode] = useState(null)
     const [mapType, setMapType] = useState("satellite")
@@ -47,17 +47,17 @@ export default function Map(props) {
 
     const [data1, setdata1] = useState([])
 
-    const [finish,setFinish]=useState(false)
+    const [finish, setFinish] = useState(false)
 
 
     let [loading, setShowLoader] = useState(true);
 
     //create function to set local storage
-    const setLocalStorage = async (key,value) => {
-      await SecureStore.setItemAsync(key, value);
+    const setLocalStorage = async (key, value) => {
+        await SecureStore.setItemAsync(key, value);
     }
     const getLocalStorage = async (key) => {
-        const getLS = await SecureStore.getItemAsync(key) 
+        const getLS = await SecureStore.getItemAsync(key)
         return getLS;
     }
     const DeleteStorageItem = async (key) => {
@@ -249,20 +249,20 @@ export default function Map(props) {
     solvedQuest = async (id) => {
         console.log("!!! Quest SOLVED !!!");
         setFinish(true)
-        const getLocalStorage = await SecureStore.getItemAsync("data_store") 
-        const User= await JSON.parse(getLocalStorage)
-        let obj={
-            userid:User._id,
-            questid:id
+        const getLocalStorage = await SecureStore.getItemAsync("data_store")
+        const User = await JSON.parse(getLocalStorage)
+        let obj = {
+            userid: User._id,
+            questid: id
         }
-        let dataBody=JSON.stringify(obj)
-    
-                await fetch("https://geo-app-server.herokuapp.com/questdone",{
-                    method: "POST", headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json',
-                    }, body: dataBody
-                  } ).then(result=>result.json()).then(d=>console.log(".........",d.success))
+        let dataBody = JSON.stringify(obj)
+
+        await fetch("https://geo-app-server.herokuapp.com/questdone", {
+            method: "POST", headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }, body: dataBody
+        }).then(result => result.json()).then(d => console.log(".........", d.success))
 
     }
 
@@ -489,22 +489,31 @@ export default function Map(props) {
                     {
                         questStarted === true &&
                         <View style={styles.startedBox}>
-                            <View>
-                                <Text> Go to: {currentPointTitle} </Text>
+                            <View style={{ flex: 1, padding: 5, backgroundColor: "#217e3a" }}>
+
+                                <Text style={{
+                                    backgroundColor: "#31a350",
+                                    padding: 10,
+                                    color: "white",
+                                    fontSize: 18,
+                                }}>
+                                    Go to: {currentPointTitle} </Text>
 
                                 {(questMode === "play") &&
                                     <Text>{currentHint}</Text>
                                 }
 
                                 {(questMode === "explore") &&
-                                    <Text> {getDistance(
+                                      <Text style={{
+                                        backgroundColor: "#31a350",
+                                        padding: 10,
+                                        color: "white",
+                                        fontSize: 18,
+                                    }}> {getDistance(
                                         { latitude: latitudeNow, longitude: longitudeNow },
                                         { latitude: latToFind, longitude: lonToFind }
                                     )} Meters away</Text>
                                 }
-
-
-
 
                                 {/* <Text> howManyPoints: {howManyPoints} </Text> */}
                                 {/* <Text> questID: {questID} </Text>
@@ -526,7 +535,7 @@ export default function Map(props) {
                                     }}
                                     onPress={() => cancelQuest()}
                                 >
-<Text style={{ textAlign: "center", color: "#31a350" }}> {finish? "Done":"Cancel Quest" }</Text>
+                                    <Text style={{ textAlign: "center", color: "#31a350" }}> {finish ? "Done" : "Cancel Quest"}</Text>
                                 </TouchableOpacity>
                             </View>
 
@@ -585,22 +594,17 @@ const styles = StyleSheet.create({
         bottom: 40,
         /*         padding: 10,
          *//*      margin: 20,
-  */        /* backgroundColor: "white", */
+*/        /* backgroundColor: "white", */
         /*         borderColor: "#279144",
                 borderWidth: 2, */
     },
 
     startedBox: {
         position: "absolute",
-        bottom: 30,
         flex: 1,
-        left: 20,
-        right: 20,
-        height: 100,
-        paddingVertical: 10,
-        backgroundColor: "yellow",
-        borderColor: "white",
-        borderWidth: 6,
+        left: 10,
+        right: 10,
+        bottom: 30,
     },
     foundBox: {
         position: "absolute",
