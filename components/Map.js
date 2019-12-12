@@ -6,6 +6,7 @@ import * as Location from 'expo-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDistance } from 'geolib';
 import GlobalState from "../globalstate/GlobalState"
+import * as SecureStore from "expo-secure-store"
 import IMAG from '../assets/loader1.gif'
 
 export default function Map(props) {
@@ -46,8 +47,22 @@ export default function Map(props) {
 
     const [data1, setdata1] = useState([])
 
+    const [finish,setFinish]=useState(false)
+
 
     let [loading, setShowLoader] = useState(true);
+
+    //create function to set local storage
+    const setLocalStorage = async (key,value) => {
+      await SecureStore.setItemAsync(key, value);
+    }
+    const getLocalStorage = async (key) => {
+        const getLS = await SecureStore.getItemAsync(key) 
+        return getLS;
+    }
+    const DeleteStorageItem = async (key) => {
+        await SecureStore.deleteItemAsync(key);
+    }
 
 
     useEffect(() => {
@@ -74,7 +89,7 @@ export default function Map(props) {
             .then(data => {
 
                 setdata1(data.doc)
-                console.log(data.doc)
+                /* console.log(data.doc) */
 
                 setShowLoader(false)
 
@@ -226,13 +241,29 @@ export default function Map(props) {
         setCurrentPointTitle("")
         setCurrentHint("")
         setCurrentPointInfo("")
+        setFinish(false)
 
 
     }
 
-    solvedQuest = () => {
+    solvedQuest = async (id) => {
         console.log("!!! Quest SOLVED !!!");
-        // store/save quest as solved!
+        setFinish(true)
+        const getLocalStorage = await SecureStore.getItemAsync("data_store") 
+        const User= await JSON.parse(getLocalStorage)
+        let obj={
+            userid:User._id,
+            questid:id
+        }
+        let dataBody=JSON.stringify(obj)
+    
+                await fetch("https://geo-app-server.herokuapp.com/questdone",{
+                    method: "POST", headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                    }, body: dataBody
+                  } ).then(result=>result.json()).then(d=>console.log(".........",d.success))
+
     }
 
 
@@ -495,7 +526,7 @@ export default function Map(props) {
                                     }}
                                     onPress={() => cancelQuest()}
                                 >
-                                    <Text style={{ textAlign: "center", color: "#31a350" }}>Cancel Quest</Text>
+<Text style={{ textAlign: "center", color: "#31a350" }}> {finish? "Done":"Cancel Quest" }</Text>
                                 </TouchableOpacity>
                             </View>
 
@@ -516,7 +547,7 @@ export default function Map(props) {
                                 {(currentPoint != howManyPoints) ?
                                     <Button title="Go to next Point"
                                         onPress={() => loadNextPoint()} />
-                                    : <Text onLayout={() => solvedQuest()}> YOU SOLVED THE COMPLETE QUEST!!!
+                                    : <Text onLayout={() => solvedQuest((data1.find(x => x._id === questID)._id))}> YOU SOLVED THE COMPLETE QUEST!!!
                             </Text>
                                 }
                             </View>
