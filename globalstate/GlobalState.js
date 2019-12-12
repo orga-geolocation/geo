@@ -3,7 +3,7 @@ import {createContext} from "react"
 const initialstate={
     login:false,
     user:"",
-    register:false,
+    register:true,
     modalVisible:false,
     userData:null,
     mode:"",

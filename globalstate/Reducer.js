@@ -1,7 +1,7 @@
 export const initialstate = {
     login: false,
     user: null,
-    register: false,
+    register: true,
     modalVisible: false,
     userData: null,
     mode: "",
