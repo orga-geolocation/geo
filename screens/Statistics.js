@@ -4,9 +4,6 @@ import Headers from "../components/Headers";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PureChart from 'react-native-pure-chart';
             
-
-           /*  let row=''
-            let row2=''  */
             let nov = 0;
             let dec = 0;
             let jan = 0;
@@ -47,9 +44,9 @@ export default function Statistics(props) {
                 /* console.log(data[i].title) 
                 row = data[0].title
                 row2 = data[1].title */
-                arr.push(data[i].timestamp)
+                /* arr.push(data[i].timestamp)
                 console.log('explore time : ',arr);
-              
+               */
                 date2 = new Date(data[i].timestamp);
                 month2 = date2.getMonth()+1; 
                 console.log(month2);
@@ -143,8 +140,8 @@ export default function Statistics(props) {
              // console.log( 'play mode ',play[z].points.length)
               name = play[z].info
               sub = play[z].mode.length+1
-              subPlay.push(play[z].timestamp)
-            console.log('play mode time',subPlay);
+             /*  subPlay.push(play[z].timestamp)
+            console.log('play mode time',subPlay); */
               playDate= new Date(play[z].timestamp)
               playMonth= playDate.getMonth()+1
                 
@@ -184,14 +181,6 @@ export default function Statistics(props) {
 
                /////////////////////////////////////////////////////////////////////////
                console.log('---------------------CHARTS-----------------------');
-
-               console.log('---------chart for total exp. and play----------');
-/* 
-              let totalData= [
-                {x: [split][split2][playSplit][playSplit2 ] , y:[nov][dec][nov2][dec2]},
-               ]
-                */
-              
             let sampleData = [
               {
                 seriesName: 'Explore',
@@ -205,6 +194,7 @@ export default function Statistics(props) {
                   {x: 'jul', y: jul},
                   {x: 'aug', y: aug},
                   {x: 'sep', y: sep},
+                  {x: 'Oct', y: oct},
                   {x: 'Nov', y:nov},
                   {x: 'Dec', y: dec},
                 ],
@@ -286,7 +276,7 @@ export default function Statistics(props) {
          </View> */} 
         <View>
         <PureChart 
-         width={'70%'} height={170}  data={sampleData} type='bar' /> 
+         width={'20%'} height={170}  data={sampleData} type='bar' /> 
          </View>
          <View>
         <PureChart 
