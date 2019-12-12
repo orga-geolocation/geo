@@ -28,6 +28,8 @@ export default Reducer = (state, action) => {
             return { ...state, long: action.payload }
         case "id":
             return { ...state, id: action.payload }
+        case "login":
+            return { ...state,login:!action.payload}
         default:
             return state;
     }
