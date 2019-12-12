@@ -25,8 +25,9 @@ export default function ExploreMode(props) {
             if (data) {
                 const jsonData = await data.json()
                 if(Object.keys(jsonData).includes("user")){
-                                 Context.setUser(jsonData.user.username)
+                Context.setUser(jsonData.user.username)
                 Context.setUserData(jsonData.user)
+                Context.setLogin(Context.state.login)
                 }
    
             }
