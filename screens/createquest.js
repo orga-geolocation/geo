@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { StyleSheet, View,Text} from 'react-native';
 import Headers from "../components/Headers";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import QuestCreatorStack from "./stacknavforcreatequest.js/stacknavQuest"
+import GlobalState from "../globalstate/GlobalState"
 
 
 export default function CreateQuest(props) {
-
+ const Context=useContext(GlobalState)
   return (
     <View style={{ flex: 1 }}>
-      <Headers
+       <Headers
         name='Create Quest'
         navigation={props.navigation}
       />
-      <QuestCreatorStack/>
+      {Context.state.login?<QuestCreatorStack/>:<Text style={styles.firstlogin}>Please login to Add Quest</Text> }
+     
+      
     </View>
   );
 }
@@ -31,6 +34,15 @@ CreateQuest.navigationOptions = {
 }
 
 const styles = StyleSheet.create({
+  firstlogin:{
+    width:"80%",
+    height:300,
+    backgroundColor:"lightgreen",
+    margin:"10%",
+    padding:50,
+    fontSize:35,
+    color:"white"
+  },
   icon: {
     fontSize: 15,
     color: "white",
