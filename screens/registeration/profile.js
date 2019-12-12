@@ -20,6 +20,7 @@ export default function Profile() {
         await DeleteStorageItem("data_store")
         Context.setUser(null)
         Context.switchModal(state.modalVisible)
+        Context.setLogin(state.login)
     }
 
 /* secure Storage */
@@ -40,7 +41,7 @@ const DeleteStorageItem = async (key) => {
                     <Text>Quests Completed : {state.userData.completeQuests.length}</Text>
                     <TouchableOpacity style={styles.buttonContainer} onPress={userLogout}>
                         <Text>Log Out</Text>
-                    </TouchableOpacity> 
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>

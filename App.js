@@ -36,8 +36,11 @@ export default App = () => {
   const setID=(value)=>{
     dispatch({type:"id",payload:value})
   }
+  const setLogin=(value)=>{
+    dispatch({type:"login",payload:value})
+  }
   return (
-    <GlobalState.Provider value={{ state, switchValue, setUser, switchModal, setUserData ,setMode ,setLatG,setLongG,setID}}>
+    <GlobalState.Provider value={{ state, switchValue, setUser, switchModal, setUserData ,setMode ,setLatG,setLongG,setID,setLogin}}>
       <View style={styles.view} >
         <Appcontainer />
       </View>

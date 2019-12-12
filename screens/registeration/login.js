@@ -51,6 +51,7 @@ export default LoginView = (props) => {
             Context.setUserData(data.user)
             Context.setUser(data.user.username)
             Context.switchModal(state.modalVisible)
+            Context.setLogin(state.login)
           } else {
             setMsj(data.msj)
             setTimeout(function () { setMsj("") }, 2000)
