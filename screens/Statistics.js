@@ -4,8 +4,7 @@ import Headers from "../components/Headers";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PureChart from 'react-native-pure-chart';
             
-            let nov = 0;
-            let dec = 0;
+            
             let jan = 0;
             let feb = 0;
             let mar = 0;
@@ -16,6 +15,8 @@ import PureChart from 'react-native-pure-chart';
             let aug = 0;
             let sep = 0;
             let oct = 0;
+            let nov = 0;
+            let dec = 0;
             let month2;
             let arr =[]
             let long= ''
