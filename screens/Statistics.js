@@ -245,7 +245,7 @@ export default function Statistics(props) {
          </View> */} 
         <View>
         <PureChart 
-         width={'20%'} height={170}  data={sampleData} type='bar' /> 
+         width={'70%'} height={170}  data={sampleData} type='bar' /> 
          </View>
          <View>
         <PureChart 
