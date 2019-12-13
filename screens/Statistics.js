@@ -18,7 +18,6 @@ import PureChart from 'react-native-pure-chart';
             let nov = 0;
             let dec = 0;
             let month2;
-            let arr =[]
             let long= ''
         
 export default function Statistics(props) {
@@ -40,26 +39,12 @@ export default function Statistics(props) {
    
   },[]) 
               for (let i =0; i < data.length; i++){
-                //console.log('lengthhhhhhhhhhhhhh: ', data[i].points.length); 
                 long =data[i].mode.length+1
-                /* console.log(data[i].title) 
-                row = data[0].title
-                row2 = data[1].title */
-                /* arr.push(data[i].timestamp)
-                console.log('explore time : ',arr);
-               */
                 date2 = new Date(data[i].timestamp);
                 month2 = date2.getMonth()+1; 
                 console.log(month2);
 
-                if (month2 === 11)
-                {
-                  nov++
-                  
-                }else if(month2 === 12){
-                  dec++
-                    
-                } else if (month2 === 1){
+                if (month2 === 1){
                   jan ++
                 }
                 else if (month2 === 2){
@@ -83,25 +68,15 @@ export default function Statistics(props) {
                   sep++
                }else if (month2 === 10){
                   oct++
-               }
-                
-               /*   date = new Date(data[i].timestamp)
-                month = date.getMonth(); 
-
-                console.log(month); */
-                
-              // inner loop
-                /* for(let j=0; j<data[i].points.length; j++){
-                 console.log('this is innerloop',data[i].points[j].title);
+               }else if (month2 === 11)
+               {
+                 nov++
                  
-                  console.log('inner loop time',data[i].points[j].timestamp); 
-                  pointsTime.push(data[i].points[j].timestamp)
-                  splitPoints= pointsTime.join(' / ')
+               }else if(month2 === 12){
+                dec++
                   
-                  info2 = data[i].points[j].title[2][]; 
-                 info3 = data[3].points[j].title;
-                 info4 = data[4].points[j].title;  
-                }        */
+              }
+                  
               }
 
               console.log("November: ", nov);
@@ -124,9 +99,6 @@ export default function Statistics(props) {
             let playDate;
             let playMonth;
             let sub =''
-            let subPlay= []
-            let nov2=0
-            let dec2=0
             let jan2= 0;
             let feb2 = 0;
             let mar2 = 0;
@@ -137,6 +109,8 @@ export default function Statistics(props) {
             let aug2 = 0;
             let sep2 = 0;
             let oct2 = 0;
+            let nov2 = 0;
+            let dec2 = 0;
             for (let z = 0; z < play.length; z++) {
              // console.log( 'play mode ',play[z].points.length)
               name = play[z].info
@@ -146,11 +120,7 @@ export default function Statistics(props) {
               playDate= new Date(play[z].timestamp)
               playMonth= playDate.getMonth()+1
                 
-                if(playMonth === 11){
-                  nov2++
-                }else if(playMonth === 12){
-                  dec2++
-                }else if (playMonth === 1){
+               if (playMonth === 1){
                   jan2 ++
                 }
                 else if (playMonth=== 2){
@@ -174,6 +144,10 @@ export default function Statistics(props) {
                   sep2++
                 }else if (playMonth === 10){
                   oct2++
+              } else if(playMonth === 11){
+                nov2++
+              }else if(playMonth === 12){
+                dec2++
               }
 
                }
@@ -187,14 +161,14 @@ export default function Statistics(props) {
                 seriesName: 'Explore',
                 data: [
                   {x: 'Jan', y: jan},
-                  {x: 'feb', y: feb},
-                  {x: 'mar', y: mar},
-                  {x: 'apr', y: apr},
-                  {x: 'may', y: may},
-                  {x: 'jun', y: jun},
-                  {x: 'jul', y: jul},
-                  {x: 'aug', y: aug},
-                  {x: 'sep', y: sep},
+                  {x: 'Feb', y: feb},
+                  {x: 'Mar', y: mar},
+                  {x: 'Apr', y: apr},
+                  {x: 'May', y: may},
+                  {x: 'Jun', y: jun},
+                  {x: 'Jul', y: jul},
+                  {x: 'Aug', y: aug},
+                  {x: 'Sep', y: sep},
                   {x: 'Oct', y: oct},
                   {x: 'Nov', y:nov},
                   {x: 'Dec', y: dec},
@@ -205,15 +179,15 @@ export default function Statistics(props) {
                 seriesName: 'Play',
                 data: [
                   {x: 'Jan', y: jan2},
-                  {x: 'feb', y: feb2},
-                  {x: 'mar', y: mar2},
-                  {x: 'apr', y: apr2},
-                  {x: 'may', y: may2},
-                  {x: 'jun', y: jun2},
-                  {x: 'jul', y: jul2},
-                  {x: 'aug', y: aug2},
-                  {x: 'sep', y: sep2},
-                  {x: 'oct', y: oct2},
+                  {x: 'Feb', y: feb2},
+                  {x: 'Mar', y: mar2},
+                  {x: 'Apr', y: apr2},
+                  {x: 'May', y: may2},
+                  {x: 'Jun', y: jun2},
+                  {x: 'Jul', y: jul2},
+                  {x: 'Aug', y: aug2},
+                  {x: 'Sep', y: sep2},
+                  {x: 'Oct', y: oct2},
                   {x: 'Nov', y: nov2},
                   {x: 'Dec', y: dec2},
                 ],
@@ -223,15 +197,15 @@ export default function Statistics(props) {
 
             let newData = [
               {x: 'Jan', y: jan},
-              {x: 'feb', y: feb},
-              {x: 'mar', y: mar},
-              {x: 'apr', y: apr},
-              {x: 'may', y: may},
-              {x: 'jun', y: jun},
-              {x: 'jul', y: jul},
-              {x: 'aug', y: aug},
-              {x: 'sep', y: sep},
-              {x: 'oct', y: oct},
+              {x: 'Feb', y: feb},
+              {x: 'Mar', y: mar},
+              {x: 'Apr', y: apr},
+              {x: 'May', y: may},
+              {x: 'Jun', y: jun},
+              {x: 'Jul', y: jul},
+              {x: 'Aug', y: aug},
+              {x: 'Sep', y: sep},
+              {x: 'Oct', y: oct},
               {x: 'Nov', y:nov},
               {x: 'Dec', y: dec},
               
@@ -239,15 +213,15 @@ export default function Statistics(props) {
 
           let playData = [
               {x: 'Jan', y: jan2},
-              {x: 'feb', y: feb2},
-              {x: 'mar', y: mar2},
-              {x: 'apr', y: apr2},
-              {x: 'may', y: may2},
-              {x: 'jun', y: jun2},
-              {x: 'jul', y: jul2},
-              {x: 'aug', y: aug2},
-              {x: 'sep', y: sep2},
-              {x: 'oct', y: oct2},
+              {x: 'Feb', y: feb2},
+              {x: 'Mar', y: mar2},
+              {x: 'Apr', y: apr2},
+              {x: 'May', y: may2},
+              {x: 'Jun', y: jun2},
+              {x: 'Jul', y: jul2},
+              {x: 'Aug', y: aug2},
+              {x: 'Sep', y: sep2},
+              {x: 'Oct', y: oct2},
               {x: 'Nov', y: nov2},
               {x: 'Dec', y: dec2},
             
@@ -259,14 +233,8 @@ export default function Statistics(props) {
         navigation={props.navigation}
       />
    <View>
-    
-  {/*  <Text> Quest 1 : {row}</Text> */}
-  <Text> in November 2019: {nov} Quest/s</Text>
-  <Text> in December 2019: {dec} Quest/s</Text>
-   
-     {/*  <Text> Quest 2 : {row2}</Text> */}
-    {/* <Text> Quests time : {jo}</Text>
-    <Text> points time :  {splitPoints}</Text> */}
+    <Text> in November 2019: {nov} Quest/s</Text>
+    <Text> in December 2019: {dec} Quest/s</Text>
     <Text> explore quest length is : {long}</Text>
     <Text> play quest length is : {sub}</Text>
    
