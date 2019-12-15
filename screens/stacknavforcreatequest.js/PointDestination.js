@@ -139,7 +139,7 @@ const PointDestination = (props) => {
                     style={styles.saveButton}
                     onPress={handleSubmit}
                 >
-                    <Text style={styles.saveButtonText}>next</Text>
+<Text style={styles.saveButtonText}>Add {array[des]} Destination</Text>
                 </TouchableOpacity>
                 {des >= 1 ? (<TouchableOpacity
                     style={styles.saveButton}

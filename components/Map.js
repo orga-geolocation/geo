@@ -8,6 +8,8 @@ import { getDistance } from 'geolib';
 import GlobalState from "../globalstate/GlobalState"
 import * as SecureStore from "expo-secure-store"
 import IMAG from '../assets/loader1.gif'
+import QuestRating from '../screens/rating/QuestRating';
+import StarRating from 'react-native-star-rating';
 
 export default function Map(props) {
     /* console.log(props.mode) */
@@ -51,6 +53,8 @@ export default function Map(props) {
 
 
     let [loading, setShowLoader] = useState(true);
+
+    const [rate, setRate] = useState(3.5)
 
     //create function to set local storage
     const setLocalStorage = async (key, value) => {
@@ -227,8 +231,19 @@ export default function Map(props) {
         // and store/save current point
     }
 
-    cancelQuest = () => {
+
+    cancelQuest = async (id,rate) => {
         console.log(" <- Quest canceled");
+        if (finish) {
+            let data = JSON.stringify({ questid: id, rate: rate })
+            await fetch("https://geo-app-server.herokuapp.com/rate", {
+                method: "POST", headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }, body: data
+            })
+                .then(res => res.json())
+        }
         setFoundPoint(false)
         setQuestMode(null)
         setLatToFind(null)
@@ -245,12 +260,29 @@ export default function Map(props) {
 
 
     }
-
+const onStarRatingPress=(rate)=>{
+    setRate(rate)
+}
     solvedQuest = async (id) => {
         console.log("!!! Quest SOLVED !!!");
         setFinish(true)
         const getLocalStorage = await SecureStore.getItemAsync("data_store")
         const User = await JSON.parse(getLocalStorage)
+        if (User) {
+            let obj = {
+                userid: User._id,
+                questid: id
+            }
+            let dataBody = JSON.stringify(obj)
+
+            await fetch("https://geo-app-server.herokuapp.com/questdone", {
+                method: "POST", headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }, body: dataBody
+            }).then(result => result.json()).then(d => console.log(".........", d.success))
+
+        }
         let obj = {
             userid: User._id,
             questid: id
@@ -301,7 +333,15 @@ export default function Map(props) {
         console.log(getIt);
         return (getIt)
     }
-
+    const stars = (rating) => {
+        let star = rating.reduce((rate, acc) => {
+            let rate1 = Number(rate)
+            let acc1 = Number(acc)
+            acc = rate1 + acc1;
+            return acc;
+        }, 0)
+        return (star / rating.length)
+    }
 
     return (
         <View style={styles.view} >
@@ -360,7 +400,10 @@ export default function Map(props) {
                                         >
                                             <View>
                                                 <Text>{item.title}</Text>
-                                                <Text>More Info</Text>
+                                                <QuestRating rating={stars(item.rating)} />
+                                                <Text style={{ textAlign: "center" }}>{stars(item.rating).toFixed(1)}/5</Text>
+
+                                                <Text style={{ textAlign: "center" }}>More Info</Text>
                                             </View>
                                         </Callout>
                                     </Marker>
@@ -533,7 +576,7 @@ export default function Map(props) {
                                         padding: 10,
                                         margin: 5
                                     }}
-                                    onPress={() => cancelQuest()}
+                                    onPress={() => cancelQuest((data1.find(x => x._id === questID)._id),rate)}
                                 >
                                     <Text style={{ textAlign: "center", color: "#31a350" }}> {finish ? "Done" : "Cancel Quest"}</Text>
                                 </TouchableOpacity>
@@ -559,7 +602,15 @@ export default function Map(props) {
                                     : <Text onLayout={() => solvedQuest((data1.find(x => x._id === questID)._id))}> YOU SOLVED THE COMPLETE QUEST!!!
                             </Text>
                                 }
+
                             </View>
+                            <StarRating
+                                disabled={false}
+                                maxStars={5}
+                                rating={rate}
+                                selectedStar={(rating) => onStarRatingPress(rating)}
+                                fullStarColor={'#d4af37'}
+                            />
                         </View>
                     }
 
