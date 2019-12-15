@@ -8,6 +8,7 @@ import { getDistance } from 'geolib';
 import GlobalState from "../globalstate/GlobalState"
 import * as SecureStore from "expo-secure-store"
 import IMAG from '../assets/loader1.gif'
+import QuestRating from '../screens/rating/QuestRating';
 
 export default function Map(props) {
     /* console.log(props.mode) */
@@ -301,7 +302,15 @@ export default function Map(props) {
         console.log(getIt);
         return (getIt)
     }
-
+    const stars=(rating)=>{
+        let star=rating.reduce((rate,acc)=>{
+            let rate1=Number(rate)
+            let acc1=Number(acc)
+            acc=rate1+acc1;
+            return acc;
+        },0)
+        return (star/rating.length)
+    }
 
     return (
         <View style={styles.view} >
@@ -360,6 +369,7 @@ export default function Map(props) {
                                         >
                                             <View>
                                                 <Text>{item.title}</Text>
+                                                <QuestRating rating={stars(item.rating)}/>
                                                 <Text>More Info</Text>
                                             </View>
                                         </Callout>
