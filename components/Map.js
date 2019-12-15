@@ -370,7 +370,9 @@ export default function Map(props) {
                                             <View>
                                                 <Text>{item.title}</Text>
                                                 <QuestRating rating={stars(item.rating)}/>
-                                                <Text>More Info</Text>
+                                        <Text style={{textAlign:"center"}}>{stars(item.rating).toFixed(1)}/5</Text>
+                                                
+                                                <Text style={{textAlign:"center"}}>More Info</Text>
                                             </View>
                                         </Callout>
                                     </Marker>
