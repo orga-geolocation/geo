@@ -172,7 +172,7 @@ const MainQuest = (props) => {
                     style={styles.saveButton}
                     onPress={handleSubmit}
                 >
-                    <Text style={styles.saveButtonText}>next</Text>
+                    <Text style={styles.saveButtonText}>Add Starting Point</Text>
                 </TouchableOpacity>
 
                 <View style={styles.errmsj}>
