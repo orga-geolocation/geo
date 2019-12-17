@@ -6,9 +6,9 @@ import Headers from "../components/Headers";
 import { Content, Accordion } from 'native-base';
 
 const dataArray = [
-    { title: "Whats the different between Explore and Play?", content: "Lorem ipsum dolor sit amet" },
-    { title: "I'm at the right point, but nothing happened.", content: "Lorem ipsum dolor sit amet" },
-    { title: "Why I can't create a quest?", content: "Lorem ipsum dolor sit amet" },
+    { title: "Difference between explore and play mode?", content: "Lorem ipsum dolor sit amet" },
+/*     { title: "I'm at the right point, but nothing happened.", content: "Lorem ipsum dolor sit amet" },
+ */    { title: "Why I can't create a quest?", content: "Lorem ipsum dolor sit amet" },
     { title: "I can't login.", content: "Lorem ipsum dolor sit amet" }
 
 ];
