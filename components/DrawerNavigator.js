@@ -19,7 +19,7 @@ const headerNavigator = (props) => (
     <SafeAreaView style={styles.container}>
         <View style={styles.view}>
             <Image
-                source={require('../assets/geo.png')}
+                source={require('../assets/logogrey.png')}
                 style={styles.image}
             />
         </View>
@@ -34,19 +34,20 @@ const headerNavigator = (props) => (
 )
 
 const DrawerNavigator = createDrawerNavigator({
-    Home: { screen: HomeScreen },
-    Player: { screen: Player },
-    CreateQuest: { screen: CreateQuest },
+    MAP: { screen: HomeScreen },
+    /* Player: { screen: Player }, */
+    ADD_QUEST: { screen: CreateQuest },
+    STATISTICS: { screen: Statistics },
     FAQ: { screen: FAQ },
-    About : {screen : About},
-    Statistics : {screen: Statistics} 
+    ABOUT: { screen: About },
+
 
 },
     {
         DrawerNavigatorConfig,
         contentComponent: headerNavigator,
         contentOptions: {
-            activeTintColor: '#5DC150',
+            activeTintColor: '#217e3a',
             inactiveTintColor: 'white',
         },
         drawerBackgroundColor: '#262A2C'
