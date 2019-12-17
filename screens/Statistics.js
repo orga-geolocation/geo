@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 15,
     textAlign: 'center',
-    backgroundColor: 'green',
-    height: 25,
+/*     backgroundColor: 'green',
+ */    height: 25,
     width: 25,
     borderRadius: 50,
     alignItems: 'center',
