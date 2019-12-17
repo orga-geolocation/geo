@@ -24,7 +24,7 @@ export default function Map(props) {
     })
     let [loadFirst, setLoadFirst] = useState(true)
     let [followPosition, setFollowPosition] = useState(false)
-    const [accuracyOfMeters, setAccuracyOfMeters] = useState(10000)
+    const [accuracyOfMeters, setAccuracyOfMeters] = useState(20)
     // 2486
     const [questMode, setQuestMode] = useState(null)
     const [mapType, setMapType] = useState("satellite")
