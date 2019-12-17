@@ -21,7 +21,7 @@ export default function HomeScreen(props) {
   return (
     <View style={{ flex: 1 }}>
       <Headers
-        name='Map'
+        name='QUESTS'
         navigation={props.navigation}
       />
       <SubHeaderButtons changeMode={changeMode} mode={mode}/>
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white",
     textAlign: 'center',
-    backgroundColor: 'green',
-    height: 25,
+/*     backgroundColor: 'green',
+ */    height: 25,
     width: 25,
     borderRadius: 50,
     alignItems: 'center',
