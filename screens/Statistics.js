@@ -17,8 +17,8 @@ import PureChart from 'react-native-pure-chart';
             let oct = 0;
             let nov = 0;
             let dec = 0;
-            let month2;
-            let long= ''
+            let month;
+            let long= 0;
         
 export default function Statistics(props) {
   const [data, setdata] = useState([])
@@ -33,56 +33,62 @@ export default function Statistics(props) {
             console.log(err.message)
         })
 }
-  useEffect(() => {
-    fetchData()
-    playMode()
-   
-  },[]) 
-              for (let i =0; i < data.length; i++){
+useEffect(() => {
+  fetchData()
+  playMode()
+  
+  
+ 
+},[])
+      
+              const renderData = () => {
+                for (let i =0; i< data.length; i++){
                 long =data[i].mode.length+1
+                console.log('exp mode length is: ',long);
+                
                 date2 = new Date(data[i].timestamp);
-                month2 = date2.getMonth()+1; 
-                console.log(month2);
+                month = date2.getMonth()+1; 
+                console.log(month);
 
-                if (month2 === 1){
+                if (month === 1){
                   jan ++
                 }
-                else if (month2 === 2){
+                else if (month === 2){
                   feb ++
                 }
-                else if (month2 === 3){
+                else if (month === 3){
                   mar ++
                 }
-                else if (month2 === 4){
+                else if (month === 4){
                   apr ++
                 }
-                else if (month2 === 5){
-                   may++
-                }else if (month2 === 6){
-                  jun++
-               }else if (month2 === 7){
-                jul++
-               }else if (month2 === 8){
-                  aug++
-               }else if (month2 === 9){
-                  sep++
-               }else if (month2 === 10){
-                  oct++
-               }else if (month2 === 11)
+                else if (month === 5){
+                   may ++
+                }else if (month === 6){
+                  jun ++
+               }else if (month === 7){
+                jul ++
+               }else if (month === 8){
+                  aug ++
+               }else if (month === 9){
+                  sep ++
+               }else if (month === 10){
+                  oct ++
+               }else if (month === 11)
                {
-                 nov++
+                 nov ++
                  
-               }else if(month2 === 12){
+               }else if(month === 12){
                 dec++
                   
-              }
-                  
+              }    
               }
 
+            }
               console.log("November: ", nov);
               console.log('December: ', dec);
               console.log("January: ", jan);
-
+            renderData()
   console.log("------------------------------");
   
               //  ******* play ******
@@ -134,18 +140,25 @@ export default function Statistics(props) {
                 }
                 else if (playMonth === 5){
                   may2++
+
                 }else if (playMonth === 6){
                   jun2++
+
                 }else if (playMonth === 7){
                   jul2++
+
                 }else if (playMonth === 8){
                   aug2++
+
                 }else if (playMonth === 9){
                   sep2++
+
                 }else if (playMonth === 10){
                   oct2++
+
               } else if(playMonth === 11){
                 nov2++
+
               }else if(playMonth === 12){
                 dec2++
               }
@@ -195,7 +208,7 @@ export default function Statistics(props) {
               }
             ]
 
-            let newData = [
+           /*  let newData = [
               {x: 'Jan', y: jan},
               {x: 'Feb', y: feb},
               {x: 'Mar', y: mar},
@@ -209,9 +222,9 @@ export default function Statistics(props) {
               {x: 'Nov', y:nov},
               {x: 'Dec', y: dec},
               
-          ]
+          ] */
 
-          let playData = [
+          /* let playData = [
               {x: 'Jan', y: jan2},
               {x: 'Feb', y: feb2},
               {x: 'Mar', y: mar2},
@@ -225,29 +238,30 @@ export default function Statistics(props) {
               {x: 'Nov', y: nov2},
               {x: 'Dec', y: dec2},
             
-        ]
+        ] */
+       
  return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1}}>
       <Headers
         name='Statistics'
         navigation={props.navigation}
       />
-   <View>
-    <Text> in November 2019: {nov} Quest/s</Text>
-    <Text> in December 2019: {dec} Quest/s</Text>
+  <View style={styles.defaultOuterBox}>
+  <Text style={styles.defaultBoxTitle}>Statistics</Text>
+  <View style={styles.defaultBoxMain}>
     <Text> explore quest length is : {long}</Text>
     <Text> play quest length is : {sub}</Text>
-   
+   </View>
         </View > 
        {/*  <View>
         <PureChart 
          width={'70%'} height={170} data={totalData} type='bar' /> 
          </View> */} 
-        <View>
+        <View style={styles.defaultOuterBox}>
         <PureChart 
-         width={'70%'} height={170}  data={sampleData} type='bar' /> 
+         width={'30%'} height={170}  data={sampleData} type='bar' /> 
          </View>
-         <View>
+        {/*  <View>
         <PureChart 
          width={'70%'} height={170}  data={newData} type='line' /> 
          </View>
@@ -255,7 +269,7 @@ export default function Statistics(props) {
         <PureChart 
          width={'70%'} height={170} data={playData} type='line' /> 
          </View>
-        
+         */}
    </ScrollView>
  )
 }
@@ -271,6 +285,27 @@ Statistics.navigationOptions = {
   )
 }
 const styles = StyleSheet.create({
+  defaultOuterBox: {
+    marginLeft: 9,
+    marginRight: 9,
+    marginTop: 5,
+    marginBottom: 5,
+    /*     borderWidth: 1,
+        borderColor: "black", */
+  },
+  defaultBoxTitle: {
+    fontWeight: "bold",
+    padding: 10,
+    color: "#135625",
+    backgroundColor: "#f5f5f5",
+  },
+  defaultBoxMain: {
+    padding: 10,
+    backgroundColor: "#fff",
+  },
+  defaultMainText: {
+    color: "#135625",
+  },
   icon: {
     fontSize: 15,
     textAlign: 'center',
