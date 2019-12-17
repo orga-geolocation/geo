@@ -11,7 +11,7 @@ export default function CreateQuest(props) {
   return (
     <View style={{ flex: 1 }}>
        <Headers
-        name='Create Quest'
+        name='ADD QUEST'
         navigation={props.navigation}
       />
       {Context.state.login?<QuestCreatorStack/>:<Text style={styles.firstlogin}>Please login to Add Quest</Text> }
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "white",
     textAlign: 'center',
-    backgroundColor: 'green',
-    height: 25,
+/*     backgroundColor: 'green',
+ */    height: 25,
     width: 25,
     borderRadius: 50,
     alignItems: 'center',
