@@ -34,7 +34,7 @@ const headerNavigator = (props) => (
 )
 
 const DrawerNavigator = createDrawerNavigator({
-    MAP: { screen: HomeScreen },
+    QUESTS: { screen: HomeScreen },
     /* Player: { screen: Player }, */
     ADD_QUEST: { screen: CreateQuest },
     STATISTICS: { screen: Statistics },
@@ -47,7 +47,7 @@ const DrawerNavigator = createDrawerNavigator({
         DrawerNavigatorConfig,
         contentComponent: headerNavigator,
         contentOptions: {
-            activeTintColor: '#217e3a',
+            activeTintColor: '#36bb5a',
             inactiveTintColor: 'white',
         },
         drawerBackgroundColor: '#262A2C'
