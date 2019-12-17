@@ -9,7 +9,7 @@ export default function About(props) {
   return (
     <View style={{ flex: 1 }}>
       <Headers
-        name='About'
+        name='ABOUT'
         navigation={props.navigation} />
 
       <ScrollView style={{backgroundColor:"#31a350"}}>
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 15,
     textAlign: 'center',
-    backgroundColor: 'green',
+    /* backgroundColor: 'green', */
     height: 25,
     width: 25,
     borderRadius: 50,
