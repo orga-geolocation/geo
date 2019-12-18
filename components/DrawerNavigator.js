@@ -35,8 +35,8 @@ const headerNavigator = (props) => (
 
 const DrawerNavigator = createDrawerNavigator({
     Home: { screen: HomeScreen },
-    Player: { screen: Player },
-    CreateQuest: { screen: CreateQuest },
+    "My Data": { screen: Player },
+    "Create Quest": { screen: CreateQuest },
     FAQ: { screen: FAQ },
     About : {screen : About},
     Statistics : {screen: Statistics} 
