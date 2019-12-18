@@ -400,9 +400,9 @@ const onStarRatingPress=(rate)=>{
                                         >
                                             <View>
                                                 <Text>{item.title}</Text>
-                                                <QuestRating rating={stars(item.rating)} />
-                                                <Text style={{ textAlign: "center" }}>{stars(item.rating).toFixed(1)}/5</Text>
-
+                                               <QuestRating rating={stars(item.rating)} />
+                                                <Text style={{ textAlign: "center" }}>{stars(item.rating).toFixed(1)}/5.0</Text>
+                                                 
                                                 <Text style={{ textAlign: "center" }}>More Info</Text>
                                             </View>
                                         </Callout>
@@ -604,13 +604,14 @@ const onStarRatingPress=(rate)=>{
                                 }
 
                             </View>
-                            <StarRating
+                            {finish?<StarRating
                                 disabled={false}
                                 maxStars={5}
                                 rating={rate}
                                 selectedStar={(rating) => onStarRatingPress(rating)}
                                 fullStarColor={'#d4af37'}
-                            />
+                            />:null }
+                            
                         </View>
                     }
 

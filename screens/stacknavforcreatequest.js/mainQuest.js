@@ -133,7 +133,7 @@ const MainQuest = (props) => {
                     onChangeText={value => setFtext(value)}
                 />
                 <SegmentedControls
-                    tint={'black'}
+                    tint={'gray'}
                     selectedTint={'white'}
                     backTint={'green'}
                     options={options}
@@ -150,7 +150,7 @@ const MainQuest = (props) => {
                     containerStyle={{ marginTop: 10 }}
                 />
                 <SegmentedControls
-                    tint={'black'}
+                    tint={'gray'}
                     selectedTint={'white'}
                     backTint={'green'}
                     options={options1}
