@@ -36,12 +36,10 @@ CreateQuest.navigationOptions = {
 const styles = StyleSheet.create({
   firstlogin:{
     width:"80%",
-    height:300,
     backgroundColor:"lightgreen",
     margin:"10%",
-    padding:50,
-    fontSize:35,
-    color:"white"
+    padding:20,
+    fontSize:20,
   },
   icon: {
     fontSize: 15,

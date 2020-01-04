@@ -19,7 +19,6 @@ export default function Player(props) {
     console.log("working")
     const getLocalStorage = await SecureStore.getItemAsync("data_store")
     const User = await JSON.parse(getLocalStorage)
-
      if (User) {
       User.completeQuests.map(quest => {
        return fetch(`https://geo-app-server.herokuapp.com/completequests/${quest}`)
@@ -31,7 +30,7 @@ export default function Player(props) {
          }
         })
       })
-    }
+  
     User.userQuests.map(uquest => {
       return fetch(`https://geo-app-server.herokuapp.com/userquests/${uquest}`)
       .then(res => res.json())
@@ -43,13 +42,14 @@ export default function Player(props) {
        })
     }) 
   }
+  }
   return (
     <View style={{ flex: 1 }}>
       <Headers
         name='My Data'
         navigation={props.navigation}
       />
-      {state.login ? <View><Text style={{fontSize:20,backgroundColor:"gray",color:"white",padding:5}}>Created Quests</Text>{creQuests.map((item,i)=><Text key={i} style={{fontSize:16,textAlign:"center",backgroundColor:"lightgreen",borderColor:"white",borderWidth:2,padding:5,color:"gray"}}>{item.key}</Text>)}<Text style={{fontSize:20,backgroundColor:"gray",color:"white",padding:5}}>Completed Quests</Text>{comQuests.map((item,i)=><Text key={i} style={{fontSize:16,textAlign:"center",backgroundColor:"lightgreen",borderColor:"white",borderWidth:2,padding:5,color:"gray"}}>{item.key}</Text>)}</View> : <Text>Need to login</Text>}
+      {state.login ? <View><Text style={{fontSize:20,backgroundColor:"gray",color:"white",padding:5}}>Created Quests</Text>{creQuests.map((item,i)=><Text key={i} style={{fontSize:16,textAlign:"center",backgroundColor:"lightgreen",borderColor:"white",borderWidth:2,padding:5,color:"gray"}}>{item.key}</Text>)}<Text style={{fontSize:20,backgroundColor:"gray",color:"white",padding:5}}>Completed Quests</Text>{comQuests.map((item,i)=><Text key={i} style={{fontSize:16,textAlign:"center",backgroundColor:"lightgreen",borderColor:"white",borderWidth:2,padding:5,color:"gray"}}>{item.key}</Text>)}</View> : <View style={{backgroundColor:"lightgreen",textAlign:"center",color:"white",padding:20, marginTop:20,marginRight:"10%",marginLeft:"10%"}}><Text style={{fontSize:20,textAlign:"center"}}>Need to login</Text></View>}
     </View>
   );
 }
