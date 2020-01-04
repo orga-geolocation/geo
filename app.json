@@ -11,7 +11,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logogrey.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -24,12 +24,14 @@
       "**/*"
     ],
     "android": {
+      "package": "com.geo-quest-app.yam",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
       }
     },
       "ios": {
         "supportsTablet": true,
+        "bundleIdentifier": "com.geo-quest-app.yam",
         "config": {
           "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
         }
