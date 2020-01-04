@@ -24,14 +24,14 @@
       "**/*"
     ],
     "android": {
-      "package": "com.geo-quest-app.yam",
+      "package": "com.geoquestapp.yam",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
       }
     },
       "ios": {
         "supportsTablet": true,
-        "bundleIdentifier": "com.geo-quest-app.yam",
+        "bundleIdentifier": "com.geoquestapp.yam",
         "config": {
           "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
         }
