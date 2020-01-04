@@ -9,10 +9,9 @@
       "android",
       "web"
     ],
-
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon1.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -24,8 +23,18 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
+    "android": {
+      "package": "com.geoquestapp.yam",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
+      }
+    },
+      "ios": {
+        "supportsTablet": true,
+        "bundleIdentifier": "com.geoquestapp.yam",
+        "config": {
+          "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
+        }
     }
   }
-}
+  }
