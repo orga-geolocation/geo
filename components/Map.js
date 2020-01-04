@@ -10,6 +10,7 @@ import * as SecureStore from "expo-secure-store"
 import IMAG from '../assets/loader1.gif'
 import QuestRating from '../screens/rating/QuestRating';
 import StarRating from 'react-native-star-rating';
+import { AuthSession } from 'expo';
 
 export default function Map(props) {
     /* console.log(props.mode) */
@@ -24,7 +25,7 @@ export default function Map(props) {
     })
     let [loadFirst, setLoadFirst] = useState(true)
     let [followPosition, setFollowPosition] = useState(false)
-    const [accuracyOfMeters, setAccuracyOfMeters] = useState(20)
+    const [accuracyOfMeters, setAccuracyOfMeters] = useState(10)
     // 2486
     const [questMode, setQuestMode] = useState(null)
     const [mapType, setMapType] = useState("satellite")
@@ -232,7 +233,7 @@ export default function Map(props) {
     }
 
 
-    cancelQuest = async (id,rate) => {
+    cancelQuest = async (id, rate) => {
         console.log(" <- Quest canceled");
         if (finish) {
             let data = JSON.stringify({ questid: id, rate: rate })
@@ -260,9 +261,9 @@ export default function Map(props) {
 
 
     }
-const onStarRatingPress=(rate)=>{
-    setRate(rate)
-}
+    const onStarRatingPress = (rate) => {
+        setRate(rate)
+    }
     solvedQuest = async (id) => {
         console.log("!!! Quest SOLVED !!!");
         setFinish(true)
@@ -398,12 +399,13 @@ const onStarRatingPress=(rate)=>{
                                                 setQuestID(item._id)
                                             }}
                                         >
-                                            <View>
-                                                <Text>{item.title}</Text>
-                                               <QuestRating rating={stars(item.rating)} />
-                                                <Text style={{ textAlign: "center" }}>{stars(item.rating).toFixed(1)}/5.0</Text>
-                                                 
-                                                <Text style={{ textAlign: "center" }}>More Info</Text>
+                                            <View style={{backgroundColor:"green",padding:10}}>
+                                               
+                                                <Text style={{textAlign: "center" ,textAlign: "center" ,color:"white",fontSize:16}}>{item.title}</Text> 
+                                                <QuestRating rating={stars(item.rating)} />
+                                                <Text style={{ textAlign: "center" ,color:"white",fontSize:16}}>{stars(item.rating).toFixed(1)}/5.0</Text>
+
+                                                <Text style={{ textAlign: "center",color:"white",fontSize:16 }}>More Info</Text>
                                             </View>
                                         </Callout>
                                     </Marker>
@@ -486,9 +488,16 @@ const onStarRatingPress=(rate)=>{
                                         size={20}
                                         color="#ffffff"
                                     /> */}
-
+                                   
 
                                     {' '}{data1.find(x => x._id === questID).title}</Text>
+                                    {data1.find(x => x._id === questID).user==="Ali" ||(data1.find(x => x._id === questID).completedBy.length>10 && stars(item.rating).toFixed(1)>4) ? 
+                                     <View style={{backgroundColor:"green"}}>
+                                    <Image style={{width:70,height:50, marginLeft:"auto",marginRight:"auto"}} source={require("../assets/trusted1.png")}/>
+                                    </View> : null }
+                                   
+                                   
+                                    
                             </View>
                             <View style={{ flex: 1, padding: 5, backgroundColor: "#217e3a" }}>
                                 <ScrollView style={{ flex: 1, backgroundColor: "#ffffff", margin: 5 }}>
@@ -530,7 +539,7 @@ const onStarRatingPress=(rate)=>{
 
                     {/* show this box if quest started */}
                     {
-                        questStarted === true &&
+                        questStarted === true && !finish &&
                         <View style={styles.startedBox}>
                             <View style={{ flex: 1, padding: 5, backgroundColor: "#217e3a" }}>
 
@@ -547,7 +556,7 @@ const onStarRatingPress=(rate)=>{
                                 }
 
                                 {(questMode === "explore") &&
-                                      <Text style={{
+                                    <Text style={{
                                         backgroundColor: "#31a350",
                                         padding: 10,
                                         color: "white",
@@ -576,7 +585,7 @@ const onStarRatingPress=(rate)=>{
                                         padding: 10,
                                         margin: 5
                                     }}
-                                    onPress={() => cancelQuest((data1.find(x => x._id === questID)._id),rate)}
+                                    onPress={() => cancelQuest((data1.find(x => x._id === questID)._id), rate)}
                                 >
                                     <Text style={{ textAlign: "center", color: "#31a350" }}> {finish ? "Done" : "Cancel Quest"}</Text>
                                 </TouchableOpacity>
@@ -604,14 +613,14 @@ const onStarRatingPress=(rate)=>{
                                 }
 
                             </View>
-                            {finish?<StarRating
+                            {finish ? <StarRating
                                 disabled={false}
                                 maxStars={5}
                                 rating={rate}
                                 selectedStar={(rating) => onStarRatingPress(rating)}
                                 fullStarColor={'#d4af37'}
-                            />:null }
-                            
+                            /> : null}
+
                         </View>
                     }
 
