@@ -11,6 +11,9 @@ import IMAG from '../assets/loader1.gif'
 import QuestRating from '../screens/rating/QuestRating';
 import StarRating from 'react-native-star-rating';
 import { AuthSession } from 'expo';
+import {
+    AdMobInterstitial
+} from 'expo-ads-admob';
 
 export default function Map(props) {
     /* console.log(props.mode) */
@@ -69,6 +72,10 @@ export default function Map(props) {
         await SecureStore.deleteItemAsync(key);
     }
 
+    const loadadd=async()=>{
+        AdMobInterstitial.setAdUnitID('ca-app-pub-8286685514274605/7088043917');
+        await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });  
+    }
 
     useEffect(() => {
 
@@ -82,9 +89,14 @@ export default function Map(props) {
             setShowLoader(true)
 
         }
+    
 
 
     }, [props.mode])
+
+useEffect(()=>{
+    loadadd()
+},[])
 
     const datafromExpServer = async () => {
 
@@ -243,7 +255,7 @@ export default function Map(props) {
                     'Content-Type': 'application/json',
                 }, body: data
             })
-                .then(res => res.json())
+                .then(res => res.json()).then(async()=> await AdMobInterstitial.showAdAsync())
         }
         setFoundPoint(false)
         setQuestMode(null)
@@ -399,13 +411,13 @@ export default function Map(props) {
                                                 setQuestID(item._id)
                                             }}
                                         >
-                                            <View style={{backgroundColor:"green",padding:10}}>
-                                               
-                                                <Text style={{textAlign: "center" ,textAlign: "center" ,color:"white",fontSize:16}}>{item.title}</Text> 
-                                                <QuestRating rating={stars(item.rating)} />
-                                                <Text style={{ textAlign: "center" ,color:"white",fontSize:16}}>{stars(item.rating).toFixed(1)}/5.0</Text>
+                                            <View style={{ backgroundColor: "green", padding: 10 }}>
 
-                                                <Text style={{ textAlign: "center",color:"white",fontSize:16 }}>More Info</Text>
+                                                <Text style={{ textAlign: "center", textAlign: "center", color: "white", fontSize: 16 }}>{item.title}</Text>
+                                                <QuestRating rating={stars(item.rating)} />
+                                                <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>{stars(item.rating).toFixed(1)}/5.0</Text>
+
+                                                <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>More Info</Text>
                                             </View>
                                         </Callout>
                                     </Marker>
@@ -488,16 +500,16 @@ export default function Map(props) {
                                         size={20}
                                         color="#ffffff"
                                     /> */}
-                                   
+
 
                                     {' '}{data1.find(x => x._id === questID).title}</Text>
-                                    {data1.find(x => x._id === questID).user==="Ali" ||(data1.find(x => x._id === questID).completedBy.length>10 && stars(item.rating).toFixed(1)>4) ? 
-                                     <View style={{backgroundColor:"green"}}>
-                                    <Image style={{width:70,height:50, marginLeft:"auto",marginRight:"auto"}} source={require("../assets/trusted1.png")}/>
-                                    </View> : null }
-                                   
-                                   
-                                    
+                                {data1.find(x => x._id === questID).user === "Ali" || data1.find(x => x._id === questID).user === "Peter" || (data1.find(x => x._id === questID).completedBy.length > 10 && stars(item.rating).toFixed(1) > 4) ?
+                                    <View style={{ backgroundColor: "green" }}>
+                                        <Image style={{ width: 70, height: 50, marginLeft: "auto", marginRight: "auto" }} source={require("../assets/trusted1.png")} />
+                                    </View> : null}
+
+
+
                             </View>
                             <View style={{ flex: 1, padding: 5, backgroundColor: "#217e3a" }}>
                                 <ScrollView style={{ flex: 1, backgroundColor: "#ffffff", margin: 5 }}>
@@ -539,8 +551,9 @@ export default function Map(props) {
 
                     {/* show this box if quest started */}
                     {
-                        questStarted === true && !finish &&
+                        questStarted === true &&
                         <View style={styles.startedBox}>
+                            { !finish && 
                             <View style={{ flex: 1, padding: 5, backgroundColor: "#217e3a" }}>
 
                                 <Text style={{
@@ -574,6 +587,7 @@ export default function Map(props) {
                         <Text> latToFind: {latToFind} </Text>
                          */}
                             </View>
+                            }
 
 
                             <View style={{ backgroundColor: "#31a350" }}>
