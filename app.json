@@ -9,7 +9,6 @@
       "android",
       "web"
     ],
-
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,8 +23,16 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
+    "android": {
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
+      }
+    },
+      "ios": {
+        "supportsTablet": true,
+        "config": {
+          "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
+        }
     }
   }
-}
+  }
