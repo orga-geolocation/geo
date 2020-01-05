@@ -35,7 +35,7 @@ export default function ExploreMode(props) {
     }
     useEffect(() => {
         loadApp()
-    }, [])
+    }, []) 
     return (
         <View style={{ flex: 1 }}>
             <DrawerNavigator style={{ flex: 1 }} />

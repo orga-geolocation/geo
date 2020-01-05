@@ -4,6 +4,14 @@
     "slug": "geoquest",
     "privacy": "public",
     "sdkVersion": "35.0.0",
+    "android": {
+      "package": "com.geoquestapp.yam",
+      "versionCode": 1,
+      "icon": "./assets/icon1.png",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
+      }
+    },
     "platforms": [
       "ios",
       "android",
@@ -11,11 +19,10 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon1.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#217e3a"
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,18 +30,12 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "android": {
-      "package": "com.geoquestapp.yam",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.geoquestapp.yam",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
       }
-    },
-      "ios": {
-        "supportsTablet": true,
-        "bundleIdentifier": "com.geoquestapp.yam",
-        "config": {
-          "googleMobileAdsAppId": "ca-app-pub-8286685514274605~5358183363"
-        }
     }
   }
-  }
+}
