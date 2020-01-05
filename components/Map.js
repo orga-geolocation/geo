@@ -10,7 +10,6 @@ import * as SecureStore from "expo-secure-store"
 import IMAG from '../assets/loader1.gif'
 import QuestRating from '../screens/rating/QuestRating';
 import StarRating from 'react-native-star-rating';
-import { AuthSession } from 'expo';
 import {
     AdMobInterstitial
 } from 'expo-ads-admob';
@@ -28,7 +27,7 @@ export default function Map(props) {
     })
     let [loadFirst, setLoadFirst] = useState(true)
     let [followPosition, setFollowPosition] = useState(false)
-    const [accuracyOfMeters, setAccuracyOfMeters] = useState(10)
+    const [accuracyOfMeters, setAccuracyOfMeters] = useState(10000)
     // 2486
     const [questMode, setQuestMode] = useState(null)
     const [mapType, setMapType] = useState("satellite")
@@ -48,7 +47,7 @@ export default function Map(props) {
     const [lonToFind, setLonToFind] = useState(null)
     const [latToFind, setLatToFind] = useState(null)
     const [currentHint, setCurrentHint] = useState("")
-
+    const [finishText,setfinishingText]=useState(null)
     const [showBox, setShowBox] = useState(false)
 
     const [data1, setdata1] = useState([])
@@ -61,7 +60,7 @@ export default function Map(props) {
     const [rate, setRate] = useState(3.5)
 
     //create function to set local storage
-    const setLocalStorage = async (key, value) => {
+    /* const setLocalStorage = async (key, value) => {
         await SecureStore.setItemAsync(key, value);
     }
     const getLocalStorage = async (key) => {
@@ -70,11 +69,11 @@ export default function Map(props) {
     }
     const DeleteStorageItem = async (key) => {
         await SecureStore.deleteItemAsync(key);
-    }
+    } */
 
-    const loadadd=async()=>{
+    const loadadd = async () => {
         AdMobInterstitial.setAdUnitID('ca-app-pub-8286685514274605/7088043917');
-        await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });  
+        await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
     }
 
     useEffect(() => {
@@ -89,14 +88,14 @@ export default function Map(props) {
             setShowLoader(true)
 
         }
-    
+
 
 
     }, [props.mode])
 
-useEffect(()=>{
-    loadadd()
-},[])
+    useEffect(() => {
+        loadadd()
+    }, [])
 
     const datafromExpServer = async () => {
 
@@ -210,6 +209,7 @@ useEffect(()=>{
         setLatToFind(data1.find(x => x._id === questID).points.find(y => y.id === pointNow).latitude)
         setCurrentHint(data1.find(x => x._id === questID).points.find(y => y.id === pointNow).hint)
         setCurrentPointInfo(data1.find(x => x._id === questID).points.find(y => y.id === pointNow).info)
+        setfinishingText(data1.find(x => x._id === questID).finishedText)
     }
 
     start = (questID) => {
@@ -255,7 +255,7 @@ useEffect(()=>{
                     'Content-Type': 'application/json',
                 }, body: data
             })
-                .then(res => res.json()).then(async()=> await AdMobInterstitial.showAdAsync())
+                .then(res => res.json()).then(async () => await AdMobInterstitial.showAdAsync())
         }
         setFoundPoint(false)
         setQuestMode(null)
@@ -415,7 +415,7 @@ useEffect(()=>{
 
                                                 <Text style={{ textAlign: "center", textAlign: "center", color: "white", fontSize: 16 }}>{item.title}</Text>
                                                 <QuestRating rating={stars(item.rating)} />
-                                                <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>{stars(item.rating).toFixed(1)}/5.0</Text>
+                                                <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>{stars(item.rating).toFixed(1) === "NaN" ? 0.0 : stars(item.rating).toFixed(1)}/5.0</Text>
 
                                                 <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>More Info</Text>
                                             </View>
@@ -505,7 +505,7 @@ useEffect(()=>{
                                     {' '}{data1.find(x => x._id === questID).title}</Text>
                                 {data1.find(x => x._id === questID).user === "Ali" || data1.find(x => x._id === questID).user === "Peter" || (data1.find(x => x._id === questID).completedBy.length > 10 && stars(item.rating).toFixed(1) > 4) ?
                                     <View style={{ backgroundColor: "green" }}>
-                                        <Image style={{ width: 70, height: 50, marginLeft: "auto", marginRight: "auto" }} source={require("../assets/trusted1.png")} />
+                                        <Image style={{ width: 70, height: 50, marginLeft: "auto", marginRight: "auto", paddingTop: 5 }} source={require("../assets/trusted1.png")} />
                                     </View> : null}
 
 
@@ -553,40 +553,41 @@ useEffect(()=>{
                     {
                         questStarted === true &&
                         <View style={styles.startedBox}>
-                            { !finish && 
-                            <View style={{ flex: 1, padding: 5, backgroundColor: "#217e3a" }}>
+                            {!finish && !foundPoint &&
+                                <View style={{ flex: 1, padding: 5, backgroundColor: "#217e3a" }}>
 
-                                <Text style={{
-                                    backgroundColor: "#31a350",
-                                    padding: 10,
-                                    color: "white",
-                                    fontSize: 18,
-                                }}>
-                                    Go to: {currentPointTitle} </Text>
-
-                                {(questMode === "play") &&
-                                    <Text>{currentHint}</Text>
-                                }
-
-                                {(questMode === "explore") &&
                                     <Text style={{
                                         backgroundColor: "#31a350",
                                         padding: 10,
                                         color: "white",
                                         fontSize: 18,
-                                    }}> {getDistance(
-                                        { latitude: latitudeNow, longitude: longitudeNow },
-                                        { latitude: latToFind, longitude: lonToFind }
-                                    )} Meters away</Text>
-                                }
+                                    }}>Go to: {currentPointTitle} </Text>
 
-                                {/* <Text> howManyPoints: {howManyPoints} </Text> */}
-                                {/* <Text> questID: {questID} </Text>
+                                    {(questMode === "play") &&
+                                        <Text>{currentHint}</Text>
+                                    }
+
+                                    {(questMode === "explore") &&
+                                        <Text style={{
+                                            backgroundColor: "#31a350",
+                                            padding: 10,
+                                            color: "white",
+                                            fontSize: 18,
+                                        }}> {getDistance(
+                                            { latitude: latitudeNow, longitude: longitudeNow },
+                                            { latitude: latToFind, longitude: lonToFind }
+                                        )} Meters away</Text>
+                                        
+                                    }
+
+                                    {/* <Text> howManyPoints: {howManyPoints} </Text> */}
+                                    {/* <Text> questID: {questID} </Text>
                         <Text> currentPoint: {currentPoint} </Text>
                         <Text> lonToFind: {lonToFind} </Text>
                         <Text> latToFind: {latToFind} </Text>
                          */}
-                            </View>
+                                </View>
+                                
                             }
 
 
@@ -616,24 +617,31 @@ useEffect(()=>{
                     {
                         (foundPoint === true && questStarted === true) &&
                         <View style={styles.foundBox}>
-                            <View>
-                                <Text> You found {currentPointTitle} </Text>
-                                <Text> {currentPointInfo} </Text>
+                            <View style={{ marginBottom: 20 }}>
+                                <Text style={{ fontWeight: "bold", backgroundColor: "#31a350", color: "white",marginBottom:5, padding: 10 }}> You found {currentPointTitle}</Text>
+                                <ScrollView style={{ height: 267 ,padding:10}}><Text style={{paddingBottom:40,letterSpacing:1}}>{currentPointInfo}</Text></ScrollView>
                                 {(currentPoint != howManyPoints) ?
-                                    <Button title="Go to next Point"
-                                        onPress={() => loadNextPoint()} />
-                                    : <Text onLayout={() => solvedQuest((data1.find(x => x._id === questID)._id))}> YOU SOLVED THE COMPLETE QUEST!!!
-                            </Text>
+                                    <TouchableOpacity style={{
+                                        backgroundColor: "#fff", // 46bf67
+                                        borderColor: "#217e3a",
+                                        borderWidth: 1,
+                                        padding: 10,
+                                        margin: 20,
+                                        zIndex: 100
+                                    }} ><Text style={{ textAlign: "center",color:"green" }} onPress={() => loadNextPoint()}>Go to next point</Text></TouchableOpacity>
+                                    : <View style={{height:120,marginTop:5,marginBottom:20}}><Text style={{padding:10, backgroundColor:"#31a350",color:"white"}} onLayout={() => solvedQuest((data1.find(x => x._id === questID)._id))}> YOU SOLVED THE COMPLETE QUEST!!!
+                            </Text>{finish ? <StarRating
+                                    disabled={false}
+                                    maxStars={5}
+                                    rating={rate}
+                                    selectedStar={(rating) => onStarRatingPress(rating)}
+                                    fullStarColor={'#d4af37'}
+                                /> : null}</View>
                                 }
-
+                                 
                             </View>
-                            {finish ? <StarRating
-                                disabled={false}
-                                maxStars={5}
-                                rating={rate}
-                                selectedStar={(rating) => onStarRatingPress(rating)}
-                                fullStarColor={'#d4af37'}
-                            /> : null}
+
+
 
                         </View>
                     }
@@ -683,15 +691,16 @@ const styles = StyleSheet.create({
     },
     foundBox: {
         position: "absolute",
-        bottom: 160,
+        bottom: 100,
         flex: 1,
         left: 20,
         right: 20,
-        height: 200,
+        height: 420,
         paddingVertical: 10,
         backgroundColor: "yellow",
         borderColor: "white",
         borderWidth: 6,
+        padding: 10
     },
     iconsOnMap: {
         width: "100%",
